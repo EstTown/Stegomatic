@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegomaticLogic
+namespace StegomaticProject.StegomaticLogic
 {
     static public class ByteConverter
     {

@@ -12,8 +12,9 @@ namespace StegomaticProject
     {
         static void Main(string[] args)
         {
-            IStegomatic stegoLogic = new StegomaticProject();
-            IStegomaticUI stegoUI = new StegomaticWinForm(stegoLogic);
+            IStegomatic stegoLogic = new Stegomatic();
+            IStegomaticUI stegoUI = new StegomaticWinForm();
+            IStegoControl stegoController = new IStegoControl(stegoLogic, stegoUI);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace StegomaticProject.StegomaticLogic
 {
     interface IStegomatic
     {
+        public void Run()
     }
 }

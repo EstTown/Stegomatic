@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.Config
 {
-    interface Config
+    public interface Config
     {
     }
 }

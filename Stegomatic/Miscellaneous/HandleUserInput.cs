@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.Miscellaneous
 {
-    class HandleUserInput
+    public class HandleUserInput
     {
         public void File(string path)
         {

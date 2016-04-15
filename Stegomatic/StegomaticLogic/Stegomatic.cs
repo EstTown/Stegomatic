@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegomaticLogic
 {
-    class Stegomatic : IStegomatic
+    public class Stegomatic : IStegomatic
     {
     }
 }

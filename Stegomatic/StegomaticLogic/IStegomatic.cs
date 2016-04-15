@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegomaticLogic
 {
-    interface IStegomatic
+    public interface IStegomatic
     {
         public void Run()
     }

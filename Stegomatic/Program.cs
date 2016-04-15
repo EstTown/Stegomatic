@@ -14,7 +14,7 @@ namespace StegomaticProject
         {
             IStegomatic stegoLogic = new Stegomatic();
             IStegomaticUI stegoUI = new StegomaticWinForm();
-            IStegoControl stegoController = new IStegoControl(stegoLogic, stegoUI);
+            IStegoControl stegoController = new StegoControl(stegoLogic, stegoUI);
         }
     }
 }

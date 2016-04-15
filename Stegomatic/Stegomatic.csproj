@@ -45,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\Config.cs" />
-    <Compile Include="Config\IConfig.cs" />
+    <Compile Include="StegomaticLogic\Miscellaneous\ByteConverter.cs" />
+    <Compile Include="StegomaticLogic\Config\Config.cs" />
+    <Compile Include="StegomaticLogic\Config\IConfig.cs" />
     <Compile Include="StegomaticController\IStegoControl.cs" />
-    <Compile Include="Miscellaneous\HandleUserInput.cs" />
+    <Compile Include="StegomaticLogic\Miscellaneous\Compression.cs" />
+    <Compile Include="StegomaticLogic\Miscellaneous\Confounder.cs" />
+    <Compile Include="StegomaticLogic\Miscellaneous\HandleUserInput.cs" />
     <Compile Include="StegomaticController\StegoControl.cs" />
     <Compile Include="StegomaticLogic\IStegomatic.cs" />
     <Compile Include="StegomaticUI\IStegomaticUI.cs" />
@@ -65,7 +68,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="StegomaticLogic\Cryptograhy\" />
+    <Folder Include="StegomaticLogic\Steganography\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

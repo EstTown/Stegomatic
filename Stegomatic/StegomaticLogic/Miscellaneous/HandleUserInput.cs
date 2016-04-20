@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StegomaticProject.Miscellaneous
+namespace StegomaticProject.StegomaticLogic.Miscellaneous
 {
     public class HandleUserInput
     {

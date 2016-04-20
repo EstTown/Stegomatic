@@ -46,8 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StegomaticLogic\Miscellaneous\ByteConverter.cs" />
-    <Compile Include="StegomaticLogic\Config\Config.cs" />
-    <Compile Include="StegomaticLogic\Config\IConfig.cs" />
+    <Compile Include="StegomaticController\Config\Config.cs" />
+    <Compile Include="StegomaticController\Config\IConfig.cs" />
     <Compile Include="StegomaticController\IStegoControl.cs" />
     <Compile Include="StegomaticLogic\Miscellaneous\Compression.cs" />
     <Compile Include="StegomaticLogic\Miscellaneous\Confounder.cs" />

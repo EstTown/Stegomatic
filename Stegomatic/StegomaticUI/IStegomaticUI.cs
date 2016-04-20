@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegomaticUI
 {
-    interface IStegomaticUI
+    public interface IStegomaticUI
     {
     }
 }

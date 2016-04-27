@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace StegomaticProject.StegomaticLogic
+namespace Stegomatic.StegoSystemLogic
 {
-    public class Stegomatic : IStegomatic
+    public class StegoSystem : IStegoSystem
     {
         public string DecodeMessageFromImage(Bitmap coverImage, string encryptionKey)
         {

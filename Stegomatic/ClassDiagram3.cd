@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StegomaticProject.Program" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StegomaticProject.StegomaticController.Config.Config" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StegomaticController\Config\Config.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StegomaticProject.StegomaticController.StegoControl" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAQAAAAAAABAAAAAA=</HashCode>
+      <FileName>StegomaticController\StegoControl.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StegomaticProject.StegomaticLogic.Stegomatic" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StegomaticLogic\Stegomatic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StegomaticProject.StegomaticLogic.Miscellaneous.Compression" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StegomaticLogic\Miscellaneous\Compression.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StegomaticProject.StegomaticLogic.Miscellaneous.Confounder" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StegomaticLogic\Miscellaneous\Confounder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StegomaticProject.StegomaticLogic.Miscellaneous.HandleUserInput" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>StegomaticLogic\Miscellaneous\HandleUserInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StegomaticProject.StegomaticUI.StegomaticWinForm" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>StegomaticUI\StegomaticWinForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="StegomaticProject.StegomaticController.Config.IConfig" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>StegomaticController\Config\IConfig.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="StegomaticProject.StegomaticController.IStegoControl" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAgAAAAAAAAQAIAQAAAAAAAAEAAAEBI=</HashCode>
+      <FileName>StegomaticController\IStegoControl.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="StegomaticProject.StegomaticLogic.IStegomatic" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StegomaticLogic\IStegomatic.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="StegomaticProject.StegomaticUI.IStegomaticUI" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAEAAAEBA=</HashCode>
+      <FileName>StegomaticUI\IStegomaticUI.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

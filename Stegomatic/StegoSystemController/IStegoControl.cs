@@ -8,7 +8,6 @@
         void SaveImage();
 
 
-
         void Run(string path, string message);
         //void ToggleEmbedOrExtract(ToggleEvent e);  // Skal kunne fjerne streng-indtastnings-feltet og lave et output felt Tror den skal væk den her.
         void OpenOptionsMenu(OpenUIElementEvent e); // Tager imod et delegate, der kan instaitiere WinForms vinduer

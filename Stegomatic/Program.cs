@@ -13,8 +13,6 @@ namespace StegomaticProject
     {
         static void Main(string[] args)
         {
-            //i make the commentsssssssssssssss
-            //dddd
             IStegomatic stegoLogic = new Stegomatic();
             IStegomaticUI stegoUI = new StegomaticWinForm();
             IStegoControl stegoController = new StegoControl(stegoLogic, stegoUI); // Fjern interface maybe? Vi kommer alligevel til at have implementationsdetailer i det.

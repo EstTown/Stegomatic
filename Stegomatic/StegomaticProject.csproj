@@ -48,6 +48,7 @@
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
     <Compile Include="StegoSystemLogic\Miscellaneous\ByteConverter.cs" />
     <Compile Include="StegoSystemLogic\Interfaces\IHandleUserInput.cs" />
+    <Compile Include="StegoSystemLogic\Steganography\IStegoAlgorithm.cs" />
     <Compile Include="StegoSystemUI\Config\Config.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
     <Compile Include="StegoSystemController\IStegoControl.cs" />
@@ -70,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="StegoSystemLogic\Cryptograhy\" />
-    <Folder Include="StegoSystemLogic\Steganography\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

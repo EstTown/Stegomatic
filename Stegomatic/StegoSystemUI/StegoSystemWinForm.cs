@@ -26,7 +26,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public void Start()
         {
-            throw new NotImplementedException();
+            Console.ReadKey();
         }
 
         public void Terminate()

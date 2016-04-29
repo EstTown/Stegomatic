@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegoSystemUI.Config
+namespace StegomaticProject.StegoSystemUI.Config
 {
     public class Config : IConfig
     {

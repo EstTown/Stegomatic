@@ -1,4 +1,4 @@
-﻿namespace Stegomatic.StegoSystemController
+﻿namespace StegomaticProject.StegoSystemController
 {
     public interface IStegoControl
     {

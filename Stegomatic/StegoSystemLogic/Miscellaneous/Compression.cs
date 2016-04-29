@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegoSystemLogic.Miscellaneous
+namespace StegomaticProject.StegoSystemLogic.Miscellaneous
 {
     class Compression
     {

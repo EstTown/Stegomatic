@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.CustomExceptions
+namespace StegomaticProject.CustomExceptions
 {
     public class NotifyUserException : Exception
     {

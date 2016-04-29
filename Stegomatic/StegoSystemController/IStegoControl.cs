@@ -1,4 +1,4 @@
-﻿namespace StegomaticProject.StegomaticController
+﻿namespace Stegomatic.StegoSystemController
 {
     public interface IStegoControl
     {
@@ -6,7 +6,6 @@
         void EncodeImage();
         void DecodeImage();
         void SaveImage();
-
 
 
         void Run(string path, string message);

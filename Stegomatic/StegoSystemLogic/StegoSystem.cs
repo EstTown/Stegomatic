@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Stegomatic.StegoSystemLogic.Miscellaneous;
 
-namespace StegomaticProject.StegomaticLogic
+namespace Stegomatic.StegoSystemLogic
 {
-    public class Stegomatic : IStegomatic
+    public class StegoSystem : IStegoSystem
     {
         public string DecodeMessageFromImage(Bitmap coverImage, string encryptionKey)
         {
@@ -21,6 +22,19 @@ namespace StegomaticProject.StegomaticLogic
 
         public Bitmap EncodeMessageInImage(Bitmap coverImage, bool encrypt = true, bool compress = true, bool confound = true)
         {
+            HandleUserInput 
+            try
+            {
+                
+            }
+            catch (Exception)
+            {
+                    
+                throw;
+            }
+
+
+
             throw new NotImplementedException();
         }
     }

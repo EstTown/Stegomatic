@@ -45,35 +45,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StegomaticLogic\Miscellaneous\ByteConverter.cs" />
-    <Compile Include="StegomaticController\Config\Config.cs" />
-    <Compile Include="StegomaticController\Config\IConfig.cs" />
-    <Compile Include="StegomaticController\IStegoControl.cs" />
-    <Compile Include="StegomaticLogic\Miscellaneous\Compression.cs" />
-    <Compile Include="StegomaticLogic\Miscellaneous\Confounder.cs" />
-    <Compile Include="StegomaticLogic\Miscellaneous\HandleUserInput.cs" />
-    <Compile Include="StegomaticController\StegoControl.cs" />
-    <Compile Include="StegomaticLogic\IStegomatic.cs" />
-    <Compile Include="StegomaticUI\IStegomaticUI.cs" />
+    <Compile Include="CustomExceptions\NotifyUserException.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\ByteConverter.cs" />
+    <Compile Include="StegoSystemLogic\Interfaces\IHandleUserInput.cs" />
+    <Compile Include="StegoSystemLogic\Steganography\IStegoAlgorithm.cs" />
+    <Compile Include="StegoSystemUI\Config\Config.cs" />
+    <Compile Include="StegoSystemUI\Config\IConfig.cs" />
+    <Compile Include="StegoSystemController\IStegoControl.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\Compression.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\Confounder.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\HandleUserInput.cs" />
+    <Compile Include="StegoSystemController\StegoControl.cs" />
+    <Compile Include="StegoSystemLogic\IStegoSystem.cs" />
+    <Compile Include="StegoSystemUI\IStegoSystemUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StegomaticLogic\Stegomatic.cs" />
-    <Compile Include="StegomaticUI\StegomaticWinForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StegomaticUI\StegomaticWinForm.Designer.cs">
-      <DependentUpon>StegomaticWinForm.cs</DependentUpon>
+    <Compile Include="StegoSystemLogic\StegoSystem.cs" />
+    <Compile Include="StegoSystemUI\StegoSystemWinForm.cs" />
+    <Compile Include="StegoSystemUI\MainMenu.Designer.cs">
+      <DependentUpon>StegoSystemWinForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="StegomaticLogic\Cryptograhy\" />
-    <Folder Include="StegomaticLogic\Steganography\" />
+    <Folder Include="StegoSystemLogic\Cryptograhy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

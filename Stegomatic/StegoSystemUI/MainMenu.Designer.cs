@@ -1,6 +1,6 @@
-﻿namespace StegomaticProject.StegomaticUI
+﻿namespace Stegomatic.StegoSystemUI
 {
-    partial class StegomaticWinForm
+    partial class MainMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "StegomaticWinForm";
+            this.Text = "MainMenu";
         }
 
         #endregion

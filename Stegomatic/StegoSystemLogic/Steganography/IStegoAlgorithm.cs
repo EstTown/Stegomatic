@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegoSystemLogic.Steganography
+namespace StegomaticProject.StegoSystemLogic.Steganography
 {
     public interface IStegoAlgorithm
     {

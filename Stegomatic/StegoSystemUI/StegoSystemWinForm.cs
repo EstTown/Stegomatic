@@ -1,4 +1,4 @@
-﻿using Stegomatic.StegoSystemUI.Config;
+﻿using StegomaticProject.StegoSystemUI.Config;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Stegomatic.StegoSystemUI
+namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {

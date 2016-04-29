@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StegomaticProject.StegoSystemController;
-using StegomaticProject.StegoSystemLogic;
-using StegomaticProject.StegoSystemUI;
+using Stegomatic.StegoSystemController;
+using Stegomatic.StegoSystemLogic;
+using Stegomatic.StegoSystemUI;
 
-namespace StegomaticProject
+namespace Stegomatic
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {

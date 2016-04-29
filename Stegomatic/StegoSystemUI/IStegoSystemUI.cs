@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StegomaticProject.StegoSystemUI.Config;
+using Stegomatic.StegoSystemUI.Config;
 
-namespace StegomaticProject.StegoSystemUI
+namespace Stegomatic.StegoSystemUI
 {
     public interface IStegoSystemUI
     {

@@ -1,4 +1,4 @@
-﻿namespace StegomaticProject.StegoSystemUI
+﻿namespace Stegomatic.StegoSystemUI
 {
     partial class MainMenu
     {

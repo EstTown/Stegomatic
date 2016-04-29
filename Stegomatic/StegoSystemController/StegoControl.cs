@@ -1,8 +1,8 @@
-﻿using StegomaticProject.StegoSystemLogic;
+﻿using Stegomatic.StegoSystemLogic;
 using System.Drawing;
-using StegomaticProject.StegoSystemUI;
+using Stegomatic.StegoSystemUI;
 
-namespace StegomaticProject.StegoSystemController
+namespace Stegomatic.StegoSystemController
 {
     public class StegoControl : IStegoControl
     {

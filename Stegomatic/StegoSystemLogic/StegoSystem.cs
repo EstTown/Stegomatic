@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using StegomaticProject.StegoSystemLogic.Miscellaneous;
+using Stegomatic.StegoSystemLogic.Miscellaneous;
 
-namespace StegomaticProject.StegoSystemLogic
+namespace Stegomatic.StegoSystemLogic
 {
     public class StegoSystem : IStegoSystem
     {

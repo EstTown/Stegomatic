@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Stegomatic.StegoSystemLogic.Miscellaneous;
 using System;
 using System.IO;
 using System.Security.AccessControl;
@@ -6,8 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StegomaticProject.StegoSystemLogic.Miscellaneous;
-using StegomaticProject.CustomExceptions;
+using Stegomatic.CustomExceptions;
 
 namespace StegomaticProject.Tests
 {
@@ -87,12 +87,12 @@ namespace StegomaticProject.Tests
             }
             catch (NotifyUserException)
             {
-                Assert.Pass("Made it in here");
+                Assert.Pass();
             }
             catch (Exception)
             {
             }
-            Assert.Fail("Did not make it");
+            Assert.Fail();
         }
 
 

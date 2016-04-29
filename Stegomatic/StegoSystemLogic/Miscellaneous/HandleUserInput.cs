@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using StegomaticProject.CustomExceptions;
+using Stegomatic.CustomExceptions;
 
-namespace StegomaticProject.StegoSystemLogic.Miscellaneous
+namespace Stegomatic.StegoSystemLogic.Miscellaneous
 {
     public class HandleUserInput
     {

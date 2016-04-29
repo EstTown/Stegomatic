@@ -14,8 +14,8 @@ namespace StegomaticProject.Tests
     [TestFixture]
     public class HandleUserInputTests
     {
-        HandleUserInput TestUserInput;
-        string _pathOfTempFile;
+        private HandleUserInput TestUserInput;
+        private string _pathOfTempFile;
 
         [OneTimeSetUp]
         public void InitialSetup()
@@ -27,6 +27,14 @@ namespace StegomaticProject.Tests
             string pathOfProjectExecutableFile = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
             string directoryOfExecutableFile = Path.GetDirectoryName(pathOfProjectExecutableFile);
             _pathOfTempFile = Path.Combine(directoryOfExecutableFile, "tempFile.txt");
+            _pathOfTempFile = _pathOfTempFile.Remove(0, 6);
+            // Removes the first six characters, which are invalid and show "file:/" - we only want the path.
+        }
+
+        private void CreateFileCloseStream()
+        {
+            FileStream fs = File.Create(_pathOfTempFile);
+            fs.Close();
         }
 
         [TearDown]
@@ -44,7 +52,7 @@ namespace StegomaticProject.Tests
         [Test]
         public void File_ExistsAndNotReadOnly_NothingHappens()
         {
-            File.Create(_pathOfTempFile);
+            CreateFileCloseStream();
             File.SetAttributes(_pathOfTempFile, FileAttributes.Normal);
 
             try
@@ -61,7 +69,7 @@ namespace StegomaticProject.Tests
         [Test]
         public void File_ExistsAndIsReadOnly_ThrowsNotifyUserException()
         {
-            File.Create(_pathOfTempFile);
+            CreateFileCloseStream();
             File.SetAttributes(_pathOfTempFile, FileAttributes.ReadOnly);
 
             try
@@ -94,7 +102,5 @@ namespace StegomaticProject.Tests
             }
             Assert.Fail();
         }
-
-
     }
 }

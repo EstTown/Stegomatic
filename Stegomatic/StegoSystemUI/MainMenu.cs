@@ -7,10 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Stegomatic.StegoSystemLogic;
-using Stegomatic.StegoSystemUI.Config;
 
-namespace Stegomatic.StegoSystemUI
+namespace StegomaticProejct.StegoSystemUI
 {
     public partial class MainMenu : Form
     {

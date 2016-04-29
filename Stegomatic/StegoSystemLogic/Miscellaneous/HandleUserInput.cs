@@ -25,7 +25,10 @@ namespace Stegomatic.StegoSystemLogic.Miscellaneous
 
         public void Message(string message)
         {
-
+            if (message == null)
+            {
+                throw new NotifyUserException("Empty message.");
+            }
         }
     }
 }

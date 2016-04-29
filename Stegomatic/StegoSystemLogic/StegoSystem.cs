@@ -20,21 +20,8 @@ namespace Stegomatic.StegoSystemLogic
             throw new NotImplementedException();
         }
 
-        public Bitmap EncodeMessageInImage(Bitmap coverImage, bool encrypt = true, bool compress = true, bool confound = true)
+        public Bitmap EncodeMessageToImage(Bitmap coverImage, bool encrypt = true, bool compress = true, bool confound = true)
         {
-            HandleUserInput 
-            try
-            {
-                
-            }
-            catch (Exception)
-            {
-                    
-                throw;
-            }
-
-
-
             throw new NotImplementedException();
         }
     }

@@ -11,6 +11,7 @@ namespace Stegomatic.StegoSystemLogic.Miscellaneous
         public string GenerateConfounder()
         {
             // Find ud af om man kan fjerne den igen?
+            throw new NotImplementedException();
         }
     }
 

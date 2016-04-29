@@ -1,37 +1,35 @@
-﻿using Stegomatic.StegoSystemUI.Config;
+﻿using StegomaticProject.StegoSystemUI.Config;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Drawing;
 
-namespace Stegomatic.StegoSystemUI
+namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {
-        public string message { get; private set; }
-        public string imagePath { get; private set; }
         public IConfig config { get; private set; }
+        public string message { get; private set; }
+        public string pathOfCoverImage { get; private set; }
+
+        public void SetDisplayImage(Bitmap newImage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowNotification()
+        {
+            throw new NotImplementedException();
+        }
 
         public void Start()
         {
-            Form s = new MainMenu();
-            Console.ReadKey();
+            throw new NotImplementedException();
         }
 
         public void Terminate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateConfig(IConfig newConfig)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateDisplayedImage(Bitmap newImage)
         {
             throw new NotImplementedException();
         }

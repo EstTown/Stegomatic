@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegoSystemUI.Config
+namespace StegomaticProject.StegoSystemUI.Config
 {
     public interface IConfig
     {
-        bool encrypt { get; set; }
-        bool kompress { get; set; }
-        bool confound { get; set; }
+        bool encrypt { get; }
+        bool compress { get; }
+        bool confound { get; }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegoSystemLogic.Interfaces
+namespace StegomaticProject.StegoSystemLogic.Interfaces
 {
     public interface IHandleUserInput
     {

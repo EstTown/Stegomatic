@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace Stegomatic.StegoSystemLogic
+namespace StegomaticProject.StegoSystemLogic
 {
     public interface IStegoSystem
     {
-        Bitmap EncodeMessageToImage(Bitmap coverImage, bool encrypt, bool compress, bool confound); 
+        Bitmap EncodeMessageInImage(Bitmap coverImage, bool encrypt, bool compress, bool confound); 
         string DecodeMessageFromImage(Bitmap coverImage, string encryptionKey);
     }
 }

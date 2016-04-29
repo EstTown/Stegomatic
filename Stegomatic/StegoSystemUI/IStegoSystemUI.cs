@@ -4,14 +4,23 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Stegomatic.StegoSystemUI.Config;
+using StegomaticProject.StegoSystemUI.Config;
 
-namespace Stegomatic.StegoSystemUI
+namespace StegomaticProject.StegoSystemUI
 {
     public interface IStegoSystemUI
     {
-        string GetMessage();
-        Bitmap GetCoverImage();
-        IConfig GetConfig();
+        // Get info from UI
+        string message { get; }
+        string pathOfCoverImage { get; }
+        IConfig config { get; }
+
+        // Modify UI
+        void SetDisplayImage(Bitmap newImage);
+        void ShowNotification(/*notifyUserEvent e*/);
+
+        // Start/End
+        void Start();
+        void Terminate();
     }
 }

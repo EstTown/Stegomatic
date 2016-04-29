@@ -1,8 +1,8 @@
-﻿using Stegomatic.StegoSystemLogic;
+﻿using StegomaticProject.StegoSystemLogic;
 using System.Drawing;
-using Stegomatic.StegoSystemUI;
+using StegomaticProject.StegoSystemUI;
 
-namespace Stegomatic.StegoSystemController
+namespace StegomaticProject.StegoSystemController
 {
     public class StegoControl : IStegoControl
     {
@@ -39,16 +39,6 @@ namespace Stegomatic.StegoSystemController
         }
 
         public void Run(string path, string message)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OpenOptionsMenu(OpenUIElementEvent e)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ToggleOption(ToggleOptionEvent e)
         {
             throw new System.NotImplementedException();
         }

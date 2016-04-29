@@ -43,6 +43,16 @@ namespace StegomaticProject.StegoSystemController
             throw new System.NotImplementedException();
         }
 
+        public void OpenOptionsMenu(OpenUIElementEvent e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ToggleOption(ToggleOptionEvent e)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void ShowPicture()
         {
             throw new System.NotImplementedException();

@@ -15,9 +15,7 @@ namespace StegomaticProject
         {
             IStegoSystem stegoLogic = new StegoSystem();
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
-            IStegoControl stegoController = new StegoControl(stegoLogic, stegoUI);
-
-            stegoUI.Start();
+            IStegoControl stegoController = new StegoControl(stegoLogic, stegoUI); // Fjern interface maybe? Vi kommer alligevel til at have implementationsdetailer i det.
         }
     }
 }

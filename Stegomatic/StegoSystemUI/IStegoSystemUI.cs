@@ -10,17 +10,8 @@ namespace StegomaticProject.StegoSystemUI
 {
     public interface IStegoSystemUI
     {
-        // Get info from UI
-        string message { get; }
-        string imagePath { get; }
-        IConfig config { get; }
-
-        // Update the UI
-        void UpdateDisplayedImage(Bitmap newImage);
-        void UpdateConfig(IConfig newConfig);
-
-        // Start/end
-        void Start();
-        void Terminate();
+        string GetMessage();
+        Bitmap GetCoverImage();
+        IConfig GetConfig();
     }
 }

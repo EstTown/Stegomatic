@@ -9,7 +9,7 @@ namespace StegomaticProject.StegoSystemLogic
 {
     public interface IStegoSystem
     {
-        Bitmap EncodeMessageInImage(Bitmap coverImage, bool encrypt, bool compress, bool confound); 
+        Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, bool encrypt, bool compress, bool confound); 
         string DecodeMessageFromImage(Bitmap coverImage, string encryptionKey);
     }
 }

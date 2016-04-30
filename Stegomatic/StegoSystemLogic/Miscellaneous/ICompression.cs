@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemLogic.Miscellaneous
 {
-    class Compression
+    public interface ICompression
     {
+        byte[] Compress(byte[] uncompressedMessage);
+        byte[] Decompress(byte[] compressedMessage);
     }
 }

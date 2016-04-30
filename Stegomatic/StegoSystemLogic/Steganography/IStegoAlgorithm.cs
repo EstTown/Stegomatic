@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stegomatic.StegoSystemLogic.Steganography
+namespace StegomaticProject.StegoSystemLogic.Steganography
 {
     public interface IStegoAlgorithm
     {
-        void Encode();
-        void Decode();
+        Bitmap Encode(Bitmap coverImage, string seed, byte[] message);
+        byte[] Decode(Bitmap coverImage, string seed);
     }
 }

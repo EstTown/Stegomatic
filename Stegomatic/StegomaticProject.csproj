@@ -49,12 +49,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
+    <Compile Include="StegoSystemLogic\Cryptograhy\RijndaelCrypto.cs" />
+    <Compile Include="StegoSystemLogic\Cryptograhy\ICryptoMethod.cs" />
     <Compile Include="StegoSystemLogic\Miscellaneous\ByteConverter.cs" />
     <Compile Include="StegoSystemLogic\Interfaces\IHandleUserInput.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\ICompression.cs" />
+    <Compile Include="StegoSystemLogic\Steganography\GraphtheoryBased.cs" />
+    <Compile Include="StegoSystemLogic\Steganography\IStegoAlgorithm.cs" />
     <Compile Include="StegoSystemUI\Config\Config.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
     <Compile Include="StegoSystemController\IStegoControl.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\Compression.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\GZipStream.cs" />
     <Compile Include="StegoSystemLogic\Miscellaneous\Confounder.cs" />
     <Compile Include="StegoSystemLogic\Miscellaneous\HandleUserInput.cs" />
     <Compile Include="StegoSystemController\StegoControl.cs" />
@@ -74,10 +79,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="StegoSystemLogic\Cryptograhy\" />
-    <Folder Include="StegoSystemLogic\Steganography\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

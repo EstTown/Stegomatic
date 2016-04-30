@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemLogic.Miscellaneous
 {
-    public class Confounder
+    public class GZipStream : ICompression
     {
-        public byte[] AddConfounder(byte[] message)
+        public byte[] Compress(byte[] uncompressedMessage)
         {
             throw new NotImplementedException();
-            // Find ud af om man kan fjerne den igen?
+        }
+
+        public byte[] Decompress(byte[] compressedMessage)
+        {
+            throw new NotImplementedException();
         }
     }
-
-    
 }

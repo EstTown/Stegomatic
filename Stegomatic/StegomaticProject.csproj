@@ -59,7 +59,7 @@
     <Compile Include="StegoSystemUI\Config\Config.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
     <Compile Include="StegoSystemController\IStegoControl.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\GZipStream.cs" />
+    <Compile Include="StegoSystemLogic\Miscellaneous\GZipStreamCompression.cs" />
     <Compile Include="StegoSystemLogic\Miscellaneous\Confounder.cs" />
     <Compile Include="StegoSystemLogic\Miscellaneous\HandleUserInput.cs" />
     <Compile Include="StegoSystemController\StegoControl.cs" />

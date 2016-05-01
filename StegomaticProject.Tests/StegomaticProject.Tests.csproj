@@ -38,8 +38,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GZipStreamCompressionTests.cs" />
     <Compile Include="HandleUserInputTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StegoSystemLogicTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -12,14 +12,14 @@ namespace StegomaticProject.StegoSystemLogic
 {
     public class StegoSystem : IStegoSystem
     {
-        private GZipStream _compresser;
+        private GZipStreamCompression _compresser;
         private Confounder _confounder;
         private ICryptoMethod _cryptography;
         private IStegoAlgorithm _steganography;
 
         public StegoSystem()
         {
-            _compresser = new GZipStream();
+            _compresser = new GZipStreamCompression();
             _confounder = new Confounder();
             _cryptography = new RijndaelCrypto();
             _steganography = new GraphtheoryBased();

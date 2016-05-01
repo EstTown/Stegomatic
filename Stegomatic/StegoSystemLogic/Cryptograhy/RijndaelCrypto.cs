@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemLogic.Cryptograhy
 {
-    class RijndaelCrypto : ICryptoMethod
+    public class RijndaelCrypto : ICryptoMethod
     {
         public byte[] Decrypt(string decryptionKey, byte[] ciphertext)
         {

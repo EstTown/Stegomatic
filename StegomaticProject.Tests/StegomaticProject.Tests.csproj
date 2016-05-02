@@ -38,10 +38,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\..\..\Desktop\GZipStreamCompressionTests.cs">
-      <Link>ModelTests\GZipStreamCompressionTests.cs</Link>
-    </Compile>
     <Compile Include="ControllerTests\HandleUserInputTests.cs" />
+    <Compile Include="ModelTests\GZipStreamCompressionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelTests\StegoSystemModelTests.cs" />
   </ItemGroup>

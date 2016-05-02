@@ -1,4 +1,4 @@
-﻿namespace WinFormsGUI
+﻿namespace StegomaticProject.StegoSystemUI
 {
     partial class EncyptionkeyPopup
     {

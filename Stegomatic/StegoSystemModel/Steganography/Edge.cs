@@ -44,7 +44,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             private set
             {
-                if (value < 0 || value > GraphtheoryBased.MaxWeight)
+                if (value < 0 || value > GraphTheoryBased.MaxWeight)
                 {
                     throw new ArgumentOutOfRangeException();
                 }

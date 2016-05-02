@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    class GraphtheoryBased : IStegoAlgorithm
+    class GraphTheoryBased : IStegoAlgorithm
     {
-        public GraphtheoryBased(/*Bitmap coverImage, string seed*/) //constructor
+        public GraphTheoryBased(/*Bitmap coverImage, string seed*/) //constructor
         {
             /*
             this.CoverImage = coverImage;

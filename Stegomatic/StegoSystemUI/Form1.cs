@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace StegomaticProejct.StegoSystemUI
+namespace StegomaticProject.StegoSystemUI
 {
-    public partial class MainMenu : Form
+    public partial class Form1 : Form
     {
-        public MainMenu()
+        public Form1()
         {
             InitializeComponent();
         }

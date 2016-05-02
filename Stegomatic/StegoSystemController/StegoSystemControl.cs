@@ -9,6 +9,9 @@ namespace StegomaticProject.StegoSystemController
         private IStegoSystemModel stegoLogic;
         private IStegoSystemUI stegoUI;
         private Bitmap _image;
+        
+
+
 
         public StegoSystemControl(IStegoSystemModel stegoLogic, IStegoSystemUI stegoUI)
         {

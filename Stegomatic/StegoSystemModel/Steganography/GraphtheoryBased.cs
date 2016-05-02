@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StegomaticProject.StegoSystemLogic.Steganography
+namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class GraphtheoryBased : IStegoAlgorithm
     {

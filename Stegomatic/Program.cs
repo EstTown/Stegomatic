@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StegomaticProject.StegoSystemController;
-using StegomaticProject.StegoSystemLogic;
+using StegomaticProject.StegoSystemModel;
 using StegomaticProject.StegoSystemUI;
 
 namespace StegomaticProject
@@ -13,9 +13,9 @@ namespace StegomaticProject
     {
         static void Main(string[] args)
         {
-            IStegoSystem stegoLogic = new StegoSystem();
+            IStegoSystemModel stegoModel = new StegoSystemModel.StegoSystemModel();
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
-            IStegoControl stegoController = new StegoControl(stegoLogic, stegoUI);
+            IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
             stegoUI.Start();
         }

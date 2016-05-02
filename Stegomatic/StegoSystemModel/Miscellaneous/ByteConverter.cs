@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StegomaticProject.StegoSystemLogic.Miscellaneous
+namespace StegomaticProject.StegoSystemModel.Miscellaneous
 {
     static public class ByteConverter
     {

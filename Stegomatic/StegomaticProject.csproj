@@ -12,21 +12,6 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,81 +49,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="StegoSystemLogic\Cryptograhy\RijndaelCrypto.cs" />
-    <Compile Include="StegoSystemLogic\Cryptograhy\ICryptoMethod.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\ByteConverter.cs" />
-    <Compile Include="StegoSystemLogic\Interfaces\IHandleUserInput.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\ICompression.cs" />
-    <Compile Include="StegoSystemLogic\Steganography\GraphtheoryBased.cs" />
-    <Compile Include="StegoSystemLogic\Steganography\IStegoAlgorithm.cs" />
+    <Compile Include="StegoSystemModel\Cryptograhy\RijndaelCrypto.cs" />
+    <Compile Include="StegoSystemModel\Cryptograhy\ICryptoMethod.cs" />
+    <Compile Include="StegoSystemModel\Miscellaneous\ByteConverter.cs" />
+    <Compile Include="StegoSystemModel\Interfaces\IHandleUserInput.cs" />
+    <Compile Include="StegoSystemModel\Miscellaneous\ICompression.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Edge.cs" />
+    <Compile Include="StegoSystemModel\Steganography\GraphtheoryBased.cs" />
+    <Compile Include="StegoSystemModel\Steganography\IStegoAlgorithm.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Pixel.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Vertex.cs" />
     <Compile Include="StegoSystemUI\Config\Config.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
-    <Compile Include="StegoSystemController\IStegoControl.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\GZipStreamCompression.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\Confounder.cs" />
-    <Compile Include="StegoSystemLogic\Miscellaneous\HandleUserInput.cs" />
-    <Compile Include="StegoSystemController\StegoControl.cs" />
-    <Compile Include="StegoSystemLogic\IStegoSystem.cs" />
-    <Compile Include="StegoSystemUI\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StegoSystemUI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StegoSystemUI\ImageData.cs" />
+    <Compile Include="StegoSystemController\IStegoSystemControl.cs" />
+    <Compile Include="StegoSystemModel\Miscellaneous\GZipStreamCompression.cs" />
+    <Compile Include="StegoSystemModel\Miscellaneous\HandleUserInput.cs" />
+    <Compile Include="StegoSystemController\StegoSystemControl.cs" />
+    <Compile Include="StegoSystemModel\IStegoSystemModel.cs" />
     <Compile Include="StegoSystemUI\IStegoSystemUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StegoSystemLogic\StegoSystem.cs" />
+    <Compile Include="StegoSystemModel\StegoSystemModel.cs" />
     <Compile Include="StegoSystemUI\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="StegoSystemUI\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="StegoSystemUI\PopupForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StegoSystemUI\PopupForm.designer.cs">
-      <DependentUpon>PopupForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="StegoSystemUI\StegoSystemWinForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StegoSystemUI\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StegoSystemUI\PopupForm.resx">
-      <DependentUpon>PopupForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\background.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

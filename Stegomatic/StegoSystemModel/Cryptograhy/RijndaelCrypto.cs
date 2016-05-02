@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StegomaticProject.StegoSystemLogic.Steganography
+namespace StegomaticProject.StegoSystemModel.Cryptograhy
 {
-    class GraphtheoryBased : IStegoAlgorithm
+    public class RijndaelCrypto : ICryptoMethod
     {
-        public byte[] Decode(Bitmap coverImage, string seed)
+        public byte[] Decrypt(string decryptionKey, byte[] ciphertext)
         {
             throw new NotImplementedException();
         }
 
-        public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
+        public byte[] Encrypt(byte[] message, string encryptionKey)
         {
             throw new NotImplementedException();
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StegomaticProject.StegoSystemLogic.Cryptograhy
+namespace StegomaticProject.StegoSystemModel.Cryptograhy
 {
     public interface ICryptoMethod
     {

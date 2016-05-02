@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO.Compression;
 using System.IO;
 
-namespace StegomaticProject.StegoSystemLogic.Miscellaneous
+namespace StegomaticProject.StegoSystemModel.Miscellaneous
 {
     public class GZipStreamCompression : ICompression
     {

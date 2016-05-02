@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace StegomaticProject.StegoSystemUI
+namespace WinFormsGUI
 {
     public partial class EncyptionkeyPopup : Form
     {

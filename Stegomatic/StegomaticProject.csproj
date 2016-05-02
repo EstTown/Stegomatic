@@ -54,8 +54,11 @@
     <Compile Include="StegoSystemModel\Miscellaneous\ByteConverter.cs" />
     <Compile Include="StegoSystemModel\Interfaces\IHandleUserInput.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\ICompression.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Edge.cs" />
     <Compile Include="StegoSystemModel\Steganography\GraphtheoryBased.cs" />
     <Compile Include="StegoSystemModel\Steganography\IStegoAlgorithm.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Pixel.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Vertex.cs" />
     <Compile Include="StegoSystemUI\Config\Config.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
     <Compile Include="StegoSystemController\IStegoSystemControl.cs" />

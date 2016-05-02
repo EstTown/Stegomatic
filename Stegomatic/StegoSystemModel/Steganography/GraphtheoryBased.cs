@@ -15,7 +15,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.Seed = seed;
         }
         public Bitmap CoverImage { get; }
-        public string Seed;
+        public string Seed { get; }
 
 
 

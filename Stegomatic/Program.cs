@@ -13,9 +13,9 @@ namespace StegomaticProject
     {
         static void Main(string[] args)
         {
-            IStegoSystem stegoLogic = new StegoSystem();
+            IStegoSystemModel stegoModel = new StegoSystemModel();
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
-            IStegoControl stegoController = new StegoControl(stegoLogic, stegoUI);
+            IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
             stegoUI.Start();
         }

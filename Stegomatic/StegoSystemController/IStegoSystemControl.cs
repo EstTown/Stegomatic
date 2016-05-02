@@ -1,6 +1,6 @@
 ﻿namespace StegomaticProject.StegoSystemController
 {
-    public interface IStegoControl
+    public interface IStegoSystemControl
     {
         void OpenImage();
         void EncodeImage();

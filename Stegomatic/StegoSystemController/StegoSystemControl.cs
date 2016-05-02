@@ -4,13 +4,13 @@ using StegomaticProject.StegoSystemUI;
 
 namespace StegomaticProject.StegoSystemController
 {
-    public class StegoControl : IStegoControl
+    public class StegoSystemControl : IStegoSystemControl
     {
-        private IStegoSystem stegoLogic;
+        private IStegoSystemModel stegoLogic;
         private IStegoSystemUI stegoUI;
         private Bitmap _image;
 
-        public StegoControl(IStegoSystem stegoLogic, IStegoSystemUI stegoUI)
+        public StegoSystemControl(IStegoSystemModel stegoLogic, IStegoSystemUI stegoUI)
         {
             // INITILISERER CONFIG OG SÆTTER OUTPUT IND I RUN FUNKTIONEN
 

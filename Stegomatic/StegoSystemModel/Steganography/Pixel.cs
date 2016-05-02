@@ -11,20 +11,24 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public short R { get; set; }
         public short G { get; set; }
         public short B { get; set; }
-        public short EmbeddedValue;
+        public int EmbeddedValue;
         public short PosX;
         public short PosY; 
 
-        void GetPixelPos ()
+        void GetPixelPos (short PosX, short PosY)
         {
+
         }
 
-        void GetPixelValue()
+        void GetPixelValue(short R, short G, short B)
         {
+
         }
 
-        void AssignEmbeddedValue()
+        // Adds the 3 color-values and use modulo
+        void AssignEmbeddedValue(short R, short G, short B)
         {
+            EmbeddedValue = R + G + B % 4;
         }
 
         public override string ToString()

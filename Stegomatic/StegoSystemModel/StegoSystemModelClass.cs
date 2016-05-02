@@ -10,13 +10,13 @@ using StegomaticProject.StegoSystemModel.Steganography;
 
 namespace StegomaticProject.StegoSystemModel
 {
-    public class StegoSystemModel : IStegoSystemModel
+    public class StegoSystemModelClass : IStegoSystemModel
     {
         private ICompression _compressMethod;
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
-        public StegoSystemModel()
+        public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();

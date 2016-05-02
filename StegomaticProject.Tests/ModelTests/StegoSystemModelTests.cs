@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StegomaticProject.Tests
+namespace StegomaticProject.Tests.ModelTests
 {
     [TestFixture]
-    public class StegoSystemLogicTests
+    public class StegoSystemModelTests
     {
     }
 }

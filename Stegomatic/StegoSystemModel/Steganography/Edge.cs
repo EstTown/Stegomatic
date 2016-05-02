@@ -45,6 +45,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             private set
             {
                 this._edgeWeight = CalculateVertexWeight(VertexPixelOne, VertexPixelTwo);
+
+                if(_edgeWeight < 0 || _edgeWeight > GraphtheoryBased.MaxWeight)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
             }
         }
 

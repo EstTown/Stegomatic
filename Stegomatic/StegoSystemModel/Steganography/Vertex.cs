@@ -34,6 +34,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte NumberOfSamples;
         public byte Modulo;
         public bool Active;
+        public byte VertexValue; //value that has to correspond to a certain part of the secret message
 
 
         public Pixel[] PixelsForThisVertex;

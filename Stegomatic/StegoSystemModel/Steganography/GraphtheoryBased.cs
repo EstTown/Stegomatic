@@ -9,16 +9,21 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class GraphtheoryBased : IStegoAlgorithm
     {
-        public GraphtheoryBased(Bitmap coverImage, string seed) //constructor
+        public GraphtheoryBased(/*Bitmap coverImage, string seed*/) //constructor
         {
+            /*
             this.CoverImage = coverImage;
             this.Seed = seed;
+            */
         }
+        /*
         public Bitmap CoverImage { get; }
         public string Seed { get; }
+        */
 
-
-
+        public static byte SamplesVertexRatio = 3;
+        public static byte Modulo = 4;
+        public static byte MaxWeight = 10;
 
         public byte[] Decode(Bitmap coverImage, string seed)
         {

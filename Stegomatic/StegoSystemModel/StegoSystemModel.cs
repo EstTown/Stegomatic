@@ -16,6 +16,8 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
+
+
         public StegoSystemModel()
         {
             _compressMethod = new GZipStreamCompression();
@@ -66,6 +68,8 @@ namespace StegomaticProject.StegoSystemModel
 
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, encryptionKey, byteMessage);
             // SKAL DET VÆRE ENCRYPTION KEY DER KOMMER IND HER??? HVAD SKAL DET VÆRE DET SEED OG HVOR FÅR VI DET FRA?
+
+            
 
             return StegoObject;
         }

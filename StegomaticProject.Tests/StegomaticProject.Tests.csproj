@@ -38,10 +38,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GZipStreamCompressionTests.cs" />
-    <Compile Include="HandleUserInputTests.cs" />
+    <Compile Include="ControllerTests\HandleUserInputTests.cs" />
+    <Compile Include="ModelTests\GZipStreamCompressionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StegoSystemLogicTests.cs" />
+    <Compile Include="ModelTests\StegoSystemModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -54,6 +54,9 @@
       <Project>{3249698c-bcbb-443f-81a1-f5e5ccd30982}</Project>
       <Name>StegomaticProject</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UITests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

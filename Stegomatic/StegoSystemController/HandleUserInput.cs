@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using StegomaticProject.CustomExceptions;
 
-namespace StegomaticProject.StegoSystemModel.Miscellaneous
+namespace StegomaticProject.StegoSystemController
 {
     public class HandleUserInput
     {

@@ -9,6 +9,17 @@ namespace StegomaticProject.StegoSystemLogic.Steganography
 {
     class GraphtheoryBased : IStegoAlgorithm
     {
+        public GraphtheoryBased(Bitmap coverImage, string seed) //constructor
+        {
+            this.CoverImage = coverImage;
+            this.Seed = seed;
+        }
+        public Bitmap CoverImage { get; }
+        public string Seed;
+
+
+
+
         public byte[] Decode(Bitmap coverImage, string seed)
         {
             throw new NotImplementedException();

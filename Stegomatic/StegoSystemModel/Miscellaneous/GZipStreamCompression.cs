@@ -17,7 +17,7 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 
         public byte[] Decompress(byte[] compressedMessage)
         {
-            return Execute(CompressionMode.Compress, compressedMessage);
+            return Execute(CompressionMode.Decompress, compressedMessage);
         }
 
         private byte[] Execute(CompressionMode cm, byte[] message)
@@ -40,7 +40,6 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
         private byte[] ToBytes(MemoryStream messageStream)
         {
             return messageStream.ToArray();
-            // Check whether there is any loss of data here!! 
         }
     }
 }

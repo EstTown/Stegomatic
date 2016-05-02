@@ -55,7 +55,7 @@
     <Compile Include="StegoSystemModel\Interfaces\IHandleUserInput.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\ICompression.cs" />
     <Compile Include="StegoSystemModel\Steganography\Edge.cs" />
-    <Compile Include="StegoSystemModel\Steganography\GraphtheoryBased.cs" />
+    <Compile Include="StegoSystemModel\Steganography\GraphTheoryBased.cs" />
     <Compile Include="StegoSystemModel\Steganography\IStegoAlgorithm.cs" />
     <Compile Include="StegoSystemModel\Steganography\Pixel.cs" />
     <Compile Include="StegoSystemModel\Steganography\Vertex.cs" />

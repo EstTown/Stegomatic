@@ -49,10 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
+    <Compile Include="StegoSystemController\HandleUserInput.cs" />
+    <Compile Include="StegoSystemModel\StegoSystemModelClass.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\RijndaelCrypto.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\ICryptoMethod.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\ByteConverter.cs" />
-    <Compile Include="StegoSystemModel\Interfaces\IHandleUserInput.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\ICompression.cs" />
     <Compile Include="StegoSystemModel\Steganography\Edge.cs" />
     <Compile Include="StegoSystemModel\Steganography\GraphTheoryBased.cs" />
@@ -63,7 +64,6 @@
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
     <Compile Include="StegoSystemController\IStegoSystemControl.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\GZipStreamCompression.cs" />
-    <Compile Include="StegoSystemModel\Miscellaneous\HandleUserInput.cs" />
     <Compile Include="StegoSystemController\StegoSystemControl.cs" />
     <Compile Include="StegoSystemModel\IStegoSystemModel.cs" />
     <Compile Include="StegoSystemUI\Form1.cs">
@@ -76,7 +76,6 @@
     <Compile Include="StegoSystemUI\IStegoSystemUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StegoSystemModel\StegoSystemModel.cs" />
     <Compile Include="StegoSystemUI\PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>

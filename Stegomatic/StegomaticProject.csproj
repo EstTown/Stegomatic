@@ -80,12 +80,18 @@
     <Compile Include="StegoSystemUI\PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="StegoSystemUI\PopupForm.designer.cs">
+      <DependentUpon>PopupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StegoSystemUI\StegoSystemWinForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="StegoSystemUI\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StegoSystemUI\PopupForm.resx">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </EmbeddedResource>

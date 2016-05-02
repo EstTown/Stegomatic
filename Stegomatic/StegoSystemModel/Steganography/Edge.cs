@@ -35,8 +35,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Pixel VertexPixelTwo { get; private set; }
 
         /*Property for the weight of the edge*/
-        public short _edgeWeight;   
-        public short EdgeWeight 
+        public byte _edgeWeight;   
+        public byte EdgeWeight 
         {
             get
             {
@@ -44,20 +44,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             private set
             {
-                this._edgeWeight = CalculateVertexWeight(VertexPixelOne, VertexPixelTwo);
-
-                if(_edgeWeight < 0 || _edgeWeight > GraphtheoryBased.MaxWeight)
+                if (value < 0 || value > GraphtheoryBased.MaxWeight)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-            }
-        }
 
-        /*Method for calculating the weight of the edge*/
-        public short CalculateVertexWeight(Pixel VertPixelOne, Pixel VertPixelTwo)
-        {
-            short weight = 0;
-            return weight;
+                this._edgeWeight = value;
+            }
         }
     }
 }

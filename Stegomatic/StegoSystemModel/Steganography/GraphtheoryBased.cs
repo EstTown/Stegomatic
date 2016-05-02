@@ -34,5 +34,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             throw new NotImplementedException();
         }
+
+        /*Method for calculating the weight of the edge*/
+        public byte CalculateEdgeWeight(Vertex vertOne, Vertex vertTwo)
+        {
+            byte weight = 0;
+            return weight;
+        }
     }
 }

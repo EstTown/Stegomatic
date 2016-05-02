@@ -8,8 +8,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Vertex
     {
-        public Vertex(byte samplesVertexRatio, byte modulo, params Pixel[] pixels)
+        public Vertex(byte partOfMessage, byte samplesVertexRatio, byte modulo, params Pixel[] pixels)
         {
+            
             //constants needed
             this.NumberOfSamples = samplesVertexRatio;
             this.Modulo = modulo;
@@ -47,6 +48,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 
             }
+        }
+
+        public byte CalculateVertexValue()
+        {
+
+
+            return VertexValue;
         }
 
         public void AssignWeightToVertex(short weight)

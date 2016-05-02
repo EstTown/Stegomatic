@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace StegomaticProject.StegoSystemLogic
+namespace StegomaticProject.StegoSystemModel
 {
     public interface IStegoSystemModel
     {

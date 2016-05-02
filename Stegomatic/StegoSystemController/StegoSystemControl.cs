@@ -1,4 +1,4 @@
-﻿using StegomaticProject.StegoSystemLogic;
+﻿using StegomaticProject.StegoSystemModel;
 using System.Drawing;
 using StegomaticProject.StegoSystemUI;
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StegomaticProject.StegoSystemLogic.Miscellaneous;
+using StegomaticProject.StegoSystemModel.Miscellaneous;
 using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.Tests

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using StegomaticProject.StegoSystemLogic.Miscellaneous;
-using StegomaticProject.StegoSystemLogic.Cryptograhy;
-using StegomaticProject.StegoSystemLogic.Steganography;
+using StegomaticProject.StegoSystemModel.Miscellaneous;
+using StegomaticProject.StegoSystemModel.Cryptograhy;
+using StegomaticProject.StegoSystemModel.Steganography;
 
-namespace StegomaticProject.StegoSystemLogic
+namespace StegomaticProject.StegoSystemModel
 {
     public class StegoSystemModel : IStegoSystemModel
     {

@@ -53,7 +53,7 @@
     <Compile Include="StegoSystemModel\Cryptograhy\ICryptoMethod.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\ByteConverter.cs" />
     <Compile Include="StegoSystemModel\Miscellaneous\ICompression.cs" />
-    <Compile Include="StegoSystemModel\Steganography\GraphtheoryBased.cs" />
+    <Compile Include="StegoSystemModel\Steganography\GraphTheoryBased.cs" />
     <Compile Include="StegoSystemModel\Steganography\IStegoAlgorithm.cs" />
     <Compile Include="StegoSystemUI\Config\Config.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />

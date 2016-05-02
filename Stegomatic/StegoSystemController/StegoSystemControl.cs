@@ -1,13 +1,15 @@
 ﻿using StegomaticProject.StegoSystemModel;
 using System.Drawing;
 using StegomaticProject.StegoSystemUI;
+using System;
+using StegomaticProject.StegoSystemUI.Events;
 
 namespace StegomaticProject.StegoSystemController
 {
     public class StegoSystemControl : IStegoSystemControl
     {
-        private IStegoSystemModel stegoLogic;
-        private IStegoSystemUI stegoUI;
+        private IStegoSystemModel _stegoLogic;
+        private IStegoSystemUI _stegoUI;
         private Bitmap _image;
         
 
@@ -17,8 +19,15 @@ namespace StegomaticProject.StegoSystemController
         {
             // INITILISERER CONFIG OG SÆTTER OUTPUT IND I RUN FUNKTIONEN
 
-            this.stegoLogic = stegoLogic;
-            this.stegoUI = stegoUI;
+            this._stegoLogic = stegoLogic;
+            this._stegoUI = stegoUI;
+
+            SubscribeToAllEvents(_stegoLogic, stegoUI);
+        }
+
+        private void SubscribeToAllEvents(IStegoSystemModel _stegoLogic, IStegoSystemUI stegoUI)
+        {
+            stegoUI.EnterPressed += new DisplayNotificationEventHandler(stegoUI.ShowNotification);
         }
 
         public void OpenImage()

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StegomaticProject.StegoSystemUI.Config;
+using StegomaticProject.StegoSystemUI.Events;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -17,10 +18,13 @@ namespace StegomaticProject.StegoSystemUI
 
         // Modify UI
         void SetDisplayImage(Bitmap newImage);
-        void ShowNotification(/*notifyUserEvent e*/);
+        void ShowNotification(DisplayNotificationEvent e);
 
         // Start/End
         void Start();
         void Terminate();
+
+        // Events
+        event DisplayNotificationEventHandler EnterPressed;
     }
 }

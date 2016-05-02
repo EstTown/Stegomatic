@@ -14,17 +14,17 @@ namespace StegomaticProject
 {
     class Program
     {
-        [STAThread]
+        // [STAThread]
         static void Main(string[] args)
         {
-            IStegoSystemModel stegoModel = new StegoSystemModel.StegoSystemModelClass();
-            IStegoSystemUI stegoUI = new StegoSystemWinForm();
+            IStegoSystemModel stegoModel = new StegoSystemModelClass();
+            IStegoSystemUI stegoUI = new StegoSystemConsole(); // new StegoSystemWinForm();
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
             //Creates WinForms-window
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new Form1());
 
             stegoUI.Start();
         }

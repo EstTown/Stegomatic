@@ -10,19 +10,17 @@ using StegomaticProject.StegoSystemModel.Steganography;
 
 namespace StegomaticProject.StegoSystemModel
 {
-    public class StegoSystemModel : IStegoSystemModel
+    public class StegoSystemModelClass : IStegoSystemModel
     {
         private ICompression _compressMethod;
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
-
-
-        public StegoSystemModel()
+        public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphtheoryBased();
+            _stegoMethod = new GraphTheoryBased();
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey,
@@ -68,8 +66,6 @@ namespace StegomaticProject.StegoSystemModel
 
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, encryptionKey, byteMessage);
             // SKAL DET VÆRE ENCRYPTION KEY DER KOMMER IND HER??? HVAD SKAL DET VÆRE DET SEED OG HVOR FÅR VI DET FRA?
-
-            
 
             return StegoObject;
         }

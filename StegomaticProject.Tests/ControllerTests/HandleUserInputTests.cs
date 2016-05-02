@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using StegomaticProject.StegoSystemModel.Miscellaneous;
 using StegomaticProject.CustomExceptions;
+using StegomaticProject.StegoSystemController;
 
-namespace StegomaticProject.Tests
+namespace StegomaticProject.Tests.ControllerTests
 {
     [TestFixture]
     public class HandleUserInputTests
     {
-        private HandleUserInput TestUserInput;
+        private HandleUserInput _testUserInput;
         private string _pathOfTempFile;
 
         [OneTimeSetUp]
@@ -23,7 +24,7 @@ namespace StegomaticProject.Tests
             // Finds the directory upon where the exe/assembly file lies and combines that with a filename.
             // In the following tests tempFile.txt will be created on that location.
 
-            TestUserInput = new HandleUserInput();
+            _testUserInput = new HandleUserInput();
             string pathOfProjectExecutableFile = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
             string directoryOfExecutableFile = Path.GetDirectoryName(pathOfProjectExecutableFile);
             _pathOfTempFile = Path.Combine(directoryOfExecutableFile, "tempFile.txt");
@@ -57,7 +58,7 @@ namespace StegomaticProject.Tests
 
             try
             {
-                TestUserInput.File(_pathOfTempFile);
+                _testUserInput.File(_pathOfTempFile);
             }
             catch (Exception)
             {
@@ -74,7 +75,7 @@ namespace StegomaticProject.Tests
 
             try
             {
-                TestUserInput.File(_pathOfTempFile);
+                _testUserInput.File(_pathOfTempFile);
             }
             catch (NotifyUserException)
             {
@@ -91,7 +92,7 @@ namespace StegomaticProject.Tests
         {
             try
             {
-                TestUserInput.File(_pathOfTempFile);
+                _testUserInput.File(_pathOfTempFile);
             }
             catch (NotifyUserException)
             {

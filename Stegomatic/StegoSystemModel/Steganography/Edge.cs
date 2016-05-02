@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    /*Klasse for kanter*/
+    /*Class for edges*/
     class Edge
     {
-        /*Constructor for klassen*/
+        /*Constructor for the class*/
         public Edge(Vertex VertOne, Vertex VertTwo, Pixel VertPixOne, Pixel VertPixTwo)
         {
-            /*Tildeler kanten et ID*/
+            /*Gives the edge a unique ID*/
             this.EdgeID = edgecounter;
             edgecounter++;
 
@@ -22,19 +22,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.VertexPixelTwo = VertPixTwo;
         }
 
-        /*Property til EdgeID samt counter*/
+        /*Property for EdgeID and a counter*/
         public int EdgeID { get; private set; }
         public static int edgecounter = 1;
 
-        /*To knuder hvor en kant er mellem*/
+        /*Properties for two vertices*/
         public Vertex VertexOne { get; private set; }
         public Vertex VertexTwo { get; private set; }
 
-        /*To pixler som er i knuderne*/
+        /*Properties for two pixels within the vertices*/
         public Pixel VertexPixelOne { get; private set; }
         public Pixel VertexPixelTwo { get; private set; }
 
-        /*variabel til vægten på kanten*/
+        /*Property for the weight of the edge*/
         public short _edgeWeight;   
         public short EdgeWeight 
         {
@@ -48,7 +48,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
         }
 
-        /*Metode til at beregne vægten af kanten*/
+        /*Method for calculating the weight of the edge*/
         public short CalculateVertexWeight(Pixel VertPixelOne, Pixel VertPixelTwo)
         {
             short weight = 0;

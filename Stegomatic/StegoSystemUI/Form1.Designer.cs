@@ -47,10 +47,11 @@
             this.label_widthtext = new System.Windows.Forms.Label();
             this.label_filesizetext = new System.Windows.Forms.Label();
             this.label_capacitytext = new System.Windows.Forms.Label();
+            this.label_capacity = new System.Windows.Forms.Label();
             this.label_about = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBox_compression = new System.Windows.Forms.CheckBox();
-            this.label_capacity = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_image)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -85,7 +86,7 @@
             // label_char
             // 
             this.label_char.AutoSize = true;
-            this.label_char.Location = new System.Drawing.Point(12, 385);
+            this.label_char.Location = new System.Drawing.Point(9, 388);
             this.label_char.Name = "label_char";
             this.label_char.Size = new System.Drawing.Size(70, 13);
             this.label_char.TabIndex = 6;
@@ -267,6 +268,16 @@
             this.label_capacitytext.Text = "Est. capacity:";
             this.label_capacitytext.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label_capacity
+            // 
+            this.label_capacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_capacity.AutoSize = true;
+            this.label_capacity.Location = new System.Drawing.Point(87, 62);
+            this.label_capacity.Name = "label_capacity";
+            this.label_capacity.Size = new System.Drawing.Size(194, 13);
+            this.label_capacity.TabIndex = 7;
+            this.label_capacity.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label_about
             // 
             this.label_about.AutoSize = true;
@@ -296,22 +307,22 @@
             this.checkBox_compression.Text = "Enable  compression";
             this.checkBox_compression.UseVisualStyleBackColor = true;
             // 
-            // label_capacity
+            // progressBar1
             // 
-            this.label_capacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_capacity.AutoSize = true;
-            this.label_capacity.Location = new System.Drawing.Point(87, 62);
-            this.label_capacity.Name = "label_capacity";
-            this.label_capacity.Size = new System.Drawing.Size(194, 13);
-            this.label_capacity.TabIndex = 7;
-            this.label_capacity.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.progressBar1.Location = new System.Drawing.Point(145, 384);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(478, 23);
+            this.progressBar1.TabIndex = 7;
+            this.progressBar1.Visible = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 411);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.checkBox_compression);
+            this.Controls.Add(this.label_char);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
@@ -320,7 +331,6 @@
             this.Controls.Add(this.btn_decode);
             this.Controls.Add(this.btn_encode);
             this.Controls.Add(this.btn_open);
-            this.Controls.Add(this.label_char);
             this.Controls.Add(this.picbox_image);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -362,6 +372,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBox_compression;
         private System.Windows.Forms.Label label_capacity;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

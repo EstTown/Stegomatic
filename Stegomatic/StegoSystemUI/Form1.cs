@@ -62,7 +62,7 @@ namespace StegomaticProject.StegoSystemUI
                             label_width.Text = imageinfo[0];
                             label_height.Text = imageinfo[1];
                             label_filesize.Text = imageinfo[2] + " Bytes";
-                            label_capacity.Text = Convert.ToString((image.Height*image.Width*0.18)/12) + " Chars";
+                            label_capacity.Text = Convert.ToString((image.Height*image.Width*0.18)/12);
 
                         }
                     }
@@ -132,7 +132,22 @@ namespace StegomaticProject.StegoSystemUI
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
             // Update character-count when change is happening
-            label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+            if (label_capacity.Text == String.Empty)
+            {
+                label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+            }
+            else
+            {
+                progressBar1.Visible = true;
+
+                label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString() + " / " + label_capacity.Text;
+
+                double capacity = Convert.ToDouble(label_capacity.Text);
+                double text = txtbox_input.Text.Length;
+
+                progressBar1.Value = Convert.ToInt32((text/capacity)*100);
+            }
+            
         }
 
         private void btn_decode_Click(object sender, EventArgs e)

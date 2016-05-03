@@ -23,7 +23,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte[] Decode(Bitmap coverImage, string seed)
         {
             
-            
             throw new NotImplementedException();
         }
 
@@ -213,5 +212,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return amount = counter * PixelsPerByte;
         }
+
+        
     }
 }

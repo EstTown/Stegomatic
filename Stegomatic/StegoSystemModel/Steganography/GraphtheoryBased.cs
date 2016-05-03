@@ -9,17 +9,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class GraphTheoryBased : IStegoAlgorithm
     {
-        public GraphTheoryBased(/*Bitmap coverImage, string seed*/) //constructor
+        public GraphTheoryBased() //constructor
         {
-            /*
-            this.CoverImage = coverImage;
-            this.Seed = seed;
-            */
         }
-        /*
-        public Bitmap CoverImage { get; }
-        public string Seed { get; }
-        */
 
         public const int SamplesVertexRatio = 3;
         public const int Modulo = 4;
@@ -37,7 +29,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             throw new NotImplementedException();
         }
 
-        /*Method for calculating the weight of the edge*/
+        /*Method for calculating the weight of an edge*/
         public byte CalculateEdgeWeight(Vertex vertOne, Vertex vertTwo)
         {
             byte weight = 0;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
@@ -28,6 +29,17 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
+            
+            //call bunch of methods that prepare for graph construction
+
+
+            //at some point we need to calculate a graph, therefore make new graph
+            Graph graph = new Graph(PixelList);
+
+
+
+
+            //maybe some modify stuff here
             throw new NotImplementedException();
         }
 
@@ -37,7 +49,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             byte weight = 0;
             return weight;
         }
-
         private int ShortenAndParsePassphraseToInt32(string passphrase) //converts user stego passphrase into an int32 seed
         {
             int seed;
@@ -63,7 +74,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return seed;
         }
-
         private void GetRandomPixelsAddToList2(Bitmap image, int pixelsNeeded, string passphrase)
         {
             int key = ShortenAndParsePassphraseToInt32(passphrase);
@@ -86,7 +96,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 PixelList.Add(pixel);
             }
         }
-
         private void GetRandomPixelsAddToList1(Bitmap image, string passphrase, int amount)
         {
             //Create array at the lenght of a 'amount of total pixels'

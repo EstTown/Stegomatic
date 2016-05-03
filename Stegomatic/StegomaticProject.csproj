@@ -66,6 +66,7 @@
     <Compile Include="StegoSystemModel\Miscellaneous\GZipStreamCompression.cs" />
     <Compile Include="StegoSystemController\StegoSystemControl.cs" />
     <Compile Include="StegoSystemModel\IStegoSystemModel.cs" />
+    <Compile Include="StegoSystemUI\Events\ShowNotificationEvent.cs" />
     <Compile Include="StegoSystemUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +83,7 @@
     <Compile Include="StegoSystemUI\PopupForm.designer.cs">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StegoSystemUI\StegoSystemConsole.cs" />
     <Compile Include="StegoSystemUI\StegoSystemWinForm.cs" />
   </ItemGroup>
   <ItemGroup>

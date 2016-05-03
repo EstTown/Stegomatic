@@ -35,45 +35,51 @@ namespace StegomaticProject.Tests.ModelTests
             return text;
         }
 
-        [TestCase("1234567890")]
-        [TestCase("abcdefghijklmnopqrstuxyzæøå")]
-        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
-        [TestCase("!#¤%&/()=?")]
-        [TestCase("1aA!")]
-        public void Compress_Base64String_ResultSizeLess(string text)
+        [TestCase("1234567890123456789012345678901234567890")]
+        [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
+        [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
+        [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
+        public void Compress_String_ResultSizeLessOrEqual(string text)
         {
             byte[] byteText = ConvertToByteArray(text);
             byte[] compressedByteText = _gZipStreamTest.Compress(byteText);
+
             Assert.Less(compressedByteText.Length, byteText.Length);
         }
 
-        [TestCase("1234567890")]
-        [TestCase("abcdefghijklmnopqrstuxyzæøå")]
-        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
-        [TestCase("!#¤%&/()=?")]
-        [TestCase("1aA!")]
-        public void Decompress_Base64String_ResultSizeGreater(string text)
+        [TestCase("1234567890123456789012345678901234567890")]
+        [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
+        [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
+        [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
+        public void Decompress_String_ResultSizeGreaterOrEqual(string text)
         {
             byte[] byteText = ConvertToByteArray(text);
             byte[] compressedByteText = _gZipStreamTest.Compress(byteText);
 
-            byte[] decompressedByteText = _gZipStreamTest.Decompress(byteText);
+            byte[] decompressedByteText = _gZipStreamTest.Decompress(compressedByteText);
 
-            Assert.Greater(compressedByteText.Length, decompressedByteText.Length);
+            Assert.Less(compressedByteText.Length, decompressedByteText.Length);
         }
 
-        [Test]
+        [TestCase("1234567890123456789012345678901234567890")]
+        [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
+        [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
+        [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
         public void Decompress_DecompressedString_NothingHappens(string text)
         {
             byte[] byteText = ConvertToByteArray(text);
 
             byte[] decompressedByteText = _gZipStreamTest.Decompress(byteText);
+
             Assert.AreEqual(byteText.Length, decompressedByteText.Length);
         }
 
         private byte[] ConvertToByteArray(string text)
         {
-            return Convert.FromBase64String(text);
+            return Encoding.Unicode.GetBytes(text);
         }
     }
 }

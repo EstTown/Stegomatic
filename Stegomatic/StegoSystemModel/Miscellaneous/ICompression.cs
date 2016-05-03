@@ -8,7 +8,7 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 {
     public interface ICompression
     {
-        byte[] Compress(byte[] uncompressedMessage);
-        byte[] Decompress(byte[] compressedMessage);
+        byte[] Compress(byte[] message);
+        byte[] Decompress(byte[] message);
     }
 }

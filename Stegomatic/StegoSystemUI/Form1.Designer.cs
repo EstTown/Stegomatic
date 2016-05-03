@@ -46,10 +46,11 @@
             this.label_heighttext = new System.Windows.Forms.Label();
             this.label_widthtext = new System.Windows.Forms.Label();
             this.label_filesizetext = new System.Windows.Forms.Label();
-            this.label_capacity = new System.Windows.Forms.Label();
+            this.label_capacitytext = new System.Windows.Forms.Label();
             this.label_about = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBox_compression = new System.Windows.Forms.CheckBox();
+            this.label_capacity = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picbox_image)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -173,7 +174,8 @@
             this.tableLayoutPanel1.Controls.Add(this.label_heighttext, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label_widthtext, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label_filesizetext, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label_capacity, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label_capacitytext, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label_capacity, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 20);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -253,17 +255,17 @@
             this.label_filesizetext.Text = "Filesize:";
             this.label_filesizetext.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label_capacity
+            // label_capacitytext
             // 
-            this.label_capacity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.label_capacitytext.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label_capacity.AutoSize = true;
-            this.label_capacity.Location = new System.Drawing.Point(4, 60);
-            this.label_capacity.Name = "label_capacity";
-            this.label_capacity.Size = new System.Drawing.Size(71, 18);
-            this.label_capacity.TabIndex = 6;
-            this.label_capacity.Text = "Est. capacity:";
-            this.label_capacity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label_capacitytext.AutoSize = true;
+            this.label_capacitytext.Location = new System.Drawing.Point(4, 60);
+            this.label_capacitytext.Name = "label_capacitytext";
+            this.label_capacitytext.Size = new System.Drawing.Size(71, 18);
+            this.label_capacitytext.TabIndex = 6;
+            this.label_capacitytext.Text = "Est. capacity:";
+            this.label_capacitytext.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_about
             // 
@@ -294,6 +296,16 @@
             this.checkBox_compression.Text = "Enable  compression";
             this.checkBox_compression.UseVisualStyleBackColor = true;
             // 
+            // label_capacity
+            // 
+            this.label_capacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_capacity.AutoSize = true;
+            this.label_capacity.Location = new System.Drawing.Point(87, 62);
+            this.label_capacity.Name = "label_capacity";
+            this.label_capacity.Size = new System.Drawing.Size(194, 13);
+            this.label_capacity.TabIndex = 7;
+            this.label_capacity.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,7 +325,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = ">_<";
+            this.Text = "Steg-o-matic 1000";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picbox_image)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -346,9 +358,10 @@
         private System.Windows.Forms.Label label_filesize;
         private System.Windows.Forms.Label label_width;
         private System.Windows.Forms.Label label_height;
-        private System.Windows.Forms.Label label_capacity;
+        private System.Windows.Forms.Label label_capacitytext;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBox_compression;
+        private System.Windows.Forms.Label label_capacity;
     }
 }
 

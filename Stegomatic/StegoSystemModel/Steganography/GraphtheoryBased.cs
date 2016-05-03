@@ -17,7 +17,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         public List<Pixel> PixelList = new List<Pixel>();
         //Create list for values of bitpairs in message
-        public List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
+        public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
 
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
 
@@ -167,10 +167,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
-        public List< IEnumerable<int>> ChopBytesToBitPairs(byte[] byteArray)
+        public List< IEnumerable<byte>> ChopBytesToBitPairs(byte[] byteArray)
         {
             /*List fo int values*/
-            List< IEnumerable<int>> messageValues = new List<IEnumerable <int>>();
+            List< IEnumerable<byte>> messageValues = new List<IEnumerable <byte>>();
 
             foreach (byte value in byteArray)
             {
@@ -181,9 +181,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         /*Method for converting bitpairs to ints from a byte*/
-        public IEnumerable<int> ConvertBitsToInt(byte byteValue)
+        public IEnumerable<byte> ConvertBitsToInt(byte byteValue)
         {
-            int value;
+            byte value;
             BitArray bitValues = new BitArray(new byte[] { byteValue });
 
             for (int index = 7; index > -1; index -= 2)   
@@ -220,8 +220,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
 
             return amount = counter * PixelsPerByte;
-        }
-
-        
+        }      
     }
 }

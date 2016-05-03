@@ -14,8 +14,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
         }
 
-        //Create list for selected pixels from source image
+        //Create list for selected pixels from source image aswel as a list for verts and edges
         List<Pixel> PixelList = new List<Pixel>();
+        List<Vertex> VertexList = new List<Vertex>();
+        List<Edge> EdgeList = new List<Edge>();
+        //Create list for matched edges in the cover image
+        List<Edge> MatchedEdges = new List<Edge>();
         //Create list for values of bitpairs in message
         List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
 

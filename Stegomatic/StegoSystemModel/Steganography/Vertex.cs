@@ -39,7 +39,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public void CalculateTargetValues() //need to know a couple things more
         {
-            for (int i = 0; i < NumberOfSamples; i++)
+            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 
             }
@@ -51,17 +51,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return VertexValue;
         }
-
         public void AssignWeightToVertex(short weight)
         {
             LowestEdgeWeight = weight;
         }
-
         public void AssignNumberOfEdgesToVertex(short edges)
         {
             NumberOfEdges = edges;
         }
-
-
     }
 }

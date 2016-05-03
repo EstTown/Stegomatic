@@ -11,7 +11,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Pixel
     {
-        public Pixel(Color color, short positionX, short positionY) //constructor
+        public Pixel(Color color, int positionX, int positionY) //constructor
         {
             this.Color = color;
             this.PosX = positionX;
@@ -23,8 +23,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Color Color { get; set; }
 
         public byte EmbeddedValue { get; set; }
-        public short PosX;
-        public short PosY;
+        public int PosX { get; set; }
+        public int PosY { get; set; }
         public override string ToString()
         {
             return string.Format("Position X = {0}   Position Y = {1}   R = {2}  G = {3}  B = {4}", this.PosX, this.PosY, this.Color.R, this.Color.G, this.Color.B);

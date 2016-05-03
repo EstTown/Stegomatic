@@ -89,7 +89,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 PixelList.Add(pixel);
             }
         }
-        private void GetRandomPixels(Bitmap image, int amount, int seed)
+        private void GetRandomPixelsAddToList1(Bitmap image, int amount, int seed)
         {
             //Create array at the lenght of a 'amount of total pixels'
             int[] array = new int[Convert.ToInt32(image.Width * image.Height) * 2];

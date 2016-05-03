@@ -44,9 +44,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             TargetValues = new byte[GraphTheoryBased.SamplesVertexRatio];
 
+            //calculate difference
+            byte d = (byte) Math.Abs(this.VertexValue - SecretMessageArray[this.Id]);
+
+            //calculate targetvalues
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
-                TargetValues[i] = (byte) Math.Abs(PixelsForThisVertex[i].EmbeddedValue - SecretMessageArray[i]);
+                TargetValues[i] = (byte)(PixelsForThisVertex[i].EmbeddedValue + d);
             }
         }
         public byte CalculateVertexValue()
@@ -56,7 +60,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 temp += PixelsForThisVertex[i].EmbeddedValue;
             }
-
             return (byte)(temp%GraphTheoryBased.Modulo);
         }
         public void AssignWeightToVertex(byte weight)

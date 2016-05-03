@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Events;
+using StegomaticProject.StegoSystemUI;
 
 namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {
-        private Form _mainMenu { get; set; }
+        private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
 
         public StegoSystemWinForm()
         {
@@ -37,6 +38,8 @@ namespace StegomaticProject.StegoSystemUI
 
         public void ShowNotification(DisplayNotificationEvent e)
         {
+            // Initialize a popup window and show the message!
+
             throw new NotImplementedException();
         }
 

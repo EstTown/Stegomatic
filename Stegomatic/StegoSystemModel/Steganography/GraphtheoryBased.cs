@@ -40,6 +40,57 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return weight;
         }
 
+        private int ShortenAndParsePassphraseToInt32(string passphrase) //converts user stego passphrase into an int32 seed
+        {
+            int seed;
+            string temp = "";
+
+            while (true)
+            {
+                bool b = Int32.TryParse(passphrase, out seed);
+                Console.WriteLine(b);
+                if (b == true)
+                {
+                    break;
+                }
+                else
+                {
+                    for (int i = 0; i < passphrase.Length; i += 2)
+                    {
+                        temp += passphrase[i];
+                    }
+                    passphrase = temp;
+                    temp = "";
+                }
+            }
+            return seed;
+        }
+
+        private void GetRandomPixelsAddToList2(string passphrase, int pixelsNeeded, Bitmap image)
+        {
+            int key = ShortenAndParsePassphraseToInt32(passphrase);
+
+            int numberOfPixels = image.Width*image.Height;
+
+            //generate sequence of numbers through seed
+            Random r = new Random(key);
+
+            //Generates a set of numbers {0,...,n}, where n = amount of pixels in an image. Then it randomly selects numbers from this list, which will correspond to a pixel position in that image
+            List<int> pixelPositions = Enumerable.Range(0, numberOfPixels).OrderBy(x => r.Next(0, numberOfPixels)).Take(pixelsNeeded).ToList();
+
+            int tempPosX;
+            int tempPosY;
+            for (int i = 0; i < pixelsNeeded; i++)
+            {
+                tempPosX = pixelPositions[i]%image.Width;
+                tempPosY = pixelPositions[i]%image.Height;
+
+                //make new pixel 
+                Pixel pixel = new Pixel(image.GetPixel(tempPosX, tempPosY), tempPosX, tempPosY);
+                PixelList.Add(pixel);
+            }
+        }
+
         private void GetRandomPixels(Bitmap image, int amount, int seed)
         {
             //Create array at the lenght of a 'amount of total pixels'
@@ -71,7 +122,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 {
                     break;
                 }
-
                 if (posx >= image.Width)
                 {
                     int remainder = (image.Width - posx) * -1;

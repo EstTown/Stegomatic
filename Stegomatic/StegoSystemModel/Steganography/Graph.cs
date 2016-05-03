@@ -30,5 +30,23 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             throw new NotImplementedException();
         }
+
+        //Method for checking if any vertex is already matched
+        public void CheckIfMatched(List<Vertex> vertexList)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Method for swaping pixels in the pixellist
+        public void PixelSwap(List<Pixel> pixelList)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Method for modifying pixels in the pixellist
+        public void PixelModify(List<Pixel> pixelList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

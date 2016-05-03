@@ -25,6 +25,6 @@ namespace StegomaticProject.StegoSystemUI
         void Terminate();
 
         // Events
-        event DisplayNotificationEventHandler EnterPressed;
+        event DisplayNotificationEventHandler NotifyUser;
     }
 }

@@ -22,12 +22,12 @@ namespace StegomaticProject.StegoSystemController
             this._stegoLogic = stegoLogic;
             this._stegoUI = stegoUI;
 
-            SubscribeToAllEvents(_stegoLogic, stegoUI);
+            SubscribeToEvents(_stegoLogic, stegoUI);
         }
 
-        private void SubscribeToAllEvents(IStegoSystemModel _stegoLogic, IStegoSystemUI stegoUI)
+        private void SubscribeToEvents(IStegoSystemModel _stegoLogic, IStegoSystemUI stegoUI)
         {
-            stegoUI.EnterPressed += new DisplayNotificationEventHandler(stegoUI.ShowNotification);
+            stegoUI.NotifyUser += new DisplayNotificationEventHandler(stegoUI.ShowNotification);
         }
 
         public void OpenImage()

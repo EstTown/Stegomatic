@@ -15,7 +15,7 @@ namespace StegomaticProject.StegoSystemUI
         public string message { get; private set; }
         public string pathOfCoverImage { get; private set; }
 
-        public event DisplayNotificationEventHandler EnterPressed;
+        public event DisplayNotificationEventHandler NotifyUser;
 
         public void SetDisplayImage(Bitmap newImage)
         {
@@ -37,9 +37,9 @@ namespace StegomaticProject.StegoSystemUI
                 detectedKey = Console.ReadKey();
                 if (detectedKey.Key == ConsoleKey.Enter)
                 {
-                    if (EnterPressed != null)
+                    if (NotifyUser != null)
                     {
-                        EnterPressed(new DisplayNotificationEvent("You've pressed enter"));
+                        NotifyUser(new DisplayNotificationEvent("You've pressed enter"));
                     }
                 }
             } while (detectedKey.Key != ConsoleKey.Escape);

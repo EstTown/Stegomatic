@@ -15,7 +15,7 @@ namespace StegomaticProject.StegoSystemUI
         public string message { get; private set; }
         public string pathOfCoverImage { get; private set; }
 
-        public event DisplayNotificationEventHandler EnterPressed;
+        public event DisplayNotificationEventHandler NotifyUser;
 
         public void SetDisplayImage(Bitmap newImage)
         {

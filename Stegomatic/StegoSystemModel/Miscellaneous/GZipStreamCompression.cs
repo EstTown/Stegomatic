@@ -10,26 +10,34 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 {
     public class GZipStreamCompression : ICompression
     {
-        public byte[] Compress(byte[] uncompressedMessage)
+        public byte[] Decompress(byte[] message)
         {
-            return Execute(CompressionMode.Compress, uncompressedMessage);
+            MemoryStream compressedStream = new MemoryStream(message);
+            GZipStream zipStream = new GZipStream(compressedStream, CompressionMode.Decompress);
+            MemoryStream resultStream = new MemoryStream();
+
+            try
+            {
+                zipStream.CopyTo(resultStream);
+            }
+            catch (InvalidDataException)
+            {
+                // Message was not compressed by GZipStream, result: nothing happens
+                return message;
+            }
+            return ToBytes(resultStream);
         }
 
-        public byte[] Decompress(byte[] compressedMessage)
-        {
-            return Execute(CompressionMode.Compress, compressedMessage);
-        }
-
-        private byte[] Execute(CompressionMode cm, byte[] message)
+        public byte[] Compress(byte[] message)
         {
             //  Constructs and writes gzipstream with the compressed or decompressed message.
 
-            // NOT SURE WHETHER I'M DOING SHIT DOUBLE HERE!! FEELS LIKE I CAN GET AWAY WITH AN EMPTY MEMORYSTREAM, NO??
-
-            MemoryStream memStreamMessage = ToStream(message);
-            GZipStream zipStream = new GZipStream(memStreamMessage, cm, false);
+            MemoryStream compressedStream = new MemoryStream();
+            GZipStream zipStream = new GZipStream(compressedStream, CompressionMode.Compress);
             zipStream.Write(message, 0, message.Length);
-            return ToBytes(memStreamMessage);
+            zipStream.Close();
+
+            return ToBytes(compressedStream);
         }
 
         private MemoryStream ToStream(byte[] message)
@@ -40,7 +48,6 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
         private byte[] ToBytes(MemoryStream messageStream)
         {
             return messageStream.ToArray();
-            // Check whether there is any loss of data here!! 
         }
     }
 }

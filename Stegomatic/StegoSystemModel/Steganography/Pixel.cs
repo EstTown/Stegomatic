@@ -25,6 +25,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte EmbeddedValue { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
+
         public override string ToString()
         {
             return string.Format("Position X = {0}   Position Y = {1}   R = {2}  G = {3}  B = {4}", this.PosX, this.PosY, this.Color.R, this.Color.G, this.Color.B);

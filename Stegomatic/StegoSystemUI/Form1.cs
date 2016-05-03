@@ -61,7 +61,8 @@ namespace StegomaticProject.StegoSystemUI
                             label_about.Text = "About image: " + imageinfo[3];
                             label_width.Text = imageinfo[0];
                             label_height.Text = imageinfo[1];
-                            label_filesize.Text = imageinfo[2] + " B";
+                            label_filesize.Text = imageinfo[2] + " Bytes";
+                            label_capacity.Text = Convert.ToString((image.Height*image.Width*0.18)/12) + " Chars";
 
                         }
                     }
@@ -152,6 +153,11 @@ namespace StegomaticProject.StegoSystemUI
         private void label_char_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

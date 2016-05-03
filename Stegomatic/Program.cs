@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using StegomaticProject.StegoSystemUI;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Threading;
+using StegomaticProject.StegoSystemModel.Steganography;
 
 namespace StegomaticProject
 {
@@ -21,9 +23,9 @@ namespace StegomaticProject
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
-            //Creates WinForms-window
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            //Creates WinForms-window             
+            Application.EnableVisualStyles();            
+            Application.SetCompatibleTextRenderingDefault(false);             
             Application.Run(new Form1());
 
             stegoUI.Start();   

@@ -23,6 +23,11 @@ namespace StegomaticProject
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
+            //Creates WinForms-window             
+            Application.EnableVisualStyles();            
+            Application.SetCompatibleTextRenderingDefault(false);             
+            Application.Run(new Form1());
+
             stegoUI.Start();   
         }
     }

@@ -16,11 +16,11 @@ namespace StegomaticProject
 {
     class Program
     {
-        // [STAThread]
+        [STAThread]
         static void Main(string[] args)
         {
             IStegoSystemModel stegoModel = new StegoSystemModelClass();
-            IStegoSystemUI stegoUI = new StegoSystemConsole(); // new StegoSystemWinForm();
+            IStegoSystemUI stegoUI = new StegoSystemWinForm(); // new StegoSystemWinForm();
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
             //Creates WinForms-window

@@ -98,7 +98,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 i++;
             }
 
-
+            //Print when done 
+            Console.WriteLine("Pixels imported successfully!");
 
         }
 

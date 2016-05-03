@@ -16,6 +16,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         //Create list for selected pixels from source image
         List<Pixel> PixelList = new List<Pixel>();
+        //Create list for values of bitpairs in message
+        List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
 
         public const int SamplesVertexRatio = 3;
         public const int Modulo = 4;

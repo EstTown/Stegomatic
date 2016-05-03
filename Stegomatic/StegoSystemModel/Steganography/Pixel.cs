@@ -11,14 +11,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Pixel
     {
-        public Pixel(Color color) //constructor
+        public Pixel(Color color, short positionX, short positionY) //constructor
         {
             this.Color = color;
+            this.PosX = positionX;
+            this.PosY = positionY;
 
             // Adds the 3 color-values and use modulo, which corresponds to the embedded value of a pixel
             this.EmbeddedValue = (byte)((Color.R + Color.G + Color.B)%GraphTheoryBased.Modulo);
-            
-
         }
         
         public Color Color { get; set; }

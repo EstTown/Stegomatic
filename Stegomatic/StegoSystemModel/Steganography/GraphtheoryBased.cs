@@ -20,6 +20,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public const int SamplesVertexRatio = 3;
         public const int Modulo = 4;
         public const int MaxEdgeWeight = 10;
+        public const int PixelsPerByte = 12;    
 
         public byte[] Decode(Bitmap coverImage, string seed)
         {
@@ -202,6 +203,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                 yield return value;
             }
+        }
+
+        /*Method for calculating the required amount of pixels to hide the input message*/
+        public int CalculateRequredPixels(byte[] byteArray)
+        {
+            int amount, counter = 0;
+
+            foreach(byte value in byteArray)
+            {
+                counter++;
+            }
+
+            return amount = counter * PixelsPerByte;
         }
     }
 }

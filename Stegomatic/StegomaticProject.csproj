@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
     <Compile Include="StegoSystemController\HandleUserInput.cs" />
+    <Compile Include="StegoSystemModel\Steganography\Graph.cs" />
     <Compile Include="StegoSystemModel\StegoSystemModelClass.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\RijndaelCrypto.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\ICryptoMethod.cs" />

@@ -12,12 +12,15 @@ namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {
+        private Form _mainMenu { get; set; }
+
         public StegoSystemWinForm()
         {
             //Creates new WinForms-window of Form1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            _mainMenu = new Form1();
+            Application.Run(_mainMenu);
         }
 
         public IConfig config { get; private set; }
@@ -28,6 +31,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public void SetDisplayImage(Bitmap newImage)
         {
+            
             throw new NotImplementedException();
         }
 

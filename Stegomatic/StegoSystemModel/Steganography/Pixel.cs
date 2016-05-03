@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Security.Cryptography;
+
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Pixel
     {
-        public short R { get; set; }
-        public short G { get; set; }
-        public short B { get; set; }
-        public int EmbeddedValue;
+        public Pixel(Color color) //constructor
+        {
+            this.Color = color;
+            this.EmbeddedValue = (byte)((Color.R + Color.G + Color.B)%GraphTheoryBased.Modulo);
+            
+
+        }
+        
+        public Color Color { get; set; }
+
+        public byte EmbeddedValue { get; set; }
         public short PosX;
         public short PosY; 
 
@@ -22,13 +32,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         void GetPixelValue(short R, short G, short B)
         {
-
+            
         }
 
         // Adds the 3 color-values and use modulo
         void AssignEmbeddedValue(short R, short G, short B)
         {
-            EmbeddedValue = R + G + B % 4;
+            this.EmbeddedValue = (byte)(Color.R + Color.G + Color.B + GraphTheoryBased.Modulo);
         }
 
         public override string ToString()

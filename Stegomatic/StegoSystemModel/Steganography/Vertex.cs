@@ -10,10 +10,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     {
         public Vertex(byte partOfMessage, byte samplesVertexRatio, byte modulo, params Pixel[] pixels)
         {
-            
-            //constants needed
-            this.NumberOfSamples = samplesVertexRatio;
-            this.Modulo = modulo;
 
             //assign unique ID
             this.Id = _id;
@@ -32,8 +28,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public short LowestEdgeWeight { get; set; }
         public short NumberOfEdges { get; set; }
 
-        public byte NumberOfSamples;
-        public byte Modulo;
+        
         public bool Active;
         public byte VertexValue; //value that has to correspond to a certain part of the secret message
 

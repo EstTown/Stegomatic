@@ -16,6 +16,7 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
+        
         public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();

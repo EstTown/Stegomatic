@@ -21,12 +21,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public string Seed { get; }
         */
 
-        public static byte SamplesVertexRatio = 3;
-        public static byte Modulo = 4;
-        public static byte MaxWeight = 10;
+        public const int SamplesVertexRatio = 3;
+        public const int Modulo = 4;
+        public const int MaxEdgeWeight = 10;
 
         public byte[] Decode(Bitmap coverImage, string seed)
         {
+            
+            
             throw new NotImplementedException();
         }
 

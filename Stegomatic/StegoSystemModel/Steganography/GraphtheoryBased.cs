@@ -69,7 +69,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return seed;
         }
 
-        private void GetRandomPixelsAddToList2(string passphrase, int pixelsNeeded, Bitmap image)
+        private void GetRandomPixelsAddToList2(Bitmap image, int pixelsNeeded, string passphrase)
         {
             int key = ShortenAndParsePassphraseToInt32(passphrase);
             int numberOfPixels = image.Width*image.Height;
@@ -91,10 +91,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 PixelList.Add(pixel);
             }
         }
-        private void GetRandomPixels(Bitmap image, int amount, int seed)
+
+        private void GetRandomPixelsAddToList1(Bitmap image, string passphrase, int amount)
         {
             //Create array at the lenght of a 'amount of total pixels'
             int[] array = new int[Convert.ToInt32(image.Width * image.Height) * 2];
+
+            int seed = ShortenAndParsePassphraseToInt32(passphrase);
 
             //Create random-object, based on incoming seed
             Random r = new Random(seed);

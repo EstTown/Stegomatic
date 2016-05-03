@@ -14,10 +14,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.PixelList = pixelList;
         }
 
-        List<Pixel> PixelList = new List<Pixel>();
-        List<Vertex> VertexList = new List<Vertex>();
-        List<Edge> EdgeList = new List<Edge>();
-        List<Edge> MatchedEdges = new List<Edge>();
+        public List<Pixel> PixelList;
+        public List<Vertex> VertexList = new List<Vertex>();
+        public List<Edge> EdgeList = new List<Edge>();
+        public List<Edge> MatchedEdges = new List<Edge>();
 
         //Method for constructing vertices
         public void ConstructVertices(List<Pixel> pixelList)

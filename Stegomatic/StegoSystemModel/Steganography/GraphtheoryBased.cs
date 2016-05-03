@@ -12,16 +12,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     {
         public GraphTheoryBased() //constructor
         {
+
         }
-
-        List<Pixel> PixelList = new List<Pixel>();
+        public List<Pixel> PixelList = new List<Pixel>();
         //Create list for values of bitpairs in message
-        List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
+        public List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
 
-        public const int SamplesVertexRatio = 3;
-        public const int Modulo = 4;
-        public const int MaxEdgeWeight = 10;
-        public const int PixelsPerByte = 12;    
+        public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
 
         public byte[] Decode(Bitmap coverImage, string seed)
         {

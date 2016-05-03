@@ -70,7 +70,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private void GetRandomPixelsAddToList2(string passphrase, int pixelsNeeded, Bitmap image)
         {
             int key = ShortenAndParsePassphraseToInt32(passphrase);
-
             int numberOfPixels = image.Width*image.Height;
 
             //generate sequence of numbers through seed
@@ -84,14 +83,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             for (int i = 0; i < pixelsNeeded; i++)
             {
                 tempPosX = pixelPositions[i]%image.Width;
-                tempPosY = pixelPositions[i]%image.Height;
-
+                tempPosY = pixelPositions[i]/image.Width;
                 //make new pixel 
                 Pixel pixel = new Pixel(image.GetPixel(tempPosX, tempPosY), tempPosX, tempPosY);
                 PixelList.Add(pixel);
             }
         }
-
         private void GetRandomPixels(Bitmap image, int amount, int seed)
         {
             //Create array at the lenght of a 'amount of total pixels'

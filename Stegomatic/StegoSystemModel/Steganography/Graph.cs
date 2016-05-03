@@ -18,5 +18,17 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         List<Vertex> VertexList = new List<Vertex>();
         List<Edge> EdgeList = new List<Edge>();
         List<Edge> MatchedEdges = new List<Edge>();
+
+        //Method for constructing vertices
+        public void ConstructVertices(List<Pixel> pixelList)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Method for constructing edges
+        public void ConstructEdges(List<Vertex> vertexList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

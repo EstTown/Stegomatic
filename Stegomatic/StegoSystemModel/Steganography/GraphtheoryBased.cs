@@ -13,9 +13,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public GraphTheoryBased() //constructor
         {
         }
-
-        //Create list for selected pixels from source image
+        
         List<Pixel> PixelList = new List<Pixel>();
+        List<Vertex> VertexList = new List<Vertex>();
+        List<Edge> EdgeList = new List<Edge>();
+        List<Edge> MatchedEdges = new List<Edge>();
+
+        //Create list for values of bitpairs in message
+        List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
 
         public const int SamplesVertexRatio = 3;
         public const int Modulo = 4;
@@ -35,7 +40,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         /*Method for calculating the weight of an edge*/
-        public byte CalculateEdgeWeight(Vertex vertOne, Vertex vertTwo)
+        public byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo) 
         {
             byte weight = 0;
             return weight;
@@ -159,8 +164,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
-
-
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
         public List< IEnumerable<int>> ChopBytesToBitPairs(byte[] byteArray)

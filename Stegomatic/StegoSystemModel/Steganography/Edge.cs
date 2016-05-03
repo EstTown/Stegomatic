@@ -24,7 +24,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         /*Property for EdgeID and a counter*/
         public int EdgeID { get; private set; }
-        private static int _edgecounter = 1;
+        private static int _edgecounter = 1; //might not need this, but keep for now
 
         /*Properties for two vertices*/
         public Vertex VertexOne { get; private set; }
@@ -35,7 +35,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Pixel VertexPixelTwo { get; private set; }
 
         /*Property for the weight of the edge*/
-        public byte _edgeWeight;   
+        private byte _edgeWeight;   
         public byte EdgeWeight 
         {
             get

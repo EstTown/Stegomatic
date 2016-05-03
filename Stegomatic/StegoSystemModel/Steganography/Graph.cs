@@ -13,11 +13,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
 
         }
-
-        //Create list for verts and edges
         List<Vertex> VertexList = new List<Vertex>();
         List<Edge> EdgeList = new List<Edge>();
-        //Create list for matched edges in the cover image
         List<Edge> MatchedEdges = new List<Edge>();
     }
 }

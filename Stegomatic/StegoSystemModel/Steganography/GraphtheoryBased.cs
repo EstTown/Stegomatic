@@ -14,8 +14,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
         }
 
-        //Create list for selected pixels from source image
+        //Create list for selected pixels from source image aswel as a list for verts and edges
         List<Pixel> PixelList = new List<Pixel>();
+        List<Vertex> VertexList = new List<Vertex>();
+        List<Edge> EdgeList = new List<Edge>();
+        //Create list for matched edges in the cover image
+        List<Edge> MatchedEdges = new List<Edge>();
+        //Create list for values of bitpairs in message
+        List<IEnumerable<int>> BitPairValueList = new List<IEnumerable<int>>();
 
         public const int SamplesVertexRatio = 3;
         public const int Modulo = 4;
@@ -89,10 +95,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 PixelList.Add(pixel);
             }
         }
-        private void GetRandomPixelsAddToList1(Bitmap image, int amount, int seed)
+
+        private void GetRandomPixelsAddToList1(Bitmap image, string passphrase, int amount)
         {
             //Create array at the lenght of a 'amount of total pixels'
             int[] array = new int[Convert.ToInt32(image.Width * image.Height) * 2];
+
+            int seed = ShortenAndParsePassphraseToInt32(passphrase);
 
             //Create random-object, based on incoming seed
             Random r = new Random(seed);

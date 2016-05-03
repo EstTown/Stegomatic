@@ -8,18 +8,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Vertex
     {
-        public Vertex(byte partOfMessage, byte samplesVertexRatio, byte modulo, params Pixel[] pixels)
+        public Vertex(byte partOfMessage, params Pixel[] pixels)
         {
-
             //assign unique ID
             this.Id = _id;
             _id++;
 
             //assign "NumberOfSamples" amount of samples (pixels) to this vertex
-            for (int i = 0; i < samplesVertexRatio; i++)
+            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
-                PixelsForThisVertex[i] = pixels[i];
+                this.PixelsForThisVertex[i] = pixels[i];
             }
+
+            this.VertexValue = CalculateVertexValue();
         }
 
         private static short _id = 1;
@@ -47,9 +48,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public byte CalculateVertexValue()
         {
+            byte temp = 0;
+            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
+            {
+                temp += PixelsForThisVertex[i].EmbeddedValue;
+            }
 
-
-            return VertexValue;
+            return (byte)(temp%GraphTheoryBased.Modulo);
         }
         public void AssignWeightToVertex(short weight)
         {

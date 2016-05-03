@@ -47,13 +47,6 @@ namespace StegomaticProject
             //print vertex
             Console.WriteLine(vertex1.ToString());
 
-            //this all 
-
-            //Creates WinForms-window
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-
             stegoUI.Start();   
         }
     }

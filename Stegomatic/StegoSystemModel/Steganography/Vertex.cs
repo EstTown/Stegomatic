@@ -14,16 +14,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.Id = _id;
             _id++;
 
+            //all vertices will be set to active, no matter what
+            this.Active = true;
+
             //assign "NumberOfSamples" amount of samples (pixels) to this vertex
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
             PixelsForThisVertex = pixels;
+            
 
-            /*
-            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
-            {
-                this.PixelsForThisVertex[i] = pixels[i];
-            }
-            */
             this.SecretMessageArray = messagePairArray;
             this.VertexValue = CalculateVertexValue();
             CalculateTargetValues();
@@ -32,14 +30,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private static short _id = 0;
         public short Id { get; }
 
-        public short LowestEdgeWeight { get; set; }
+        public byte LowestEdgeWeight { get; set; }
         public short NumberOfEdges { get; set; }
 
-        
         public bool Active;
         public byte VertexValue; //value that has to correspond to a certain part of the secret message
-
-
+        
         public Pixel[] PixelsForThisVertex;
         public byte[] TargetValues;
         public byte[] SecretMessageArray; //placeholder array. This comes from somewhere else
@@ -63,7 +59,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return (byte)(temp%GraphTheoryBased.Modulo);
         }
-        public void AssignWeightToVertex(short weight)
+        public void AssignWeightToVertex(byte weight)
         {
             LowestEdgeWeight = weight;
         }

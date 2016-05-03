@@ -39,7 +39,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return weight;
         }
 
-        private void GetRandomPixels(Bitmap image, int seed)
+        private void GetRandomPixels(Bitmap image, int amount, int seed)
         {
             //Create array at the lenght of a 'amount of total pixels'
             int[] array = new int[Convert.ToInt32(image.Width * image.Height) * 2];
@@ -95,11 +95,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 //Gets selected pixel data; and creates new Pixel-object and stores in list
                 Pixel pix = new Pixel(image.GetPixel(posx, posy), posx, posy);
                 PixelList.Add(pix);
+                if (PixelList.Count >= amount)
+                {
+                    break;
+                }
                 i++;
             }
 
-            //Print when done 
+            //Print log when done
             Console.WriteLine("Pixels imported successfully!");
+            Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
 

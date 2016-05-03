@@ -21,12 +21,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
             PixelsForThisVertex = pixels;
             
-
             this.SecretMessageArray = messagePairArray;
             this.VertexValue = CalculateVertexValue();
             CalculateTargetValues();
         }
-
         private static short _id = 0;
         public short Id { get; }
 
@@ -40,7 +38,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte[] TargetValues;
         public byte[] SecretMessageArray; //placeholder array. This comes from somewhere else
 
-        public void CalculateTargetValues() //need to know a couple things more
+        public void CalculateTargetValues()
         {
             TargetValues = new byte[GraphTheoryBased.SamplesVertexRatio];
 
@@ -70,7 +68,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             NumberOfEdges = edges;
         }
-
         public override string ToString()
         {
             return this.Id + "\n" + this.VertexValue + "\n";

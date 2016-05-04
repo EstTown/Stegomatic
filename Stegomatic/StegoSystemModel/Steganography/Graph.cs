@@ -33,7 +33,34 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         
         public void ConstructEdges(List<Vertex> vertexList)
         {
-            throw new NotImplementedException();
+            //need double for loop, to check all pixels in a vertex, triple for loop to check all vertices
+            int k = 0;
+
+            for (int i = 0; i < vertexList.Count; i++)
+            {
+                for (int j = 0; i < GraphTheoryBased.SamplesVertexRatio; j++)
+                {
+                    for (int k = 0; j < GraphTheoryBased.SamplesVertexRatio; k++)
+                    {
+                        if (vertexList[i].PixelsForThisVertex[j].EmbeddedValue == vertexList[i].TargetValues[k] && ) 
+                    }
+                }
+            }
+        }
+
+        public void HelpMethodConstructEdges(Vertex vertex1, Vertex vertex2)
+        {
+
+            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
+            {
+                for (int j = 0; j < GraphTheoryBased.SamplesVertexRatio; j++)
+                {
+                    if (vertex1.PixelsForThisVertex[i].EmbeddedValue == vertex2.TargetValues[j] && 
+                        vertex2.PixelsForThisVertex[j].EmbeddedValue == vertex1.TargetValues[i] &&
+                        Math.Abs(vertex1.PixelsForThisVertex[i].Color.R - vertex2.PixelsForThisVertex[j].Color.R) < GraphTheoryBased.MaxEdgeWeight
+                        )
+                    }
+            }
         }
         
         public void CheckIfMatched(List<Vertex> vertexList) //this will be called multiple times

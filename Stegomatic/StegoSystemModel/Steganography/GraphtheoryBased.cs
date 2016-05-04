@@ -49,6 +49,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             byte weight = 0;
             return weight;
         }
+
         private int ShortenAndParsePassphraseToInt32(string passphrase) //converts user stego passphrase into an int32 seed
         {
             int seed;
@@ -164,6 +165,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels imported successfully!");
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
+        }
+
+        //
+        public void EmbedPixelListIntoImagePixels(List<Pixel> PixelList)//already has acces to coverimage
+        {
+            throw new NotImplementedException();
         }
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/

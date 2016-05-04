@@ -8,7 +8,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Vertex
     {
-        public Vertex(byte[] messagePairArray, params Pixel[] pixels)
+        public Vertex(byte partOfSecretMessage, params Pixel[] pixels)
         {
             //assign unique ID
             this.Id = _id;
@@ -20,8 +20,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //assign "NumberOfSamples" amount of samples (pixels) to this vertex
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
             PixelsForThisVertex = pixels;
-            
-            this.SecretMessageArray = messagePairArray;
+
+            this.PartOfSecretMessage = partOfSecretMessage;
             this.VertexValue = CalculateVertexValue();
             CalculateTargetValues();
         }
@@ -36,14 +36,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         
         public Pixel[] PixelsForThisVertex;
         public byte[] TargetValues;
-        public byte[] SecretMessageArray; //placeholder array. This comes from somewhere else
+        public byte PartOfSecretMessage;
 
         public void CalculateTargetValues()
         {
             TargetValues = new byte[GraphTheoryBased.SamplesVertexRatio];
 
-            //calculate difference
-            byte d = (byte) Math.Abs(this.VertexValue - SecretMessageArray[this.Id]);
+            //calculate difference. It could be zero, and if it is, the vertex is already matched, and therefore the targetvalues are of no use. Put in if statement probably. if (d == 0) {dont calculate anything, waste of time}
+            byte d = (byte) Math.Abs(this.VertexValue - this.PartOfSecretMessage);
 
             //calculate targetvalues
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)

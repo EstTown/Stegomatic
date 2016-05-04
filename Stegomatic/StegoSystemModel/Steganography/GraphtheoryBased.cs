@@ -34,7 +34,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
 
             //at some point we need to calculate a graph, therefore make new graph
-            Graph graph = new Graph(PixelList);
+            Graph graph = new Graph(PixelList, message);
 
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,19 +20,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public List<Edge> EdgeList = new List<Edge>();
         public List<Edge> MatchedEdges = new List<Edge>();
         
-        public void ConstructVertices(List<Pixel> pixelList, int pixelsNeeded)
+        public void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
         {
-            /*
-            for (int i = 0; i < pixelsNeeded/3; i++)
+            int counter = 0;
+            for (int i = 0; i < pixelsNeeded; i+=GraphTheoryBased.SamplesVertexRatio)
             {
-                Vertex vertex = new Vertex();
+                Vertex vertex = new Vertex(secretMessage[counter], PixelList[i], PixelList[i+1], PixelList[i+2]); //this is hardcoded and can maybe rewritten by using a delegate.
+                VertexList.Add(vertex);
+                counter++;
             }
-            not done yet
-            */
-
-
-
-            throw new NotImplementedException();
         }
         
         public void ConstructEdges(List<Vertex> vertexList)
@@ -39,9 +36,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             throw new NotImplementedException();
         }
         
-        public void CheckIfMatched(List<Vertex> vertexList)
+        public void CheckIfMatched(List<Vertex> vertexList) //this will be called multiple times
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < VertexList.Count; i++)
+            {
+                if (vertexList[i].PartOfSecretMessage == vertexList[i].VertexValue)
+                {
+                    vertexList[i].Active = false;
+                }
+            }
         }
 
         public void SortListByEdgeAndWeight()

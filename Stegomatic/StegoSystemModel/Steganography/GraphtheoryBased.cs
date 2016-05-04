@@ -239,18 +239,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         //Method for helping pixels trade values
-        public void TradePixelValues(Pixel PixelOne, Pixel PixelTwo)
+        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
-            int tempPosX, tempPosY;
+            int tempPosX = pixelOne.PosX;
+            int tempPosY = pixelOne.PosY;
 
-            tempPosX = PixelOne.PosX;
-            tempPosY = PixelOne.PosY;
+            pixelOne.PosX = pixelTwo.PosX;
+            pixelOne.PosY = pixelTwo.PosY;
 
-            PixelOne.PosX = PixelTwo.PosX;
-            PixelOne.PosY = PixelTwo.PosY;
-
-            PixelTwo.PosX = tempPosX;
-            PixelTwo.PosY = tempPosY;
+            pixelTwo.PosX = tempPosX;
+            pixelTwo.PosY = tempPosY;
         }
 
         public void PixelModify(List<Pixel> pixelList)

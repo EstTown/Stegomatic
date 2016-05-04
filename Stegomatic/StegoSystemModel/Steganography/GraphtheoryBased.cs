@@ -220,6 +220,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
 
             return amount = counter * PixelsPerByte;
-        }      
+        }
+
+        public void PixelSwap(List<Pixel> pixelList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PixelModify(List<Pixel> pixelList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

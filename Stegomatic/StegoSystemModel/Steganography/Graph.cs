@@ -33,14 +33,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         
         public void ConstructEdges(List<Vertex> vertexList)
         {
-            //need double for loop, to check all pixels in a vertex, triple for loop to check all vertices
-            int k = 0;
+            //need double for loop, to check every vertex with every other vertex
 
             for (int i = 0; i < vertexList.Count; i++)
             {
-                for (int j = 0; j < GraphTheoryBased.SamplesVertexRatio; j++)
+                for (int j = 0; j < vertexList.Count; j++)
                 {
-                    HelpMethodConstructEdges(vertexList[i], vertexList[j]);
+                    if (i != j) //don't want to compare a vertex with itself
+                    {
+                        HelpMethodConstructEdges(vertexList[i], vertexList[j]);
+                    }
                 }
             }
         }

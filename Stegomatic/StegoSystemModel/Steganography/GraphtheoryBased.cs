@@ -34,7 +34,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
 
             //at some point we need to calculate a graph, therefore make new graph
-            Graph graph = new Graph(PixelList, message);
+            //Graph graph = new Graph(PixelList, message);
 
 
 
@@ -229,9 +229,28 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return amount = counter * PixelsPerByte;
         }
 
-        public void PixelSwap(List<Pixel> pixelList)
+        //Method for swapping pixels in the list og matched edges
+        public void PixelSwap(List<Edge> matchedEdges)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < matchedEdges.Count; i++)
+            {
+                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
+            }
+        }
+
+        //Method for helping pixels trade values
+        public void TradePixelValues(Pixel PixelOne, Pixel PixelTwo)
+        {
+            int tempPosX, tempPosY;
+
+            tempPosX = PixelOne.PosX;
+            tempPosY = PixelOne.PosY;
+
+            PixelOne.PosX = PixelTwo.PosX;
+            PixelOne.PosY = PixelTwo.PosY;
+
+            PixelTwo.PosX = tempPosX;
+            PixelTwo.PosY = tempPosY;
         }
 
         public void PixelModify(List<Pixel> pixelList)

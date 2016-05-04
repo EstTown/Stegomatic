@@ -55,7 +55,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 for (int j = 0; j < GraphTheoryBased.SamplesVertexRatio; j++)
                 {
-                    if (vertex1.PixelsForThisVertex[i].EmbeddedValue == vertex2.TargetValues[j] && 
+                    if (vertex1.PixelsForThisVertex[i].EmbeddedValue == vertex2.TargetValues[j] &&
                         vertex2.PixelsForThisVertex[j].EmbeddedValue == vertex1.TargetValues[i] &&
                         Math.Abs(vertex1.PixelsForThisVertex[i].Color.R - vertex2.PixelsForThisVertex[j].Color.R) < GraphTheoryBased.MaxEdgeWeight
                         )

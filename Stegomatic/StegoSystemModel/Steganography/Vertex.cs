@@ -15,7 +15,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             _id++;
 
             //all vertices will be set to active, no matter what
-            this.Active = true;
+            this.Active = false;
 
             //assign "NumberOfSamples" amount of samples (pixels) to this vertex
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];

@@ -34,7 +34,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
 
             //at some point we need to calculate a graph, therefore make new graph
-            Graph graph = new Graph(PixelList, message);
+            //Graph graph = new Graph(PixelList, message);
 
 
 
@@ -49,6 +49,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             byte weight = 0;
             return weight;
         }
+
         private int ShortenAndParsePassphraseToInt32(string passphrase) //converts user stego passphrase into an int32 seed
         {
             int seed;
@@ -166,6 +167,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         }
 
+        //
+        public void EmbedPixelListIntoImagePixels(List<Pixel> PixelList)//already has acces to coverimage
+        {
+            throw new NotImplementedException();
+        }
+
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
         public List< IEnumerable<byte>> ChopBytesToBitPairs(byte[] byteArray)
         {
@@ -210,16 +217,37 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         /*Method for calculating the required amount of pixels to hide the input message*/
-        public int CalculateRequredPixels(byte[] byteArray)
+        public int CalculateRequiredPixels(byte[] byteArray)
         {
-            int amount, counter = 0;
+            int amount = byteArray.Length*PixelsPerByte;
+            return amount;
+        }
 
-            foreach(byte value in byteArray)
+        //Method for swapping pixels in the list og matched edges
+        public void PixelSwap(List<Edge> matchedEdges)
+        {
+            for (int i = 0; i < matchedEdges.Count; i++)
             {
-                counter++;
+                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
             }
+        }
 
-            return amount = counter * PixelsPerByte;
-        }      
+        //Method for helping pixels trade values
+        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
+        {
+            int tempPosX = pixelOne.PosX;
+            int tempPosY = pixelOne.PosY;
+
+            pixelOne.PosX = pixelTwo.PosX;
+            pixelOne.PosY = pixelTwo.PosY;
+
+            pixelTwo.PosX = tempPosX;
+            pixelTwo.PosY = tempPosY;
+        }
+
+        public void PixelModify(List<Pixel> pixelList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

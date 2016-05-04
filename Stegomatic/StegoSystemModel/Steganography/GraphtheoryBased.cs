@@ -217,7 +217,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         /*Method for calculating the required amount of pixels to hide the input message*/
-        public int CalculateRequredPixels(byte[] byteArray)
+        public int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length*PixelsPerByte;
             return amount;

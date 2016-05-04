@@ -107,15 +107,5 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             throw new NotImplementedException();
         }
-        
-        public void PixelSwap(List<Pixel> pixelList)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void PixelModify(List<Pixel> pixelList)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

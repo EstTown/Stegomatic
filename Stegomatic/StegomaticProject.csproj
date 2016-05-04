@@ -49,7 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
-    <Compile Include="StegoSystemController\HandleUserInput.cs" />
+    <Compile Include="StegoSystemController\IVerifyUserInput.cs" />
+    <Compile Include="StegoSystemController\VerifyUserInput.cs" />
     <Compile Include="StegoSystemModel\Steganography\Graph.cs" />
     <Compile Include="StegoSystemModel\StegoSystemModelClass.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\RijndaelCrypto.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="StegoSystemModel\Miscellaneous\GZipStreamCompression.cs" />
     <Compile Include="StegoSystemController\StegoSystemControl.cs" />
     <Compile Include="StegoSystemModel\IStegoSystemModel.cs" />
+    <Compile Include="StegoSystemUI\Events\BtnEvent.cs" />
     <Compile Include="StegoSystemUI\Events\ShowNotificationEvent.cs" />
     <Compile Include="StegoSystemUI\Form1.cs">
       <SubType>Form</SubType>

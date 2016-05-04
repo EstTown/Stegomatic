@@ -13,9 +13,9 @@ using StegomaticProject.StegoSystemController;
 namespace StegomaticProject.Tests.ControllerTests
 {
     [TestFixture]
-    public class HandleUserInputTests
+    public class VerifyUserInputTests
     {
-        private HandleUserInput _testUserInput;
+        private VerifyUserInput _testUserInput;
         private string _pathOfTempFile;
 
         [OneTimeSetUp]
@@ -24,7 +24,7 @@ namespace StegomaticProject.Tests.ControllerTests
             // Finds the directory upon where the exe/assembly file lies and combines that with a filename.
             // In the following tests tempFile.txt will be created on that location.
 
-            _testUserInput = new HandleUserInput();
+            _testUserInput = new VerifyUserInput();
             string pathOfProjectExecutableFile = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase;
             string directoryOfExecutableFile = Path.GetDirectoryName(pathOfProjectExecutableFile);
             _pathOfTempFile = Path.Combine(directoryOfExecutableFile, "tempFile.txt");

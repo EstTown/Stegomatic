@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace StegomaticProject.Tests.ModelTests
 {
     [TestFixture]
-    public class StegoSystemModelTests
+    public class StegoSystemModelClassTests
     {
     }
 }

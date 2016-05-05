@@ -148,7 +148,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     }
 
                     //Connected edges are now found, and sorted. Yeay!
-                    List<Edge> SortedInternalList = InternalEdgeList.OrderBy(x => x.EdgeWeight).ToList();
+                    List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
                     //Create new Edge, from the loweset weighted edge
                     Edge M = SortedInternalList.FirstOrDefault();

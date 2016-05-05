@@ -253,9 +253,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             PixelTwo.PosY = tempPosY;
         }
 
-        public void PixelModify(List<Pixel> pixelList)
+        public void PixelModify(Vertex UnmatchedVert)
         {
-            throw new NotImplementedException();
+            UnmatchedVert.CalculateTargetValues();
         }
     }
 }

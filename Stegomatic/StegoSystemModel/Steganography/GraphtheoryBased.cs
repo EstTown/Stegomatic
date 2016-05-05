@@ -249,5 +249,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             UnmatchedVert.CalculateTargetValues();
         }
+
     }
 }

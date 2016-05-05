@@ -122,9 +122,63 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
 
-        public void CalcGraphMatching()
+        
+        private void CalcGraphMatching()
         {
-            throw new NotImplementedException();
+            //This will calculate a match for each vertex in the graph
+            
+            //Sort list
+            SortVertexListByEdgeAndWeight();
+
+            //Process each vertex in sorted list
+            foreach (Vertex x in VertexList)
+            {
+                if (x.Active == true && x.NumberOfEdges > 0)
+                {
+                    //Today we're finding the shortest edge for the vertex 'x'
+                    List<Edge> InternalEdgeList = new List<Edge>();
+                    foreach (Edge edge in EdgeList)
+                    {
+                        if (edge.VertexOne == x || edge.VertexTwo == x)
+                        {
+                            //Look! Look! We caught one!
+                            InternalEdgeList.Add(edge);
+                        }
+                    }
+
+                    //Connected edges are now found, and sorted. Yeay!
+                    List<Edge> SortedInternalList = InternalEdgeList.OrderBy(x => x.EdgeWeight).ToList();
+
+                    //Create new Edge, from the loweset weighted edge
+                    Edge M = SortedInternalList.FirstOrDefault();
+                    //Add to list
+                    MatchedEdges.Add(M);
+
+                    //Now we're done...
+
+                    //I was lying... we're not...
+
+                    //Now, lets handle the "dirty work"
+                    //Killingspree and hiding the evidence!
+
+                    //Deactive both verts connected to selected edge
+                    M.VertexOne.Active = false;
+                    M.VertexTwo.Active = false;
+
+                    //Now, let's kill ANY edge who knows of these two verts!
+                    foreach (Edge edge in EdgeList)
+                    {
+                        if (edge.VertexOne == M.VertexOne || edge.VertexTwo == M.VertexOne ||
+                            edge.VertexOne == M.VertexTwo || edge.VertexTwo == M.VertexTwo)
+                        {
+                            //KILL! KILL! KILL!
+                            EdgeList.Remove(edge);
+                        }
+                    }
+                }
+            }
+            //Now we should have a list of all selected edges, and no two verts should be connected by more than one edge.
+            //Congratulations! You're now a certified killer! :D
         }
     }
 }

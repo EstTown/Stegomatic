@@ -12,13 +12,16 @@ namespace StegomaticProject.StegoSystemUI
     public interface IStegoSystemUI
     {
         // Get info from UI
-        string message { get; }
-        string pathOfCoverImage { get; }
-        IConfig config { get; }
+        string Message { get; }
+        string PathOfCoverImage { get; }
+        IConfig Config { get; }
+        Bitmap DisplayImage { get; }
 
         // Modify UI
         void SetDisplayImage(Bitmap newImage);
-        void ShowNotification(DisplayNotificationEvent e);
+        void ShowNotification(string notification);
+        string GetEncryptionKey();
+        string GetStegoSeed();
 
         // Start/End
         void Start();
@@ -26,5 +29,8 @@ namespace StegomaticProject.StegoSystemUI
 
         // Events
         event DisplayNotificationEventHandler NotifyUser;
+        event BtnEventHandler DecodeImageBtn;
+        event BtnEventHandler EncodeImageBtn;
+        event BtnEventHandler SaveImageBtn;
     }
 }

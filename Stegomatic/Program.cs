@@ -39,7 +39,7 @@ namespace StegomaticProject
             Pixel pixel3 = new Pixel(color3, 722, 19);
 
             //make one new vertex
-            Vertex vertex1 = new Vertex(secretMessage, pixel1, pixel2, pixel3);
+            Vertex vertex1 = new Vertex(secretMessage[0], pixel1, pixel2, pixel3);
 
             //print all pixels
             Console.WriteLine(pixel1.ToString() + pixel2.ToString() + pixel3.ToString());

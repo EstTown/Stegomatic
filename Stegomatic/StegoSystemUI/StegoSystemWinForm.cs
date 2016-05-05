@@ -24,19 +24,24 @@ namespace StegomaticProject.StegoSystemUI
             Application.Run(_mainMenu);
         }
 
-        public IConfig config { get; private set; }
-        public string message { get; private set; }
-        public string pathOfCoverImage { get; private set; }
+        public IConfig Config { get; private set; }
+        public string Message { get; private set; }
+        public string PathOfCoverImage { get; private set; }
+        public Bitmap DisplayImage { get; private set; }
 
         public event DisplayNotificationEventHandler NotifyUser;
+        public event BtnEventHandler DecodeImageBtn;
+        public event BtnEventHandler EncodeImageBtn;
+        public event BtnEventHandler SaveImageBtn;
 
         public void SetDisplayImage(Bitmap newImage)
         {
-            
+            // VERIFY AND DISPLAY IT ON UI
+            DisplayImage = newImage;
             throw new NotImplementedException();
         }
 
-        public void ShowNotification(DisplayNotificationEvent e)
+        public void ShowNotification(string notification)
         {
             // Initialize a popup window and show the message!
 
@@ -50,6 +55,18 @@ namespace StegomaticProject.StegoSystemUI
 
         public void Terminate()
         {
+            throw new NotImplementedException();
+        }
+
+        public string GetEncryptionKey()
+        {
+            // ASK USER FOR ENCRYPTION KEY. MAKE THAT POPUPWINDOW AND RETURN THE STRING.
+            throw new NotImplementedException();
+        }
+
+        public string GetStegoSeed()
+        {
+            //SAME AS ABOVE
             throw new NotImplementedException();
         }
     }

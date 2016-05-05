@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public List<Edge> EdgeList = new List<Edge>();
         public List<Edge> MatchedEdges = new List<Edge>();
         
+        
+
         public void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
         {
             int counter = 0;
@@ -33,50 +36,90 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         
         public void ConstructEdges(List<Vertex> vertexList)
         {
-            //need double for loop, to check all pixels in a vertex, triple for loop to check all vertices
-            int k = 0;
+            byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
+            byte edgeWeight;
+            short amountOfEdges = 0;
 
+            //need double for loop, to check every vertex with every other vertex
             for (int i = 0; i < vertexList.Count; i++)
             {
-                for (int j = 0; i < GraphTheoryBased.SamplesVertexRatio; j++)
+                for (int j = 0; j < vertexList.Count; j++)
                 {
-                    for (int k = 0; j < GraphTheoryBased.SamplesVertexRatio; k++)
+                    if (i != j && vertexList[i].Active == true && vertexList[j].Active == true) //don't want to compare a vertex with itself
                     {
-                        if (vertexList[i].PixelsForThisVertex[j].EmbeddedValue == vertexList[i].TargetValues[k] && ) 
+                        bool b = ConstructASingleEdge(vertexList[i], vertexList[j], out edgeWeight); //return true if an edge was created
+                        if (b == true)
+                        {
+                            amountOfEdges++;
+                            if (edgeWeight <= lowestWeight)
+                            {
+                                lowestWeight = edgeWeight;
+                            }
+                        }
+                        
                     }
                 }
+                vertexList[i].LowestEdgeWeight = lowestWeight;
+                vertexList[i].NumberOfEdges = amountOfEdges;
+                vertexList[i].Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
             }
         }
 
-        public void HelpMethodConstructEdges(Vertex vertex1, Vertex vertex2)
+        private bool ConstructASingleEdge(Vertex vertex1, Vertex vertex2, out byte lowestWeight)
         {
-
+            byte weight = GraphTheoryBased.MaxEdgeWeight;
+            Edge tempEdge = new Edge(null, null, null, null, 0);
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 for (int j = 0; j < GraphTheoryBased.SamplesVertexRatio; j++)
                 {
                     if (vertex1.PixelsForThisVertex[i].EmbeddedValue == vertex2.TargetValues[j] &&
                         vertex2.PixelsForThisVertex[j].EmbeddedValue == vertex1.TargetValues[i] &&
-                        Math.Abs(vertex1.PixelsForThisVertex[i].Color.R - vertex2.PixelsForThisVertex[j].Color.R) < GraphTheoryBased.MaxEdgeWeight
-                        )
+                        CalculateWeightForOneEdge(vertex1.PixelsForThisVertex[i], vertex2.PixelsForThisVertex[j]) <= GraphTheoryBased.MaxEdgeWeight)
+                    {
+                        //Only have to make 1 edge, for two vertices, but there could potentially be more than 1 pr. 2 vertices
+                        if (CalculateWeightForOneEdge(vertex1.PixelsForThisVertex[i],
+                                vertex2.PixelsForThisVertex[j]) <= weight)
+                        {
+                            weight = CalculateWeightForOneEdge(vertex1.PixelsForThisVertex[i],
+                                vertex2.PixelsForThisVertex[j]);
+                            tempEdge = new Edge(vertex1, vertex2, vertex1.PixelsForThisVertex[i], vertex2.PixelsForThisVertex[j], weight);
+                        }
                     }
+                }
             }
+
+            if (tempEdge.EdgeWeight != 0 ) //edgeweight will never be zero, because a pixel cannot have an embeddedvalue that's equivalent with it's targetvalue
+            {
+                EdgeList.Add(tempEdge);
+                lowestWeight = weight;
+                return true;
+            }
+            lowestWeight = 0;
+            return false;
+        }
+
+        private byte CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
+        {
+            byte weight = (byte)(Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
+                     Math.Abs(pixel1.Color.B - pixel2.Color.B));
+            return weight;
         }
         
-        public void CheckIfMatched(List<Vertex> vertexList) //this will be called multiple times
+        public void CheckIfMatched(List<Vertex> vertexList) //this will be called multiple times. 
         {
             for (int i = 0; i < VertexList.Count; i++)
             {
-                if (vertexList[i].PartOfSecretMessage == vertexList[i].VertexValue)
+                if (vertexList[i].PartOfSecretMessage != vertexList[i].VertexValue)
                 {
-                    vertexList[i].Active = false;
+                    vertexList[i].Active = true;
                 }
             }
         }
 
-        public void SortListByEdgeAndWeight()
+        private void SortVertexListByEdgeAndWeight()
         {
-            throw new NotImplementedException();
+            VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
 
         public void CalcGraphMatching()

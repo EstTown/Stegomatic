@@ -11,20 +11,27 @@ namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemConsole : IStegoSystemUI
     {
-        public IConfig config { get; private set; }
-        public string message { get; private set; }
-        public string pathOfCoverImage { get; private set; }
+        public IConfig Config { get; private set; }
+        public string Message { get; private set; }
+        public string PathOfCoverImage { get; private set; }
+        public Bitmap DisplayImage { get; private set; }
 
         public event DisplayNotificationEventHandler NotifyUser;
+        public event BtnEventHandler DecodeImageBtn;
+        public event BtnEventHandler EncodeImageBtn;
+        public event BtnEventHandler SaveImageBtn;
 
         public void SetDisplayImage(Bitmap newImage)
         {
+            // VERIFY SOMEHOW? 
+            // PUT INTO UI
+            DisplayImage = newImage;
             throw new NotImplementedException();
         }
 
-        public void ShowNotification(DisplayNotificationEvent e)
+        public void ShowNotification(string notification)
         {
-            Console.WriteLine(e.Notification);
+            Console.WriteLine(notification);
         }
 
         public void Start()
@@ -46,6 +53,16 @@ namespace StegomaticProject.StegoSystemUI
         }
 
         public void Terminate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetEncryptionKey()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetStegoSeed()
         {
             throw new NotImplementedException();
         }

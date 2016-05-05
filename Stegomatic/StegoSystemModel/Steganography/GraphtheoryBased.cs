@@ -217,16 +217,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         /*Method for calculating the required amount of pixels to hide the input message*/
-        public int CalculateRequredPixels(byte[] byteArray)
+        public int CalculateRequiredPixels(byte[] byteArray)
         {
-            int amount, counter = 0;
-
-            foreach(byte value in byteArray)
-            {
-                counter++;
-            }
-
-            return amount = counter * PixelsPerByte;
+            int amount = byteArray.Length*PixelsPerByte;
+            return amount;
         }
 
         //Method for swapping pixels in the list og matched edges
@@ -239,18 +233,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         //Method for helping pixels trade values
-        public void TradePixelValues(Pixel PixelOne, Pixel PixelTwo)
+        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
-            int tempPosX, tempPosY;
+            int tempPosX = pixelOne.PosX;
+            int tempPosY = pixelOne.PosY;
 
-            tempPosX = PixelOne.PosX;
-            tempPosY = PixelOne.PosY;
+            pixelOne.PosX = pixelTwo.PosX;
+            pixelOne.PosY = pixelTwo.PosY;
 
-            PixelOne.PosX = PixelTwo.PosX;
-            PixelOne.PosY = PixelTwo.PosY;
-
-            PixelTwo.PosX = tempPosX;
-            PixelTwo.PosY = tempPosY;
+            pixelTwo.PosX = tempPosX;
+            pixelTwo.PosY = tempPosY;
         }
 
         public void PixelModify(Vertex UnmatchedVert)

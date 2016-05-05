@@ -8,7 +8,7 @@ using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.StegoSystemController
 {
-    public class HandleUserInput
+    public class VerifyUserInput : IVerifyUserInput
     {
         public void File(string path)
         {
@@ -24,6 +24,16 @@ namespace StegomaticProject.StegoSystemController
         }
 
         public void Message(string message)
+        {
+
+        }
+
+        public void EncryptionKey(string encryptionKey)
+        {
+
+        }
+
+        public void StegoSeed(string stegoSeed)
         {
 
         }

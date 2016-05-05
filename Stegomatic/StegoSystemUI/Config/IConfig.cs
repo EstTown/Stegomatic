@@ -10,6 +10,5 @@ namespace StegomaticProject.StegoSystemUI.Config
     {
         bool encrypt { get; }
         bool compress { get; }
-        bool confound { get; }
     }
 }

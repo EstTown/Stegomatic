@@ -24,7 +24,7 @@ namespace StegomaticProject.StegoSystemModel
             _stegoMethod = new GraphTheoryBased();
         }
 
-        public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey,
+        public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
             //if (decryptionKey == string.Empty || decryptionKey == null)
@@ -33,7 +33,7 @@ namespace StegomaticProject.StegoSystemModel
             //}
             // PROP DET OVENSTÅENDE IND I ENCRYPTION KLASSEN??!
 
-            byte[] byteMessage = _stegoMethod.Decode(coverImage, decryptionKey);
+            byte[] byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
 
             if (decrypt)
             {
@@ -50,7 +50,7 @@ namespace StegomaticProject.StegoSystemModel
             return message;
         }
 
-        public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, 
+        public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
             bool encrypt = true, bool compress = true)
         {
             byte[] byteMessage = ByteConverter.StringToByteArray(message);
@@ -65,7 +65,7 @@ namespace StegomaticProject.StegoSystemModel
                 byteMessage = _cryptoMethod.Encrypt(byteMessage, encryptionKey);
             }
 
-            Bitmap StegoObject = _stegoMethod.Encode(coverImage, encryptionKey, byteMessage);
+            Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
             // SKAL DET VÆRE ENCRYPTION KEY DER KOMMER IND HER??? HVAD SKAL DET VÆRE DET SEED OG HVOR FÅR VI DET FRA?
 
             return StegoObject;

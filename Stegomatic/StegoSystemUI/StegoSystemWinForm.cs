@@ -14,6 +14,16 @@ namespace StegomaticProject.StegoSystemUI
     public class StegoSystemWinForm : IStegoSystemUI
     {
         private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
+        public IConfig Config { get; private set; }
+        public string Message { get; private set; }
+        public string PathOfCoverImage { get; private set; }
+        public Bitmap DisplayImage { get; private set; }
+
+        public event DisplayNotificationEventHandler NotifyUser;
+        public event BtnEventHandler DecodeBtn;
+        public event BtnEventHandler EncodeBtn;
+        public event BtnEventHandler SaveImageBtn;
+        public event BtnEventHandler OpenImageBtn;
 
         public StegoSystemWinForm()
         {
@@ -21,18 +31,50 @@ namespace StegomaticProject.StegoSystemUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _mainMenu = new Form1();
-            Application.Run(_mainMenu);
+
+            SubscribeToEvents();
         }
 
-        public IConfig Config { get; private set; }
-        public string Message { get; private set; }
-        public string PathOfCoverImage { get; private set; }
-        public Bitmap DisplayImage { get; private set; }
+        private void SubscribeToEvents()
+        {
+            _mainMenu.EncodeBtnClick += new BtnEventHandler(this.EncodeBtnClick);
+            _mainMenu.DecodeBtnClick += new BtnEventHandler(this.DecodeBtnClick);
+            _mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
+            _mainMenu.OpenImageBtnClick += new BtnEventHandler(this.OpenImageBtnClick);
+            // Either we don't need SaveImage here, or we need OpenImage here as well. They may be fine to be handled in the form itself. 
+        }
 
-        public event DisplayNotificationEventHandler NotifyUser;
-        public event BtnEventHandler DecodeImageBtn;
-        public event BtnEventHandler EncodeImageBtn;
-        public event BtnEventHandler SaveImageBtn;
+        private void SaveImageBtnClick(BtnEvent e)
+        {
+            if (SaveImageBtn != null)
+            {
+                SaveImageBtn(new BtnEvent());
+            }
+        }
+
+        private void OpenImageBtnClick(BtnEvent e)
+        {
+            if (OpenImageBtn != null)
+            {
+                OpenImageBtn(new BtnEvent());
+            }
+        }
+
+        private void DecodeBtnClick(BtnEvent e)
+        {
+            if (DecodeBtn != null)
+            {
+                DecodeBtn(new BtnEvent());
+            }
+        }
+
+        private void EncodeBtnClick(BtnEvent e)
+        {
+            if (EncodeBtn != null)
+            {
+                EncodeBtn(new BtnEvent());
+            }
+        }
 
         public void SetDisplayImage(Bitmap newImage)
         {
@@ -50,12 +92,14 @@ namespace StegomaticProject.StegoSystemUI
 
         public void Start()
         {
-            Console.ReadKey();
+            Application.Run(_mainMenu);
         }
 
         public void Terminate()
         {
             throw new NotImplementedException();
+            // Har vi overhovedet brug for dette eller er krydset i hjørnet nok? 
+            // Hvis ikke, så gør det til en NotSupportedException();
         }
 
         public string GetEncryptionKey()

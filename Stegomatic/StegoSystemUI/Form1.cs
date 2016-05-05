@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StegomaticProject.StegoSystemUI.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +22,12 @@ namespace StegomaticProject.StegoSystemUI
             txtbox_input.TextChanged += new System.EventHandler(this.txtbox_input_TextChanged);
         }
 
+        public event BtnEventHandler DecodeBtnClick;
+        public event BtnEventHandler EncodeBtnClick;
+        public event BtnEventHandler SaveImageBtnClick;
+        public event BtnEventHandler OpenImageBtnClick;
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -28,6 +35,11 @@ namespace StegomaticProject.StegoSystemUI
 
         public void btn_open_Click(object sender, EventArgs e)
         {
+            if (OpenImageBtnClick != null)
+            {
+                OpenImageBtnClick(new BtnEvent());
+            }
+
 
             Stream stream = null;
 
@@ -77,6 +89,11 @@ namespace StegomaticProject.StegoSystemUI
 
         private void btn_encode_Click(object sender, EventArgs e)
         {
+            if (EncodeBtnClick != null)
+            {
+                EncodeBtnClick(new BtnEvent());
+            }
+
 
             //If user wanted 'enable encryption', show dialog
             if (checkBox_encryption.Checked == true)
@@ -98,6 +115,11 @@ namespace StegomaticProject.StegoSystemUI
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            if (SaveImageBtnClick != null)
+            {
+                SaveImageBtnClick(new BtnEvent());
+            }
+
             SaveFileDialog SaveFileDialog = new SaveFileDialog();
 
             //Image to be saved, goes here
@@ -152,7 +174,10 @@ namespace StegomaticProject.StegoSystemUI
 
         private void btn_decode_Click(object sender, EventArgs e)
         {
-
+            if (DecodeBtnClick != null)
+            {
+                DecodeBtnClick(new BtnEvent());
+            }
         }
 
         private void checkBox_encryption_CheckedChanged(object sender, EventArgs e)

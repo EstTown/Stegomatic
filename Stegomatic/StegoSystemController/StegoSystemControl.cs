@@ -26,9 +26,9 @@ namespace StegomaticProject.StegoSystemController
         private void SubscribeToEvents()
         {
             _stegoUI.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
-            _stegoUI.EncodeImageBtn += new BtnEventHandler(this.EncodeImage);
-            _stegoUI.DecodeImageBtn += new BtnEventHandler(this.DecodeImage);
-            _stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage);
+            _stegoUI.EncodeBtn += new BtnEventHandler(this.EncodeImage);
+            _stegoUI.DecodeBtn += new BtnEventHandler(this.DecodeImage);
+            _stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
         }
 
         public void ShowNotification(DisplayNotificationEvent e)

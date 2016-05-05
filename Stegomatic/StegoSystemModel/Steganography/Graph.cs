@@ -21,6 +21,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public List<Edge> EdgeList = new List<Edge>();
         public List<Edge> MatchedEdges = new List<Edge>();
         
+        
+
         public void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
         {
             int counter = 0;
@@ -115,9 +117,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
         }
 
-        public void SortListByEdgeAndWeight()
+        private void SortVertexListByEdgeAndWeight()
         {
-            throw new NotImplementedException();
+            VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
 
         public void CalcGraphMatching()

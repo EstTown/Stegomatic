@@ -15,6 +15,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             this.PixelList = pixelList;
         }
+        
 
         public List<Pixel> PixelList;
         public List<Vertex> VertexList = new List<Vertex>();

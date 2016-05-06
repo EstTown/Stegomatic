@@ -247,7 +247,23 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public void PixelModify(Vertex UnmatchedVert)
         {
-            UnmatchedVert.CalculateTargetValues();
+            bool checker = true;
+
+            while(checker)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (UnmatchedVert.TargetValues[i] == UnmatchedVert.CalculateVertexValue())
+                    {
+                        checker = false;
+                    }
+                    else
+                    {
+                        UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
+                            UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
+                    }
+                }
+            }
         }
 
     }

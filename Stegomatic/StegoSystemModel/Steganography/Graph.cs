@@ -208,25 +208,25 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             pixelTwo.PosX = tempPosX;
             pixelTwo.PosY = tempPosY;
         }
-        public void PixelModify()
-        {
-            bool checker = true;
+        //public void PixelModify()
+        //{
+        //    bool checker = true;
 
-            while (checker)
-            {
-                for (int i = 0; i < VertexList.Count; i++)
-                {
-                    if (unmatchedVertex.TargetValues[i] == unmatchedVertex.CalculateVertexValue())
-                    {
-                        checker = false;
-                    }
-                    else
-                    {
-                        //UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
-                        //UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
-                    }
-                }
-            }
-        }
+        //    while (checker)
+        //    {
+        //        for (int i = 0; i < VertexList.Count; i++)
+        //        {
+        //            if (unmatchedVertex.TargetValues[i] == unmatchedVertex.CalculateVertexValue())
+        //            {
+        //                checker = false;
+        //            }
+        //            else
+        //            {
+        //                //UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
+        //                //UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

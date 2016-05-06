@@ -34,9 +34,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             CheckIfMatched();
         }
 
-        public void ModifyGraph()
+        public List<Pixel> ModifyGraph()
         {
-            
+
+
+
+            return PixelList;
         }
 
         private void ConstructVertices(int pixelsNeeded, byte[] secretMessage)

@@ -30,19 +30,20 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
             //call bunch of methods that prepare for graph construction
-
             int amountOfPixels = CalculateRequiredPixels(message);
+            GetRandomPixelsAddToList1(coverImage, seed, amountOfPixels);
 
+            //convert secretmessage
             List<IEnumerable<byte>> list = ChopBytesToBitPairs(message);
             
+
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);
             graph.ConstructGraph(amountOfPixels, message);
             graph.ModifyGraph();
+            
 
-            //maybe some modify stuff here
-
-            throw new NotImplementedException();
+            
         }
 
         /*Method for calculating the weight of an edge*/
@@ -267,6 +268,5 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
         }
-
     }
 }

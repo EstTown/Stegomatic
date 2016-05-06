@@ -52,7 +52,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 counter++;
             }
         }
-        
         private void ConstructEdges()
         {
             byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
@@ -135,12 +134,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
         }
-
         private void SortVertexListByEdgeAndWeight()
         {
             VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
-
         
         private void CalcGraphMatching()
         {
@@ -198,6 +195,48 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             //Now we should have a list of all selected edges, and no two verts should be connected by more than one edge.
             //Congratulations! You're now a certified killer! :D
+        }
+        
+        public void PixelSwap(List<Edge> matchedEdges)
+        {
+            for (int i = 0; i < matchedEdges.Count; i++)
+            {
+                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
+
+            }
+        }
+
+        //Method for helping pixels trade values
+        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
+        {
+            int tempPosX = pixelOne.PosX;
+            int tempPosY = pixelOne.PosY;
+
+            pixelOne.PosX = pixelTwo.PosX;
+            pixelOne.PosY = pixelTwo.PosY;
+
+            pixelTwo.PosX = tempPosX;
+            pixelTwo.PosY = tempPosY;
+        }
+        public void PixelModify(Vertex UnmatchedVert)
+        {
+            bool checker = true;
+
+            while (checker)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (UnmatchedVert.TargetValues[i] == UnmatchedVert.CalculateVertexValue())
+                    {
+                        checker = false;
+                    }
+                    else
+                    {
+                        //UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
+                        //UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
+                    }
+                }
+            }
         }
     }
 }

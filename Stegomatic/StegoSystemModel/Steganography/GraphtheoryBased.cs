@@ -34,12 +34,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             GetRandomPixelsAddToList1(coverImage, seed, amountOfPixels);
 
             //convert secretmessage
-            List<IEnumerable<byte>> list = ChopBytesToBitPairs(message);
+            byte[] newMessage = ChopBytesToBitPairs(message);
             
 
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);
-            graph.ConstructGraph(amountOfPixels, message);
+            graph.ConstructGraph(amountOfPixels, newMessage);
             graph.ModifyGraph();
 
 
@@ -229,54 +229,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int amount = byteArray.Length*PixelsPerByte;
             return amount;
         }
-
-        
         public void EmbedPixelListIntoImage()//already has acces to coverimage
         {
             //calls pixelswap and pixelmodify
             throw new NotImplementedException();
-        }
-        //Method for swapping pixels in the list og matched edges
-        public void PixelSwap(List<Edge> matchedEdges)
-        {
-            for (int i = 0; i < matchedEdges.Count; i++)
-            {
-                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
-
-            }
-        }
-
-        //Method for helping pixels trade values
-        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
-        {
-            int tempPosX = pixelOne.PosX;
-            int tempPosY = pixelOne.PosY;
-
-            pixelOne.PosX = pixelTwo.PosX;
-            pixelOne.PosY = pixelTwo.PosY;
-
-            pixelTwo.PosX = tempPosX;
-            pixelTwo.PosY = tempPosY;
-        }
-        public void PixelModify(Vertex UnmatchedVert)
-        {
-            bool checker = true;
-
-            while(checker)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (UnmatchedVert.TargetValues[i] == UnmatchedVert.CalculateVertexValue())
-                    {
-                        checker = false;
-                    }
-                    else
-                    {
-                        //UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
-                            //UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
-                    }
-                }
-            }
         }
     }
 }

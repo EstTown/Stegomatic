@@ -349,11 +349,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox picbox_image;
-        private System.Windows.Forms.RichTextBox txtbox_input;
         private System.Windows.Forms.Label label_char;
-        private System.Windows.Forms.Button btn_open;
         private System.Windows.Forms.Button btn_encode;
         private System.Windows.Forms.Button btn_decode;
         private System.Windows.Forms.Button btn_save;
@@ -373,6 +369,9 @@
         private System.Windows.Forms.CheckBox checkBox_compression;
         private System.Windows.Forms.Label label_capacity;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button btn_open;
+        public System.Windows.Forms.PictureBox picbox_image;
+        public System.Windows.Forms.RichTextBox txtbox_input;
     }
 }
 

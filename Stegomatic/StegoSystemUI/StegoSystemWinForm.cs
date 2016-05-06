@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI;
+using System.IO;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -33,6 +34,7 @@ namespace StegomaticProject.StegoSystemUI
         public event BtnEventHandler DecodeImageBtn;
         public event BtnEventHandler EncodeImageBtn;
         public event BtnEventHandler SaveImageBtn;
+        public event BtnEventHandler OpenImageBtn;
 
         public void SetDisplayImage(Bitmap newImage)
         {
@@ -69,5 +71,6 @@ namespace StegomaticProject.StegoSystemUI
             //SAME AS ABOVE
             throw new NotImplementedException();
         }
+
     }
 }

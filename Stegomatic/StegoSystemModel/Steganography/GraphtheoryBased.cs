@@ -41,9 +41,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Graph graph = new Graph(PixelList, amountOfPixels);
             graph.ConstructGraph(amountOfPixels, message);
             graph.ModifyGraph();
-            
 
-            
+
+            return coverImage;
         }
 
         /*Method for calculating the weight of an edge*/
@@ -172,17 +172,26 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
-        public List< IEnumerable<byte>> ChopBytesToBitPairs(byte[] byteArray)
+        public byte[] ChopBytesToBitPairs(byte[] byteArray)
         {
             /*List fo int values*/
-            List< IEnumerable<byte>> messageValues = new List<IEnumerable <byte>>();
+            List<IEnumerable<byte>> messageValues = new List<IEnumerable <byte>>();
 
             foreach (byte value in byteArray)
             {
                 messageValues.Add(ConvertBitsToInt(value));
             }
+            int counter = 0;
+            byte[] bytearray2 = new byte[] {};
 
-            return messageValues;
+            foreach (IEnumerable<byte> bytes in messageValues)
+            {
+                bytearray2 = bytes.ToArray();
+            }
+
+
+
+            return bytearray2;
         }
 
         /*Method for converting bitpairs to ints from a byte*/
@@ -222,7 +231,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
         
-        public void EmbedPixelListIntoImagePixels()//already has acces to coverimage
+        public void EmbedPixelListIntoImage()//already has acces to coverimage
         {
             //calls pixelswap and pixelmodify
             throw new NotImplementedException();
@@ -233,6 +242,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             for (int i = 0; i < matchedEdges.Count; i++)
             {
                 TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
+
             }
         }
 

@@ -31,7 +31,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             ConstructEdges();
             CheckIfMatched();
             CalcGraphMatching();
-            CheckIfMatched();
+            
         }
 
         public List<Pixel> ModifyGraph()

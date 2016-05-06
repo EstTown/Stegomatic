@@ -11,20 +11,33 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     class Graph
     {
         //Constructor for the class
-        public Graph(List<Pixel> pixelList)
+        public Graph(List<Pixel> pixelList, int pixelsNeeded)
         {
             this.PixelList = pixelList;
+            this.PixelsNeeded = pixelsNeeded;
         }
-        
-
         public List<Pixel> PixelList;
         public List<Vertex> VertexList = new List<Vertex>();
         public List<Edge> EdgeList = new List<Edge>();
         public List<Edge> MatchedEdges = new List<Edge>();
-        
-        
+        public int PixelsNeeded { get; }
 
-        public void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
+        public void ConstructGraph(int pixelsNeeded, byte[] secretMessage)
+        {
+            ConstructVertices(pixelsNeeded, secretMessage);
+            CheckIfMatched();
+            ConstructEdges();
+            CheckIfMatched();
+            CalcGraphMatching();
+            
+        }
+
+        public List<Pixel> ModifyGraph()
+        {
+            
+            return PixelList;
+        }
+        private void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
         {
             int counter = 0;
             for (int i = 0; i < pixelsNeeded; i+=GraphTheoryBased.SamplesVertexRatio)
@@ -34,21 +47,20 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 counter++;
             }
         }
-        
-        public void ConstructEdges(List<Vertex> vertexList)
+        private void ConstructEdges()
         {
             byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
             byte edgeWeight;
             short amountOfEdges = 0;
 
             //need double for loop, to check every vertex with every other vertex
-            for (int i = 0; i < vertexList.Count; i++)
+            for (int i = 0; i < VertexList.Count; i++)
             {
-                for (int j = 0; j < vertexList.Count; j++)
+                for (int j = 0; j < VertexList.Count; j++)
                 {
-                    if (i != j && vertexList[i].Active == true && vertexList[j].Active == true) //don't want to compare a vertex with itself
+                    if (i != j && VertexList[i].Active == true && VertexList[j].Active == true) //don't want to compare a vertex with itself
                     {
-                        bool b = ConstructASingleEdge(vertexList[i], vertexList[j], out edgeWeight); //return true if an edge was created
+                        bool b = ConstructASingleEdge(VertexList[i], VertexList[j], out edgeWeight); //return true if an edge was created
                         if (b == true)
                         {
                             amountOfEdges++;
@@ -60,12 +72,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         
                     }
                 }
-                vertexList[i].LowestEdgeWeight = lowestWeight;
-                vertexList[i].NumberOfEdges = amountOfEdges;
-                vertexList[i].Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
+                VertexList[i].LowestEdgeWeight = lowestWeight;
+                VertexList[i].NumberOfEdges = amountOfEdges;
+                VertexList[i].Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
             }
         }
-
         private bool ConstructASingleEdge(Vertex vertex1, Vertex vertex2, out byte lowestWeight)
         {
             byte weight = GraphTheoryBased.MaxEdgeWeight;
@@ -99,31 +110,26 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             lowestWeight = 0;
             return false;
         }
-
         private byte CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
         {
             byte weight = (byte)(Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
                      Math.Abs(pixel1.Color.B - pixel2.Color.B));
             return weight;
         }
-        
-        public void CheckIfMatched(List<Vertex> vertexList) //this will be called multiple times. 
+        public void CheckIfMatched() //this will be called multiple times. 
         {
             for (int i = 0; i < VertexList.Count; i++)
             {
-                if (vertexList[i].PartOfSecretMessage != vertexList[i].VertexValue)
+                if (VertexList[i].PartOfSecretMessage != VertexList[i].VertexValue)
                 {
-                    vertexList[i].Active = true;
+                    VertexList[i].Active = true;
                 }
             }
         }
-
         private void SortVertexListByEdgeAndWeight()
         {
             VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
-
-        
         private void CalcGraphMatching()
         {
             //This will calculate a match for each vertex in the graph
@@ -180,6 +186,47 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             //Now we should have a list of all selected edges, and no two verts should be connected by more than one edge.
             //Congratulations! You're now a certified killer! :D
+        }
+        public void PixelSwap(List<Edge> matchedEdges)
+        {
+            for (int i = 0; i < matchedEdges.Count; i++)
+            {
+                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
+
+            }
+        }
+
+        //Method for helping pixels trade values
+        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
+        {
+            int tempPosX = pixelOne.PosX;
+            int tempPosY = pixelOne.PosY;
+
+            pixelOne.PosX = pixelTwo.PosX;
+            pixelOne.PosY = pixelTwo.PosY;
+
+            pixelTwo.PosX = tempPosX;
+            pixelTwo.PosY = tempPosY;
+        }
+        public void PixelModify()
+        {
+            bool checker = true;
+
+            while (checker)
+            {
+                for (int i = 0; i < VertexList.Count; i++)
+                {
+                    if (unmatchedVertex.TargetValues[i] == unmatchedVertex.CalculateVertexValue())
+                    {
+                        checker = false;
+                    }
+                    else
+                    {
+                        //UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
+                        //UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
+                    }
+                }
+            }
         }
     }
 }

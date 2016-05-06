@@ -20,6 +20,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             // Adds the 3 color-values and use modulo, which corresponds to the embedded value of a pixel
             this.EmbeddedValue = (byte)((Color.R + Color.G + Color.B)%GraphTheoryBased.Modulo);
         }
+
         public Color Color { get; set; }
 
         public byte EmbeddedValue { get; set; }

@@ -15,10 +15,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
 
         }
+
         public List<Pixel> PixelList = new List<Pixel>();
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
-
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
 
         public byte[] Decode(Bitmap coverImage, string seed)
@@ -29,18 +29,21 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
-            
             //call bunch of methods that prepare for graph construction
+            int amountOfPixels = CalculateRequiredPixels(message);
+            GetRandomPixelsAddToList1(coverImage, seed, amountOfPixels);
 
+            //convert secretmessage
+            byte[] newMessage = ChopBytesToBitPairs(message);
+            
 
             //at some point we need to calculate a graph, therefore make new graph
-            //Graph graph = new Graph(PixelList, message);
+            Graph graph = new Graph(PixelList, amountOfPixels);
+            graph.ConstructGraph(amountOfPixels, newMessage);
+            graph.ModifyGraph();
 
 
-
-
-            //maybe some modify stuff here
-            throw new NotImplementedException();
+            return coverImage;
         }
 
         /*Method for calculating the weight of an edge*/
@@ -166,25 +169,29 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
-
-        //
-        public void EmbedPixelListIntoImagePixels(List<Pixel> PixelList)//already has acces to coverimage
-        {
-            throw new NotImplementedException();
-        }
+        
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
-        public List< IEnumerable<byte>> ChopBytesToBitPairs(byte[] byteArray)
+        public byte[] ChopBytesToBitPairs(byte[] byteArray)
         {
             /*List fo int values*/
-            List< IEnumerable<byte>> messageValues = new List<IEnumerable <byte>>();
+            List<IEnumerable<byte>> messageValues = new List<IEnumerable <byte>>();
 
             foreach (byte value in byteArray)
             {
                 messageValues.Add(ConvertBitsToInt(value));
             }
+            int counter = 0;
+            byte[] bytearray2 = new byte[] {};
 
-            return messageValues;
+            foreach (IEnumerable<byte> bytes in messageValues)
+            {
+                bytearray2 = bytes.ToArray();
+            }
+
+
+
+            return bytearray2;
         }
 
         /*Method for converting bitpairs to ints from a byte*/
@@ -222,33 +229,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int amount = byteArray.Length*PixelsPerByte;
             return amount;
         }
-
-        //Method for swapping pixels in the list og matched edges
-        public void PixelSwap(List<Edge> matchedEdges)
+        public void EmbedPixelListIntoImage()//already has acces to coverimage
         {
-            for (int i = 0; i < matchedEdges.Count; i++)
-            {
-                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
-            }
+            //calls pixelswap and pixelmodify
+            throw new NotImplementedException();
         }
-
-        //Method for helping pixels trade values
-        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
-        {
-            int tempPosX = pixelOne.PosX;
-            int tempPosY = pixelOne.PosY;
-
-            pixelOne.PosX = pixelTwo.PosX;
-            pixelOne.PosY = pixelTwo.PosY;
-
-            pixelTwo.PosX = tempPosX;
-            pixelTwo.PosY = tempPosY;
-        }
-
-        public void PixelModify(Vertex UnmatchedVert)
-        {
-            UnmatchedVert.CalculateTargetValues();
-        }
-
     }
 }

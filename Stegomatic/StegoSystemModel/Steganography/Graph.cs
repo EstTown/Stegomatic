@@ -16,8 +16,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.PixelList = pixelList;
             this.PixelsNeeded = pixelsNeeded;
         }
-
-
         public List<Pixel> PixelList;
         public List<Vertex> VertexList = new List<Vertex>();
         public List<Edge> EdgeList = new List<Edge>();
@@ -36,12 +34,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public List<Pixel> ModifyGraph()
         {
-
-
-
+            
             return PixelList;
         }
-
         private void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
         {
             int counter = 0;
@@ -82,7 +77,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 VertexList[i].Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
             }
         }
-
         private bool ConstructASingleEdge(Vertex vertex1, Vertex vertex2, out byte lowestWeight)
         {
             byte weight = GraphTheoryBased.MaxEdgeWeight;
@@ -116,14 +110,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             lowestWeight = 0;
             return false;
         }
-
         private byte CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
         {
             byte weight = (byte)(Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
                      Math.Abs(pixel1.Color.B - pixel2.Color.B));
             return weight;
         }
-        
         public void CheckIfMatched() //this will be called multiple times. 
         {
             for (int i = 0; i < VertexList.Count; i++)
@@ -138,7 +130,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
-        
         private void CalcGraphMatching()
         {
             //This will calculate a match for each vertex in the graph
@@ -196,7 +187,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //Now we should have a list of all selected edges, and no two verts should be connected by more than one edge.
             //Congratulations! You're now a certified killer! :D
         }
-        
         public void PixelSwap(List<Edge> matchedEdges)
         {
             for (int i = 0; i < matchedEdges.Count; i++)
@@ -218,15 +208,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             pixelTwo.PosX = tempPosX;
             pixelTwo.PosY = tempPosY;
         }
-        public void PixelModify(Vertex UnmatchedVert)
+        public void PixelModify()
         {
             bool checker = true;
 
             while (checker)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < VertexList.Count; i++)
                 {
-                    if (UnmatchedVert.TargetValues[i] == UnmatchedVert.CalculateVertexValue())
+                    if (unmatchedVertex.TargetValues[i] == unmatchedVertex.CalculateVertexValue())
                     {
                         checker = false;
                     }

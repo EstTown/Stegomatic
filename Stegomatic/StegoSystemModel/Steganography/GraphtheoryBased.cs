@@ -15,10 +15,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
 
         }
+
         public List<Pixel> PixelList = new List<Pixel>();
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
-
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
 
         public byte[] Decode(Bitmap coverImage, string seed)
@@ -29,17 +29,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
-            
             //call bunch of methods that prepare for graph construction
 
+            int amountOfPixels = CalculateRequiredPixels(message);
 
+            List<IEnumerable<byte>> list = ChopBytesToBitPairs(message);
+            
             //at some point we need to calculate a graph, therefore make new graph
-            //Graph graph = new Graph(PixelList, message);
-
-
-
+            Graph graph = new Graph(PixelList, amountOfPixels);
+            graph.ConstructGraph(amountOfPixels, message);
+            graph.ModifyGraph();
 
             //maybe some modify stuff here
+
             throw new NotImplementedException();
         }
 
@@ -166,12 +168,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
-
-        //
-        public void EmbedPixelListIntoImagePixels(List<Pixel> PixelList)//already has acces to coverimage
-        {
-            throw new NotImplementedException();
-        }
+        
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
         public List< IEnumerable<byte>> ChopBytesToBitPairs(byte[] byteArray)
@@ -223,6 +220,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return amount;
         }
 
+        
+        public void EmbedPixelListIntoImagePixels()//already has acces to coverimage
+        {
+            //calls pixelswap and pixelmodify
+            throw new NotImplementedException();
+        }
         //Method for swapping pixels in the list og matched edges
         public void PixelSwap(List<Edge> matchedEdges)
         {
@@ -244,7 +247,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             pixelTwo.PosX = tempPosX;
             pixelTwo.PosY = tempPosY;
         }
-
         public void PixelModify(Vertex UnmatchedVert)
         {
             UnmatchedVert.CalculateTargetValues();

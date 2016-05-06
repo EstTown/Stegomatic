@@ -21,7 +21,7 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphTheoryBased();
+            _stegoMethod = new LeastSignificantBit(); // GraphTheoryBased();
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
@@ -66,7 +66,6 @@ namespace StegomaticProject.StegoSystemModel
             }
 
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
-            // SKAL DET VÆRE ENCRYPTION KEY DER KOMMER IND HER??? HVAD SKAL DET VÆRE DET SEED OG HVOR FÅR VI DET FRA?
 
             return StegoObject;
         }

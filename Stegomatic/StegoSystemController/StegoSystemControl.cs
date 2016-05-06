@@ -10,14 +10,14 @@ namespace StegomaticProject.StegoSystemController
 {
     public class StegoSystemControl : IStegoSystemControl
     {
-        private IStegoSystemModel _stegoLogic;
+        private IStegoSystemModel _stegoModel;
         private IStegoSystemUI _stegoUI;
         private Bitmap _image;
         private IVerifyUserInput _verifyUserInput;
 
-        public StegoSystemControl(IStegoSystemModel stegoLogic, IStegoSystemUI stegoUI)
+        public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
-            this._stegoLogic = stegoLogic;
+            this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
 
             SubscribeToEvents();
@@ -29,6 +29,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.EncodeBtn += new BtnEventHandler(this.EncodeImage);
             _stegoUI.DecodeBtn += new BtnEventHandler(this.DecodeImage);
             _stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
+            _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
         }
 
         public void ShowNotification(DisplayNotificationEvent e)
@@ -36,7 +37,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ShowNotification(e.Notification);
         }
 
-        public void OpenImage()
+        public void OpenImage(BtnEvent e)
         {
             throw new System.NotImplementedException();
         }
@@ -55,7 +56,7 @@ namespace StegomaticProject.StegoSystemController
                 _verifyUserInput.EncryptionKey(encryptionKey);
                 _verifyUserInput.StegoSeed(stegoSeed);
 
-                Bitmap stegoObject = _stegoLogic.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.encrypt, config.compress);
+                Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.encrypt, config.compress);
 
                 _stegoUI.SetDisplayImage(stegoObject);
                 _stegoUI.ShowNotification("Message encoded successfully.\n" + 
@@ -68,7 +69,7 @@ namespace StegomaticProject.StegoSystemController
             }
         }
 
-        public void DecodeImage(BtnEvent btnEvente)
+        public void DecodeImage(BtnEvent btnEvent)
         {
             try
             {
@@ -80,7 +81,7 @@ namespace StegomaticProject.StegoSystemController
                 _verifyUserInput.EncryptionKey(encryptionKey);
                 _verifyUserInput.StegoSeed(stegoSeed);
 
-                string message = _stegoLogic.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.encrypt, config.compress);
+                string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.encrypt, config.compress);
 
                 _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"");
             }

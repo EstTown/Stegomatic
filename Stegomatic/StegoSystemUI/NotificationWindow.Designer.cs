@@ -46,11 +46,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(150, 0);
+            this.label1.Location = new System.Drawing.Point(182, 9);
             this.label1.Name = "label1";
             this.label1.Padding = new System.Windows.Forms.Padding(50);
+            this.label1.Size = new System.Drawing.Size(146, 117);
             this.label1.TabIndex = 1;
-            this.label1.Text = LabelText;
+            this.label1.Text = "label1";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // NotificationWindow
@@ -61,7 +62,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "NotificationWindow";
-            this.Text = WindowTitle;
+            this.Text = "NotificationWindow";
             this.Load += new System.EventHandler(this.NotificationWindow_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

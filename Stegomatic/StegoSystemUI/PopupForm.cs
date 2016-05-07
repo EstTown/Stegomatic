@@ -12,15 +12,16 @@ namespace StegomaticProject.StegoSystemUI
 {
     public partial class UserInputPopup : Form
     {
-        public UserInputPopup(string title = "Title", string textBoxTitle = "TextBoxTitle")
+        public UserInputPopup()
         {
-            Title = title;
-            TextBoxTitle = textBoxTitle;
             InitializeComponent();
         }
-
-        public string Title { get; private set; }
-        public string TextBoxTitle { get; private set; }
+        
+        public string TextBoxTitle
+        {
+            get { return this.label_popuplabel.Text; }
+            set { this.label_popuplabel.Text = value; }
+        }
 
         public string TextContents
         {

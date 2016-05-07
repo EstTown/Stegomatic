@@ -27,6 +27,12 @@ namespace StegomaticProject.StegoSystemUI
         public event BtnEventHandler SaveImageBtnClick;
         public event BtnEventHandler OpenImageBtnClick;
 
+        public string EnteredText
+        {
+            get { return this.txtbox_input.Text; }
+            set { this.txtbox_input.Text = value; }
+        }
+
         public bool CompressChecked
         {
             get { return checkBox_compression.Checked; }
@@ -53,24 +59,24 @@ namespace StegomaticProject.StegoSystemUI
             Stream stream = null;
 
             // Define dialog-object
-            OpenFileDialog OpenFileDialog = new OpenFileDialog();
-            OpenFileDialog.Title = "Select an image";
-            OpenFileDialog.DefaultExt = ".png";
-            OpenFileDialog.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|" +
+            OpenFileDialog openFileWindow = new OpenFileDialog();
+            openFileWindow.Title = "Select an image";
+            openFileWindow.DefaultExt = ".png";
+            openFileWindow.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|" +
                                     "JPEG Files (*.jpg)|*.jpg|TIFF Files (*.tif)|*.tiff";
 
-            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileWindow.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    if ((stream = OpenFileDialog.OpenFile()) != null)
+                    if ((stream = openFileWindow.OpenFile()) != null)
                     {
                         using (stream)
                         {
                             // Read image here
                             Image image = Image.FromStream(stream);
                             
-                            string filename = OpenFileDialog.FileName;
+                            string filename = openFileWindow.FileName;
 
                             // Display image
                             picbox_image.Image = image;

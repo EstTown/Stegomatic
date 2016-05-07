@@ -59,7 +59,7 @@
             this.label_popuplabel.Name = "label_popuplabel";
             this.label_popuplabel.Size = new System.Drawing.Size(28, 13);
             this.label_popuplabel.TabIndex = 2;
-            this.label_popuplabel.Text = TextBoxTitle;
+            this.label_popuplabel.Text = "label_popuplabel";
             // 
             // btn_popup_cancel
             // 
@@ -90,7 +90,7 @@
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = Title;
+            this.Text = "UserInputPopup";
             this.ResumeLayout(false);
             this.PerformLayout();
 

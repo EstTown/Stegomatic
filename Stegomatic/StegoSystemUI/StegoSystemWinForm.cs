@@ -15,9 +15,24 @@ namespace StegomaticProject.StegoSystemUI
     public class StegoSystemWinForm : IStegoSystemUI
     {
         private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
-        public string Message { get; private set; }
-        public string PathOfCoverImage { get; private set; }
-        public Bitmap DisplayImage { get; private set; }
+        public string Message
+        {
+            get { return _mainMenu.EnteredText; }
+            private set { _mainMenu.EnteredText = value; }
+        }
+
+        public string PathOfCoverImage
+        {
+            get { return _mainMenu.picbox_image.ImageLocation; }
+            private set { _mainMenu.picbox_image.ImageLocation = value; }
+        }
+
+        public Bitmap DisplayImage
+        {
+            get { return ImageToBitmap(_mainMenu.picbox_image.Image) ; }
+            private set { _mainMenu.picbox_image.Image = value; }
+        }
+
         public IConfig Config
         {
             get { return new ModelConfiguration(_mainMenu.EncryptChecked, _mainMenu.CompressChecked); }
@@ -35,7 +50,7 @@ namespace StegomaticProject.StegoSystemUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _mainMenu = new Form1();
-
+            
             SubscribeToEvents();
         }
 
@@ -91,8 +106,11 @@ namespace StegomaticProject.StegoSystemUI
         {
             // Initialize a popup window and show the message!
 
-            NotificationWindow userNotificationWindow = new NotificationWindow(notification, title);
+            NotificationWindow userNotificationWindow = new NotificationWindow();
+            userNotificationWindow.Text = title;
+            userNotificationWindow.LabelText = notification;
             userNotificationWindow.ShowDialog();
+            
         }
 
         public void Start()
@@ -135,7 +153,9 @@ namespace StegomaticProject.StegoSystemUI
         {
             // Create a popup window and return the entered string. 
 
-            UserInputPopup popupWindow = new UserInputPopup(popupTitle, popupTextBoxTitle);
+            UserInputPopup popupWindow = new UserInputPopup();
+            popupWindow.Text = popupTitle;
+            popupWindow.TextBoxTitle = popupTextBoxTitle;
             string userInput = string.Empty;
 
             DialogResult userResponse = popupWindow.ShowDialog();
@@ -151,6 +171,22 @@ namespace StegomaticProject.StegoSystemUI
             popupWindow.Close();
             popupWindow.Dispose();
             return userInput;
+        }
+
+        private Bitmap ImageToBitmap(Image image)
+        {
+            // Surpresses exceptions as data verification is not to be done in this class.
+
+            Bitmap bitmapImage;
+            try
+            {
+                bitmapImage = new Bitmap(image);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return bitmapImage;
         }
     }
 }

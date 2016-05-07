@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StegomaticProject.CustomExceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,12 @@ namespace StegomaticProject.StegoSystemUI.Events
         {
             Notification = notification;
             Title = title;
+        }
+
+        public DisplayNotificationEvent(NotifyUserException e)
+        {
+            Notification = e.Message;
+            Title = e.Title;
         }
     }
 }

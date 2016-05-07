@@ -68,5 +68,15 @@ namespace StegomaticProject.StegoSystemUI
         {
             throw new NotImplementedException();
         }
+
+        public void OpenImage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveImage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

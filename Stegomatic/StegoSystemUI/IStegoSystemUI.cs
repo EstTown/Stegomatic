@@ -22,6 +22,8 @@ namespace StegomaticProject.StegoSystemUI
         void ShowNotification(string notification, string title);
         string GetEncryptionKey();
         string GetStegoSeed();
+        void OpenImage();
+        void SaveImage();
 
         // Start/End
         void Start();

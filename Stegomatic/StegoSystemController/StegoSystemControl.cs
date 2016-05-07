@@ -19,6 +19,7 @@ namespace StegomaticProject.StegoSystemController
         {
             this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
+            this._verifyUserInput = new VerifyUserInput();
 
             SubscribeToEvents();
         }
@@ -39,7 +40,14 @@ namespace StegomaticProject.StegoSystemController
 
         public void OpenImage(BtnEvent e)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                _stegoUI.OpenImage();
+            }
+            catch (NotifyUserException exception)
+            {
+                new DisplayNotificationEvent(exception);
+            }
         }
 
         public void EncodeImage(BtnEvent e)
@@ -65,7 +73,7 @@ namespace StegomaticProject.StegoSystemController
             }
             catch (NotifyUserException exception)
             {
-                ShowNotification(new DisplayNotificationEvent(exception.Message/* + " in \n" + exception.StackTrace*/, exception.Title));
+                ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
             }
 
             // CATCH ABORTACTIONEXCEPTIONS AND CLEAN UP HERE? 
@@ -97,12 +105,7 @@ namespace StegomaticProject.StegoSystemController
 
         public void SaveImage(BtnEvent btnEvent)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void ShowPicture()
-        {
-            throw new System.NotImplementedException();
+            _stegoUI.SaveImage();
         }
     }
 }

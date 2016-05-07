@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI;
 using StegomaticProject.CustomExceptions;
+using System.IO;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -120,7 +121,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public void Terminate()
         {
-            throw new NotImplementedException();
+            _mainMenu.Dispose();
             // Har vi overhovedet brug for dette eller er krydset i hjørnet nok? 
             // Hvis ikke, så gør det til en NotSupportedException();
         }
@@ -187,6 +188,57 @@ namespace StegomaticProject.StegoSystemUI
                 return null;
             }
             return bitmapImage;
+        }
+
+        public void OpenImage()
+        {
+            Stream stream = null;
+
+            // Define dialog-object
+            OpenFileDialog openFileWindow = new OpenFileDialog();
+            openFileWindow.Title = "Select an image";
+            openFileWindow.DefaultExt = ".png";
+            openFileWindow.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|" +
+                                    "JPEG Files (*.jpg)|*.jpg|TIFF Files (*.tif)|*.tiff";
+
+            if (openFileWindow.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if ((stream = openFileWindow.OpenFile()) != null)
+                    {
+                        using (stream)
+                        {
+                            // Read image here
+                            Image image = Image.FromStream(stream);
+
+                            string filename = openFileWindow.FileName;
+
+                            // Display image
+                            this.SetDisplayImage(ImageToBitmap(image));
+
+                            // Get image info
+                            string[] imageinfo = ImageData.GetImageInfo(image, filename);
+
+                            // Set labels to imageinfo
+                            _mainMenu.ImageDescriptionAbout = "About image: " + imageinfo[3];
+                            _mainMenu.ImageDescriptionWidth = imageinfo[0];
+                            _mainMenu.ImageDescriptionHeight = imageinfo[1];
+                            _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
+                            _mainMenu.ImageDescriptionCapacity = Convert.ToString((image.Height * image.Width * 0.18) / 12);
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new NotifyUserException("Error: Could not read file. Original error: " + e.Message, "Error");
+                }
+            }
+        }
+
+        public void SaveImage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

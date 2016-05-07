@@ -43,9 +43,39 @@ namespace StegomaticProject.StegoSystemUI
             get { return checkBox_encryption.Checked; }
         }
 
+        public string ImageDescriptionAbout
+        {
+            get { return this.label_about.Text; }
+            set { this.label_about.Text = value; }
+        }
+
+        public string ImageDescriptionWidth
+        {
+            get { return this.label_width.Text; }
+            set { this.label_width.Text = value; }
+        }
+
+        public string ImageDescriptionHeight
+        {
+            get { return this.label_height.Text; }
+            set { this.label_height.Text = value; }
+        }
+
+        public string ImageDescriptionFilesize
+        {
+            get { return this.label_filesize.Text; }
+            set { this.label_filesize.Text = value; }
+        }
+
+        public string ImageDescriptionCapacity
+        {
+            get { return this.label_capacity.Text; }
+            set { this.label_capacity.Text = value; }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         public void btn_open_Click(object sender, EventArgs e)
@@ -54,52 +84,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 OpenImageBtnClick(new BtnEvent());
             }
-
-
-            Stream stream = null;
-
-            // Define dialog-object
-            OpenFileDialog openFileWindow = new OpenFileDialog();
-            openFileWindow.Title = "Select an image";
-            openFileWindow.DefaultExt = ".png";
-            openFileWindow.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|" +
-                                    "JPEG Files (*.jpg)|*.jpg|TIFF Files (*.tif)|*.tiff";
-
-            if (openFileWindow.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    if ((stream = openFileWindow.OpenFile()) != null)
-                    {
-                        using (stream)
-                        {
-                            // Read image here
-                            Image image = Image.FromStream(stream);
-                            
-                            string filename = openFileWindow.FileName;
-
-                            // Display image
-                            picbox_image.Image = image;
-
-                            // Get image info
-                            string[] imageinfo = ImageData.GetImageInfo(image, filename);
-
-                            // Set labels to imageinfo
-                            label_about.Text = "About image: " + imageinfo[3];
-                            label_width.Text = imageinfo[0];
-                            label_height.Text = imageinfo[1];
-                            label_filesize.Text = imageinfo[2] + " Bytes";
-                            label_capacity.Text = Convert.ToString((image.Height*image.Width*0.18)/12);
-
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file. Original error: " + ex.Message);
-                }
-            }
-
+            
         }
 
         private void btn_encode_Click(object sender, EventArgs e)

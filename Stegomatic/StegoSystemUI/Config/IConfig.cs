@@ -8,7 +8,7 @@ namespace StegomaticProject.StegoSystemUI.Config
 {
     public interface IConfig
     {
-        bool encrypt { get; }
-        bool compress { get; }
+        bool Encrypt { get; }
+        bool Compress { get; }
     }
 }

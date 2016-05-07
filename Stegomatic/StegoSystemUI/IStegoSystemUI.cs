@@ -14,12 +14,12 @@ namespace StegomaticProject.StegoSystemUI
         // Get info from UI
         string Message { get; }
         string PathOfCoverImage { get; }
-        IConfig Config { get; }
         Bitmap DisplayImage { get; }
+        IConfig Config { get; }
 
         // Modify UI
         void SetDisplayImage(Bitmap newImage);
-        void ShowNotification(string notification);
+        void ShowNotification(string notification, string title);
         string GetEncryptionKey();
         string GetStegoSeed();
 

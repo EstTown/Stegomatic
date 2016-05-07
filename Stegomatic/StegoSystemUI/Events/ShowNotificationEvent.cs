@@ -11,10 +11,12 @@ namespace StegomaticProject.StegoSystemUI.Events
     public class DisplayNotificationEvent : EventArgs
     {
         public string Notification { get; private set; }
+        public string Title { get; private set; }
 
-        public DisplayNotificationEvent(string notification)
+        public DisplayNotificationEvent(string notification, string title)
         {
             Notification = notification;
+            Title = title;
         }
     }
 }

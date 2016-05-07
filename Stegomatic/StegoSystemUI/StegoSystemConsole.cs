@@ -30,8 +30,9 @@ namespace StegomaticProject.StegoSystemUI
             throw new NotImplementedException();
         }
 
-        public void ShowNotification(string notification)
+        public void ShowNotification(string notification, string title)
         {
+            Console.WriteLine(title);
             Console.WriteLine(notification);
         }
 
@@ -47,7 +48,7 @@ namespace StegomaticProject.StegoSystemUI
                 {
                     if (NotifyUser != null)
                     {
-                        NotifyUser(new DisplayNotificationEvent("You've pressed enter"));
+                        NotifyUser(new DisplayNotificationEvent("You've pressed enter", "Success"));
                     }
                 }
             } while (detectedKey.Key != ConsoleKey.Escape);

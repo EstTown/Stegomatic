@@ -27,6 +27,15 @@ namespace StegomaticProject.StegoSystemUI
         public event BtnEventHandler SaveImageBtnClick;
         public event BtnEventHandler OpenImageBtnClick;
 
+        public bool CompressChecked
+        {
+            get { return checkBox_compression.Checked; }
+        }
+
+        public bool EncryptChecked
+        {
+            get { return checkBox_encryption.Checked; }
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -92,24 +101,6 @@ namespace StegomaticProject.StegoSystemUI
             if (EncodeBtnClick != null)
             {
                 EncodeBtnClick(new BtnEvent());
-            }
-
-
-            //If user wanted 'enable encryption', show dialog
-            if (checkBox_encryption.Checked == true)
-            {
-                //Prompt for encryption key/password/whatever
-                EncyptionkeyPopup popup = new EncyptionkeyPopup();
-                DialogResult dialogresult = popup.ShowDialog();
-                if (dialogresult == DialogResult.OK)
-                {
-                    popup.Close();
-                }
-                if (dialogresult == DialogResult.Cancel)
-                {
-                    popup.Close();
-                }
-                popup.Dispose();
             }
         }
 

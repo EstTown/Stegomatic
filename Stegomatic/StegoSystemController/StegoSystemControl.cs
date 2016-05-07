@@ -34,7 +34,7 @@ namespace StegomaticProject.StegoSystemController
 
         public void ShowNotification(DisplayNotificationEvent e)
         {
-            _stegoUI.ShowNotification(e.Notification);
+            _stegoUI.ShowNotification(e.Notification, e.Title);
         }
 
         public void OpenImage(BtnEvent e)
@@ -56,17 +56,19 @@ namespace StegomaticProject.StegoSystemController
                 _verifyUserInput.EncryptionKey(encryptionKey);
                 _verifyUserInput.StegoSeed(stegoSeed);
 
-                Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.encrypt, config.compress);
+                Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
                 _stegoUI.SetDisplayImage(stegoObject);
                 _stegoUI.ShowNotification("Message encoded successfully.\n" + 
                                          $"EncryptionKey = {encryptionKey}\n" +
-                                         $"StegoSeed = {stegoSeed}");
+                                         $"StegoSeed = {stegoSeed}", "Success");
             }
             catch (NotifyUserException exception)
             {
-                ShowNotification(new DisplayNotificationEvent(exception.Message/* + " in \n" + exception.StackTrace*/));
+                ShowNotification(new DisplayNotificationEvent(exception.Message/* + " in \n" + exception.StackTrace*/, exception.Title));
             }
+
+            // CATCH ABORTACTIONEXCEPTIONS AND CLEAN UP HERE? 
         }
 
         public void DecodeImage(BtnEvent btnEvent)
@@ -81,13 +83,13 @@ namespace StegomaticProject.StegoSystemController
                 _verifyUserInput.EncryptionKey(encryptionKey);
                 _verifyUserInput.StegoSeed(stegoSeed);
 
-                string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.encrypt, config.compress);
+                string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"");
+                _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
             }
             catch (NotifyUserException exception)
             {
-                ShowNotification(new DisplayNotificationEvent(exception.Message));
+                ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
             }
 
             throw new System.NotImplementedException();

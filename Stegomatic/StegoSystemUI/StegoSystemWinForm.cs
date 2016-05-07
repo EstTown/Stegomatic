@@ -8,16 +8,20 @@ using System.Drawing;
 using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI;
+using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {
         private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
-        public IConfig Config { get; private set; }
         public string Message { get; private set; }
         public string PathOfCoverImage { get; private set; }
         public Bitmap DisplayImage { get; private set; }
+        public IConfig Config
+        {
+            get { return new ModelConfiguration(_mainMenu.EncryptChecked, _mainMenu.CompressChecked); }
+        }
 
         public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtn;
@@ -83,11 +87,12 @@ namespace StegomaticProject.StegoSystemUI
             throw new NotImplementedException();
         }
 
-        public void ShowNotification(string notification)
+        public void ShowNotification(string notification, string title = "")
         {
             // Initialize a popup window and show the message!
 
-            throw new NotImplementedException();
+            NotificationWindow userNotificationWindow = new NotificationWindow(notification, title);
+            userNotificationWindow.ShowDialog();
         }
 
         public void Start()
@@ -104,14 +109,48 @@ namespace StegomaticProject.StegoSystemUI
 
         public string GetEncryptionKey()
         {
-            // ASK USER FOR ENCRYPTION KEY. MAKE THAT POPUPWINDOW AND RETURN THE STRING.
-            throw new NotImplementedException();
+            try
+            {
+                return GetUserStringPopup("Encryption key", "Key:");
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
         }
 
         public string GetStegoSeed()
         {
-            //SAME AS ABOVE
-            throw new NotImplementedException();
+            try
+            {
+                return GetUserStringPopup("Steganography seed", "Seed:");
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
+        }
+
+        private string GetUserStringPopup(string popupTitle, string popupTextBoxTitle)
+        {
+            // Create a popup window and return the entered string. 
+
+            UserInputPopup popupWindow = new UserInputPopup(popupTitle, popupTextBoxTitle);
+            string userInput = string.Empty;
+
+            DialogResult userResponse = popupWindow.ShowDialog();
+            if (userResponse == DialogResult.OK)
+            {
+                userInput = popupWindow.TextContents;
+            }
+            else
+            {
+                throw new NotifyUserException("Action aborted."); // MAKE THIS AN ABORTACTIONEXCEPTION AND CATCH IT?
+            }
+
+            popupWindow.Close();
+            popupWindow.Dispose();
+            return userInput;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace StegomaticProject.StegoSystemUI
 {
-    partial class EncyptionkeyPopup
+    partial class UserInputPopup
     {
         /// <summary>
         /// Required designer variable.
@@ -47,9 +47,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(40, 12);
+            this.textBox1.Location = new System.Drawing.Point(43, 12);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(241, 20);
+            this.textBox1.Size = new System.Drawing.Size(238, 20);
             this.textBox1.TabIndex = 1;
             // 
             // label_popuplabel
@@ -59,7 +59,7 @@
             this.label_popuplabel.Name = "label_popuplabel";
             this.label_popuplabel.Size = new System.Drawing.Size(28, 13);
             this.label_popuplabel.TabIndex = 2;
-            this.label_popuplabel.Text = "Key:";
+            this.label_popuplabel.Text = TextBoxTitle;
             // 
             // btn_popup_cancel
             // 
@@ -72,7 +72,7 @@
             this.btn_popup_cancel.UseVisualStyleBackColor = true;
             this.btn_popup_cancel.Click += new System.EventHandler(this.btn_popup_cancel_Click);
             // 
-            // EncyptionkeyPopup
+            // UserInputPopup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -86,11 +86,11 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "EncyptionkeyPopup";
+            this.Name = "UserInputPopup";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Encryptionkey";
+            this.Text = Title;
             this.ResumeLayout(false);
             this.PerformLayout();
 

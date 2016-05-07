@@ -16,9 +16,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.Color = color;
             this.PosX = positionX;
             this.PosY = positionY;
-
+            this.ColorDifference = 0;
             // Adds the 3 color-values and use modulo, which corresponds to the embedded value of a pixel
-            this.EmbeddedValue = (byte)((Color.R + Color.G + Color.B)%GraphTheoryBased.Modulo);
+            CalculateEmbeddedValue();
         }
 
         public Color Color { get; set; }
@@ -26,6 +26,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte EmbeddedValue { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
+        public byte ColorDifference { get; set; }
+
+        public void CalculateEmbeddedValue()
+        {
+            byte embeddedValue = (byte)((Color.R + Color.G + Color.B) % GraphTheoryBased.Modulo);
+            this.EmbeddedValue = embeddedValue;
+        }
 
         public override string ToString()
         {

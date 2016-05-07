@@ -34,7 +34,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public List<Pixel> ModifyGraph()
         {
-            
+            PixelSwap(MatchedEdges);
+            PixelModify();
+
             return PixelList;
         }
         private void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
@@ -187,7 +189,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //Now we should have a list of all selected edges, and no two verts should be connected by more than one edge.
             //Congratulations! You're now a certified killer! :D
         }
-        public void PixelSwap(List<Edge> matchedEdges)
+
+
+        private void PixelSwap(List<Edge> matchedEdges)
         {
             for (int i = 0; i < matchedEdges.Count; i++)
             {
@@ -195,9 +199,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             }
         }
-
         //Method for helping pixels trade values
-        public void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
+        private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
             int tempPosX = pixelOne.PosX;
             int tempPosY = pixelOne.PosY;
@@ -208,25 +211,34 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             pixelTwo.PosX = tempPosX;
             pixelTwo.PosY = tempPosY;
         }
-        public void PixelModify()
-        {
-            bool checker = true;
 
-            while (checker)
+        private void PixelModify()
+        {
+            for (int i = 0; i < VertexList.Count; i++)
             {
-                for (int i = 0; i < VertexList.Count; i++)
+                if (VertexList[i].NumberOfEdges == 0)
                 {
-                    if (unmatchedVertex.TargetValues[i] == unmatchedVertex.CalculateVertexValue())
-                    {
-                        checker = false;
-                    }
-                    else
-                    {
-                        //UnmatchedVert.PixelsForThisVertex[i] = Bitmap.SetPixel(UnmatchedVert.PixelsForThisVertex[i].PosX,
-                        //UnmatchedVert.PixelsForThisVertex[i].PosY, UnmatchedVert.PixelsForThisVertex[i].Color.FromArgb(255, 255, 255));
-                    }
+                    HelpMethodPixelModify(VertexList[i]);
                 }
             }
         }
+        private void HelpMethodPixelModify(Vertex vertex) //always uses first sample in vertex
+        {
+            byte local = 0;
+            while ((vertex.PixelsForThisVertex[0].EmbeddedValue + local) != vertex.TargetValues[0])
+            {
+                if (vertex.PixelsForThisVertex[0].Color.R < 127) //always red channel
+                {
+                    local++;
+                }
+                else
+                {
+                    local--;
+                }
+            }
+            vertex.PixelsForThisVertex[0].ColorDifference = local;
+        }
+
+
     }
 }

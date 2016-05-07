@@ -42,11 +42,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             graph.ConstructGraph(amountOfPixels, newMessage);
             graph.ModifyGraph();
 
+            coverImage = EmbedPixelListIntoImage(coverImage, amountOfPixels);
 
             return coverImage;
         }
-
-        /*Method for calculating the weight of an edge*/
+        
         public byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo) 
         {
             byte weight = 0;
@@ -193,8 +193,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return bytearray2;
         }
-
-        /*Method for converting bitpairs to ints from a byte*/
+        
         public IEnumerable<byte> ConvertBitsToInt(byte byteValue)
         {
             byte value;
@@ -222,17 +221,20 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 yield return value;
             }
         }
-
-        /*Method for calculating the required amount of pixels to hide the input message*/
-        public int CalculateRequiredPixels(byte[] byteArray)
+        
+        private int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length*PixelsPerByte;
             return amount;
         }
-        public void EmbedPixelListIntoImage()//already has acces to coverimage
+        private Bitmap EmbedPixelListIntoImage(Bitmap image, int amountOfPixels)//already has acces to coverimage
         {
-            //calls pixelswap and pixelmodify
-            throw new NotImplementedException();
+            for (int i = 0; i < amountOfPixels; i++)
+            {
+                image.SetPixel(PixelList[i].PosX, PixelList[i].PosY, 
+                    (Color.FromArgb(PixelList[i].Color.A, PixelList[i].Color.R+PixelList[i].ColorDifference, PixelList[i].Color.G, PixelList[i].Color.B)));
+            }
+            return image;
         }
     }
 }

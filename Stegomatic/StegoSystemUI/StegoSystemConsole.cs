@@ -20,6 +20,7 @@ namespace StegomaticProject.StegoSystemUI
         public event BtnEventHandler DecodeImageBtn;
         public event BtnEventHandler EncodeImageBtn;
         public event BtnEventHandler SaveImageBtn;
+        public event BtnEventHandler OpenImageBtn;
 
         public void SetDisplayImage(Bitmap newImage)
         {

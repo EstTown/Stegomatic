@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using StegomaticProject.StegoSystemModel;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -18,17 +19,22 @@ namespace StegomaticProject.StegoSystemUI
             InitializeComponent();
 
             //Event, listening to changes in textbox - used for updating char-count
-            txtbox_input.TextChanged += new System.EventHandler(this.txtbox_input_TextChanged);
+            txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
+            btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
+            btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
+
+        //These are accesed by the algorithms
+        public string text { get; private set; }
+        public Bitmap bitmap { get; private set; }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        public void btn_open_Click(object sender, EventArgs e)
+        private void btn_open_Click(object sender, EventArgs e)
         {
-
             Stream stream = null;
 
             // Define dialog-object
@@ -46,23 +52,23 @@ namespace StegomaticProject.StegoSystemUI
                     {
                         using (stream)
                         {
-                            // Read image here
-                            Image image = Image.FromStream(stream);
-                            
+                            //Sets image, to be accessed by algortimes, to input image
+                            this.bitmap = (Bitmap)Bitmap.FromStream(stream);
+
                             string filename = OpenFileDialog.FileName;
 
-                            // Display image
-                            picbox_image.Image = image;
+                            //Display image
+                            picbox_image.Image = this.bitmap;
 
-                            // Get image info
-                            string[] imageinfo = ImageData.GetImageInfo(image, filename);
+                            //Get image info
+                            string[] imageinfo = ImageData.GetImageInfo(this.bitmap, filename);
 
-                            // Set labels to imageinfo
+                            //Set labels to imageinfo
                             label_about.Text = "About image: " + imageinfo[3];
                             label_width.Text = imageinfo[0];
                             label_height.Text = imageinfo[1];
                             label_filesize.Text = imageinfo[2] + " Bytes";
-                            label_capacity.Text = Convert.ToString((image.Height*image.Width*0.18)/12);
+                            label_capacity.Text = Convert.ToString((this.bitmap.Height*this.bitmap.Width*0.18)/12);
 
                         }
                     }
@@ -72,12 +78,13 @@ namespace StegomaticProject.StegoSystemUI
                     MessageBox.Show("Error: Could not read file. Original error: " + ex.Message);
                 }
             }
-
         }
 
         private void btn_encode_Click(object sender, EventArgs e)
         {
-
+            this.text = txtbox_input.Text;
+            //Output text to console
+            Console.WriteLine("Text: \n" + this.text);
             //If user wanted 'enable encryption', show dialog
             if (checkBox_encryption.Checked == true)
             {
@@ -94,6 +101,9 @@ namespace StegomaticProject.StegoSystemUI
                 }
                 popup.Dispose();
             }
+
+            //CALL ALGOTHIME HERE!!!
+
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -131,21 +141,28 @@ namespace StegomaticProject.StegoSystemUI
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
-            // Update character-count when change is happening
-            if (label_capacity.Text == String.Empty)
+            try
             {
-                label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+                // Update character-count when change is happening
+                if (label_capacity.Text == String.Empty)
+                {
+                    label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+                }
+                else
+                {
+                    progressBar1.Visible = true;
+
+                    label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString() + " / " + label_capacity.Text;
+
+                    double capacity = Convert.ToDouble(label_capacity.Text);
+                    double text = txtbox_input.Text.Length;
+
+                    progressBar1.Value = Convert.ToInt32((text / capacity) * 100);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                progressBar1.Visible = true;
-
-                label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString() + " / " + label_capacity.Text;
-
-                double capacity = Convert.ToDouble(label_capacity.Text);
-                double text = txtbox_input.Text.Length;
-
-                progressBar1.Value = Convert.ToInt32((text/capacity)*100);
+                MessageBox.Show(ex.Message);
             }
             
         }

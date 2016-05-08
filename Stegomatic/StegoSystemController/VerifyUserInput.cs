@@ -10,7 +10,7 @@ namespace StegomaticProject.StegoSystemController
 {
     public class VerifyUserInput : IVerifyUserInput
     {
-        public void File(string path)
+        public string File(string path)
         {
             FileInfo pathToCheck = new FileInfo(path);
             if (!pathToCheck.Exists)
@@ -21,21 +21,34 @@ namespace StegomaticProject.StegoSystemController
             {
                 throw new NotifyUserException("ReadOnly path: " + pathToCheck.FullName);
             }
+            return path;
         }
 
-        public void Message(string message)
+        public string Message(string message)
         {
-
+            if (message == null)
+            {
+                return string.Empty;
+            }
+            return message;
         }
 
-        public void EncryptionKey(string encryptionKey)
+        public string EncryptionKey(string encryptionKey)
         {
-
+            if (encryptionKey == null)
+            {
+                return string.Empty;
+            }
+            return encryptionKey;
         }
 
-        public void StegoSeed(string stegoSeed)
+        public string StegoSeed(string stegoSeed)
         {
-
+            if (stegoSeed == null)
+            {
+                return string.Empty;
+            }
+            return stegoSeed;
         }
     }
 }

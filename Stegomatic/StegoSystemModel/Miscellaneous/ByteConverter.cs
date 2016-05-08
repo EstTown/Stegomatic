@@ -9,19 +9,17 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 {
     static public class ByteConverter
     {
-        static public byte[] StringToByteArray(string message)
+        static public byte[] StringToByteArray(string text)
         {
-            throw new NotImplementedException();
+            return Encoding.Unicode.GetBytes(text);
         }
 
         static public string ByteArrayToString(byte[] byteArray)
         {
-            throw new NotImplementedException();
+            return Encoding.Unicode.GetString(byteArray);
         }
     }
 }
-    // Tænk på om denne benyttes som static eller ikke?
-
     
 
     

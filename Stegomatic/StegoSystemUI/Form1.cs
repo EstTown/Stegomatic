@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StegomaticProject.StegoSystemUI.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using StegomaticProject.StegoSystemModel;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -20,123 +20,88 @@ namespace StegomaticProject.StegoSystemUI
 
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
-            btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
-            btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
+            //btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
+            //btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
 
-        //These are accesed by the algorithms
-        public string text { get; private set; }
-        public Bitmap bitmap { get; private set; }
+        public event BtnEventHandler DecodeBtnClick;
+        public event BtnEventHandler EncodeBtnClick;
+        public event BtnEventHandler SaveImageBtnClick;
+        public event BtnEventHandler OpenImageBtnClick;
+
+        public string EnteredText
+        {
+            get { return this.txtbox_input.Text; }
+            set { this.txtbox_input.Text = value; }
+        }
+
+        public bool CompressChecked
+        {
+            get { return checkBox_compression.Checked; }
+        }
+
+        public bool EncryptChecked
+        {
+            get { return checkBox_encryption.Checked; }
+        }
+
+        public string ImageDescriptionAbout
+        {
+            get { return this.label_about.Text; }
+            set { this.label_about.Text = value; }
+        }
+
+        public string ImageDescriptionWidth
+        {
+            get { return this.label_width.Text; }
+            set { this.label_width.Text = value; }
+        }
+
+        public string ImageDescriptionHeight
+        {
+            get { return this.label_height.Text; }
+            set { this.label_height.Text = value; }
+        }
+
+        public string ImageDescriptionFilesize
+        {
+            get { return this.label_filesize.Text; }
+            set { this.label_filesize.Text = value; }
+        }
+
+        public string ImageDescriptionCapacity
+        {
+            get { return this.label_capacity.Text; }
+            set { this.label_capacity.Text = value; }
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
-        private void btn_open_Click(object sender, EventArgs e)
+        public void btn_open_Click(object sender, EventArgs e)
         {
-            Stream stream = null;
-
-            // Define dialog-object
-            OpenFileDialog OpenFileDialog = new OpenFileDialog();
-            OpenFileDialog.Title = "Select an image";
-            OpenFileDialog.DefaultExt = ".png";
-            OpenFileDialog.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp|" +
-                                    "JPEG Files (*.jpg)|*.jpg|TIFF Files (*.tif)|*.tiff";
-
-            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+            if (OpenImageBtnClick != null)
             {
-                try
-                {
-                    if ((stream = OpenFileDialog.OpenFile()) != null)
-                    {
-                        using (stream)
-                        {
-                            //Sets image, to be accessed by algortimes, to input image
-                            this.bitmap = (Bitmap)Bitmap.FromStream(stream);
-
-                            string filename = OpenFileDialog.FileName;
-
-                            //Display image
-                            picbox_image.Image = this.bitmap;
-
-                            //Get image info
-                            string[] imageinfo = ImageData.GetImageInfo(this.bitmap, filename);
-
-                            //Set labels to imageinfo
-                            label_about.Text = "About image: " + imageinfo[3];
-                            label_width.Text = imageinfo[0];
-                            label_height.Text = imageinfo[1];
-                            label_filesize.Text = imageinfo[2] + " Bytes";
-                            label_capacity.Text = Convert.ToString((this.bitmap.Height*this.bitmap.Width*0.18)/12);
-
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: Could not read file. Original error: " + ex.Message);
-                }
+                OpenImageBtnClick(new BtnEvent());
             }
+
         }
 
         private void btn_encode_Click(object sender, EventArgs e)
         {
-            this.text = txtbox_input.Text;
-            //Output text to console
-            Console.WriteLine("Text: \n" + this.text);
-            //If user wanted 'enable encryption', show dialog
-            if (checkBox_encryption.Checked == true)
+            if (EncodeBtnClick != null)
             {
-                //Prompt for encryption key/password/whatever
-                EncyptionkeyPopup popup = new EncyptionkeyPopup();
-                DialogResult dialogresult = popup.ShowDialog();
-                if (dialogresult == DialogResult.OK)
-                {
-                    popup.Close();
-                }
-                if (dialogresult == DialogResult.Cancel)
-                {
-                    popup.Close();
-                }
-                popup.Dispose();
+                EncodeBtnClick(new BtnEvent());
             }
-
-            //CALL ALGOTHIME HERE!!!
-
         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            SaveFileDialog SaveFileDialog = new SaveFileDialog();
-
-            //Image to be saved, goes here
-            //Image should be handled by an outside non-form class
-            Image file = null;
-
-            SaveFileDialog.Title = "Save image as...";
-            SaveFileDialog.DefaultExt = ".png";
-            SaveFileDialog.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp";
-            SaveFileDialog.ShowDialog();
-
-            if (SaveFileDialog.FileName != "")
+            if (SaveImageBtnClick != null)
             {
-
-                //Filestream is saved here, from manipulated image.
-                //Switch determines which format the image will be saved in.
-
-                switch (SaveFileDialog.FilterIndex)
-                {
-                    case 1:
-                        file.Save(SaveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
-                        break;
-                    case 2:
-                        file.Save(SaveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
-                        break;
-                }
-
+                SaveImageBtnClick(new BtnEvent());
             }
-
         }
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
@@ -169,7 +134,10 @@ namespace StegomaticProject.StegoSystemUI
 
         private void btn_decode_Click(object sender, EventArgs e)
         {
-
+            if (DecodeBtnClick != null)
+            {
+                DecodeBtnClick(new BtnEvent());
+            }
         }
 
         private void checkBox_encryption_CheckedChanged(object sender, EventArgs e)

@@ -17,8 +17,8 @@ namespace StegomaticProject.StegoSystemUI
         public Bitmap DisplayImage { get; private set; }
 
         public event DisplayNotificationEventHandler NotifyUser;
-        public event BtnEventHandler DecodeImageBtn;
-        public event BtnEventHandler EncodeImageBtn;
+        public event BtnEventHandler DecodeBtn;
+        public event BtnEventHandler EncodeBtn;
         public event BtnEventHandler SaveImageBtn;
         public event BtnEventHandler OpenImageBtn;
 
@@ -30,8 +30,9 @@ namespace StegomaticProject.StegoSystemUI
             throw new NotImplementedException();
         }
 
-        public void ShowNotification(string notification)
+        public void ShowNotification(string notification, string title)
         {
+            Console.WriteLine(title);
             Console.WriteLine(notification);
         }
 
@@ -47,7 +48,7 @@ namespace StegomaticProject.StegoSystemUI
                 {
                     if (NotifyUser != null)
                     {
-                        NotifyUser(new DisplayNotificationEvent("You've pressed enter"));
+                        NotifyUser(new DisplayNotificationEvent("You've pressed enter", "Success"));
                     }
                 }
             } while (detectedKey.Key != ConsoleKey.Escape);
@@ -64,6 +65,16 @@ namespace StegomaticProject.StegoSystemUI
         }
 
         public string GetStegoSeed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OpenImage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveImage()
         {
             throw new NotImplementedException();
         }

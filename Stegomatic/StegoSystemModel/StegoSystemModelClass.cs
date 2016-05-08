@@ -18,22 +18,22 @@ namespace StegomaticProject.StegoSystemModel
         private IStegoAlgorithm _stegoMethod;
 
 
-        public static void EncodeWasCalled(Object sender, EventArgs e)
-        {
-            Console.WriteLine("Encoded was clicked!");
-        }
+        //public static void EncodeWasCalled(Object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("Encoded was clicked!");
+        //}
 
-        public static void DecodeWasCalled(Object sender, EventArgs e)
-        {
-            Console.WriteLine("Decoded was clicked!");
-        }
+        //public static void DecodeWasCalled(Object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("Decoded was clicked!");
+        //}
 
 
         public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();
-            //_cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphTheoryBased();
+            _cryptoMethod = new RijndaelCrypto();
+            _stegoMethod = new LeastSignificantBit(); // GraphTheoryBased();
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
@@ -78,7 +78,6 @@ namespace StegomaticProject.StegoSystemModel
             }
 
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
-            // SKAL DET VÆRE ENCRYPTION KEY DER KOMMER IND HER??? HVAD SKAL DET VÆRE DET SEED OG HVOR FÅR VI DET FRA?
 
             return StegoObject;
         }

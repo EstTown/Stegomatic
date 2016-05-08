@@ -19,7 +19,9 @@ namespace StegomaticProject.StegoSystemUI
             InitializeComponent();
 
             //Event, listening to changes in textbox - used for updating char-count
-            txtbox_input.TextChanged += new System.EventHandler(this.txtbox_input_TextChanged);
+            txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
+            btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
+            btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
 
         public event BtnEventHandler DecodeBtnClick;
@@ -84,7 +86,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 OpenImageBtnClick(new BtnEvent());
             }
-            
+
         }
 
         private void btn_encode_Click(object sender, EventArgs e)
@@ -93,6 +95,9 @@ namespace StegomaticProject.StegoSystemUI
             {
                 EncodeBtnClick(new BtnEvent());
             }
+
+            //CALL ALGOTHIME HERE!!!
+
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -105,21 +110,28 @@ namespace StegomaticProject.StegoSystemUI
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
-            // Update character-count when change is happening
-            if (label_capacity.Text == String.Empty)
+            try
             {
-                label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+                // Update character-count when change is happening
+                if (label_capacity.Text == String.Empty)
+                {
+                    label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+                }
+                else
+                {
+                    progressBar1.Visible = true;
+
+                    label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString() + " / " + label_capacity.Text;
+
+                    double capacity = Convert.ToDouble(label_capacity.Text);
+                    double text = txtbox_input.Text.Length;
+
+                    progressBar1.Value = Convert.ToInt32((text / capacity) * 100);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                progressBar1.Visible = true;
-
-                label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString() + " / " + label_capacity.Text;
-
-                double capacity = Convert.ToDouble(label_capacity.Text);
-                double text = txtbox_input.Text.Length;
-
-                progressBar1.Value = Convert.ToInt32((text/capacity)*100);
+                MessageBox.Show(ex.Message);
             }
             
         }

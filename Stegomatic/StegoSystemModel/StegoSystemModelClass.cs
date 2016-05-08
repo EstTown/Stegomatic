@@ -7,6 +7,7 @@ using System.Drawing;
 using StegomaticProject.StegoSystemModel.Miscellaneous;
 using StegomaticProject.StegoSystemModel.Cryptograhy;
 using StegomaticProject.StegoSystemModel.Steganography;
+using StegomaticProject.StegoSystemUI;
 
 namespace StegomaticProject.StegoSystemModel
 {
@@ -16,7 +17,18 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
-        
+
+        public static void EncodeWasCalled(Object sender, EventArgs e)
+        {
+            Console.WriteLine("Encoded was clicked!");
+        }
+
+        public static void DecodeWasCalled(Object sender, EventArgs e)
+        {
+            Console.WriteLine("Decoded was clicked!");
+        }
+
+
         public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();
@@ -37,7 +49,7 @@ namespace StegomaticProject.StegoSystemModel
 
             if (decrypt)
             {
-                byteMessage = _cryptoMethod.Decrypt(decryptionKey, byteMessage);
+               // byteMessage = _cryptoMethod.Decrypt(decryptionKey, byteMessage);
             }
 
             if (decompress)
@@ -62,7 +74,7 @@ namespace StegomaticProject.StegoSystemModel
 
             if (encrypt)
             {
-                byteMessage = _cryptoMethod.Encrypt(byteMessage, encryptionKey);
+                //byteMessage = _cryptoMethod.Encrypt(byteMessage, encryptionKey);
             }
 
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);

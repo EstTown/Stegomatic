@@ -8,7 +8,7 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
 {
     public interface ICryptoMethod
     {
-        byte[] Encrypt(byte[] message, string encryptionKey);
-        byte[] Decrypt(string decryptionKey, byte[] ciphertext);
+        string Encrypt(string plaintext, string password);
+        string Decrypt(string ciphertext, string password);
     }
 }

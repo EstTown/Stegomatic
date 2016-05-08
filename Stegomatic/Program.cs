@@ -46,7 +46,7 @@ namespace StegomaticProject
 
             ////print vertex
             //Console.WriteLine(vertex1.ToString());
-            // HVORFOR ER DER IKKE LAVET UNIT TESTS TIL OVENSTÅENDE?
+            // HVORFOR ER DER IKKE LAVET UNIT TESTS TIL OVENSTÅENDE I STEDET FOR AT DET STÅR HER?
 
             stegoUI.Start();   
         }

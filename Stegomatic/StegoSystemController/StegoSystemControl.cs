@@ -12,7 +12,6 @@ namespace StegomaticProject.StegoSystemController
     {
         private IStegoSystemModel _stegoModel;
         private IStegoSystemUI _stegoUI;
-        private Bitmap _image;
         private IVerifyUserInput _verifyUserInput;
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
@@ -36,6 +35,24 @@ namespace StegomaticProject.StegoSystemController
         public void ShowNotification(DisplayNotificationEvent e)
         {
             _stegoUI.ShowNotification(e.Notification, e.Title);
+        }
+
+        private void ShowEncodingSuccessNotification(bool encrypt, string encryptionKey, string stegoSeed)
+        {
+            string notification = string.Empty;
+            notification = "Message encoded successfully. \n";
+            if (encrypt)
+            {
+                notification += $"EncryptionKey = {encryptionKey}\n";
+            }
+            notification += $"StegoSeed = {stegoSeed}";
+
+            _stegoUI.ShowNotification(notification, "Success");
+        }
+
+        private void ShowDecodingSuccessNotification(string message)
+        {
+            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message.Length}\"", "Success");
         }
 
         public void OpenImage(BtnEvent e)
@@ -72,9 +89,7 @@ namespace StegomaticProject.StegoSystemController
                 Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
                 _stegoUI.SetDisplayImage(stegoObject);
-                _stegoUI.ShowNotification("Message encoded successfully.\n" + 
-                                         $"EncryptionKey = {encryptionKey}\n" +
-                                         $"StegoSeed = {stegoSeed}", "Success");
+                ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
             }
             catch (NotifyUserException exception)
             {
@@ -99,8 +114,7 @@ namespace StegomaticProject.StegoSystemController
                 stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
                 string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
-
-                _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
+                ShowDecodingSuccessNotification(message);
             }
             catch (NotifyUserException exception)
             {

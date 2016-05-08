@@ -18,15 +18,15 @@ namespace StegomaticProject.StegoSystemModel
         private IStegoAlgorithm _stegoMethod;
 
 
-        public static void EncodeWasCalled(Object sender, EventArgs e)
-        {
-            Console.WriteLine("Encoded was clicked!");
-        }
+        //public static void EncodeWasCalled(Object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("Encoded was clicked!");
+        //}
 
-        public static void DecodeWasCalled(Object sender, EventArgs e)
-        {
-            Console.WriteLine("Decoded was clicked!");
-        }
+        //public static void DecodeWasCalled(Object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("Decoded was clicked!");
+        //}
 
 
         public StegoSystemModelClass()

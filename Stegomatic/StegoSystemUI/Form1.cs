@@ -20,8 +20,8 @@ namespace StegomaticProject.StegoSystemUI
 
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
-            btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
-            btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
+            //btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
+            //btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
 
         public event BtnEventHandler DecodeBtnClick;
@@ -77,7 +77,6 @@ namespace StegomaticProject.StegoSystemUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
         }
 
         public void btn_open_Click(object sender, EventArgs e)
@@ -95,9 +94,6 @@ namespace StegomaticProject.StegoSystemUI
             {
                 EncodeBtnClick(new BtnEvent());
             }
-
-            //CALL ALGOTHIME HERE!!!
-
         }
 
         private void btn_save_Click(object sender, EventArgs e)

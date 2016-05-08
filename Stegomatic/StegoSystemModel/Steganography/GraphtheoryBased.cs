@@ -23,7 +23,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public byte[] Decode(Bitmap coverImage, string seed)
         {
+            //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
             
+
+            //actual decoding
             throw new NotImplementedException();
         }
 
@@ -31,7 +34,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             //call bunch of methods that prepare for graph construction
             int amountOfPixels = CalculateRequiredPixels(message);
+            Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
             GetRandomPixelsAddToList1(coverImage, seed, amountOfPixels);
+            Console.WriteLine("pixels in list: {0}", PixelList.Count);
 
             //convert secretmessage
             byte[] newMessage = ChopBytesToBitPairs(message);
@@ -39,7 +44,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);
+            Console.WriteLine("Before constuct graph");
+            Console.ReadKey();
             graph.ConstructGraph(amountOfPixels, newMessage);
+            Console.WriteLine("Constructed a new graph");
+            Console.ReadKey();
             graph.ModifyGraph();
 
             coverImage = EmbedPixelListIntoImage(coverImage, amountOfPixels);
@@ -58,10 +67,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int seed;
             string temp = "";
 
+            //convert passphrase to ASCII values
+            passphrase = ConvertTextToASCIIValue(passphrase);
+            
             while (true)
             {
                 bool b = Int32.TryParse(passphrase, out seed);
-                Console.WriteLine(b);
                 if (b == true)
                 {
                     break;
@@ -78,7 +89,22 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return seed;
         }
-        private void GetRandomPixelsAddToList2(Bitmap image, int pixelsNeeded, string passphrase)
+        private string ConvertTextToASCIIValue(string passphrase)
+        {
+
+            byte[] arrayBytes = Encoding.ASCII.GetBytes(passphrase);
+
+            string convertedPassphrase = "";
+
+            //put values from arrayBytes into string
+            foreach (byte element in arrayBytes)
+            {
+                convertedPassphrase += Convert.ToString(element);
+            }
+            
+            return convertedPassphrase;
+        }
+        private void GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             int key = ShortenAndParsePassphraseToInt32(passphrase);
             int numberOfPixels = image.Width*image.Height;

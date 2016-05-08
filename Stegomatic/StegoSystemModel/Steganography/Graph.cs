@@ -24,11 +24,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public void ConstructGraph(int pixelsNeeded, byte[] secretMessage)
         {
+            Console.WriteLine("Starting with constructing vertices");
+            Console.ReadKey();
             ConstructVertices(pixelsNeeded, secretMessage);
+            Console.WriteLine("Constructed a bunch of vertices");
+            Console.ReadKey();
             CheckIfMatched();
             ConstructEdges();
             CheckIfMatched();
             CalcGraphMatching();
+            CheckIfMatched();
             
         }
 
@@ -197,6 +202,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
 
+                //set vertices, that are now correct, to false
+                MatchedEdges[i].VertexOne.Active = false;
+                MatchedEdges[i].VertexTwo.Active = false;
             }
         }
         //Method for helping pixels trade values
@@ -216,7 +224,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             for (int i = 0; i < VertexList.Count; i++)
             {
-                if (VertexList[i].NumberOfEdges == 0)
+                if (VertexList[i].Active == true)
                 {
                     HelpMethodPixelModify(VertexList[i]);
                 }

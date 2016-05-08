@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             //assign "NumberOfSamples" amount of samples (pixels) to this vertex
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
-            PixelsForThisVertex = pixels;
-
+            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
+            {
+                PixelsForThisVertex[i] = pixels[i];
+            }
+            
             this.PartOfSecretMessage = partOfSecretMessage;
-            this.VertexValue = CalculateVertexValue();
+            CalculateVertexValue();
             CalculateTargetValues();
         }
         private static short _id = 0;
@@ -51,14 +55,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 TargetValues[i] = (byte)(PixelsForThisVertex[i].EmbeddedValue + d);
             }
         }
-        public byte CalculateVertexValue()
+        public void CalculateVertexValue()
         {
             byte temp = 0;
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 temp += PixelsForThisVertex[i].EmbeddedValue;
             }
-            return (byte)(temp%GraphTheoryBased.Modulo);
+            this.VertexValue = (byte)(temp%GraphTheoryBased.Modulo);
         }
         public void AssignWeightToVertex(byte weight)
         {

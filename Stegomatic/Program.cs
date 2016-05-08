@@ -16,38 +16,66 @@ namespace StegomaticProject
 {
     class Program
     {
+        private static byte[] ConvertTextToASCIIValue(string message)
+        {
+
+            byte[] arrayBytes = Encoding.ASCII.GetBytes(message);
+
+            return arrayBytes;
+        }
+
+        private static int ImageCompare(Bitmap image1, Bitmap image2)
+        {
+            int localCounter = 0;
+            for (int i = 0; i < image1.Width; i++)
+            {
+                for (int j = 0; j < image1.Height; j++)
+                {
+                    if (image1.GetPixel(i, j) == image2.GetPixel(i, j))
+                    {
+                        localCounter++;
+                    }
+                }
+            }
+            return localCounter;
+        }
+
         [STAThread]
         static void Main(string[] args)
         {
             IStegoSystemModel stegoModel = new StegoSystemModelClass();
             IStegoSystemUI stegoUI = new StegoSystemWinForm(); //new StegoSystemConsole
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
-
+            
+        
 
             //secret message byte array
-            byte[] secretMessage = new byte[10] {1, 2, 1, 2, 0, 0, 3, 1, 1, 0};
+            byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
+            
+            string seed = "thisdoesnotreallymatter";
 
-            //make three colors
-            Color color1 = Color.FromArgb(0, 45, 192, 145);
-            Color color2 = Color.FromArgb(0, 231, 55, 147);
-            Color color3 = Color.FromArgb(0, 11, 44, 198);
+            //get coverimage
+            Bitmap imageOriginal = new Bitmap(@"C:\Users\Dascham\Desktop\image2.png");
+
+            
+            //stego-object
+            Bitmap stegoObject = new Bitmap(imageOriginal);
+
+            
+            GraphTheoryBased encoder = new GraphTheoryBased();
+
+            Console.WriteLine("made an encoder");
+            Console.ReadKey();
+
+            stegoObject = encoder.Encode(imageOriginal, seed, secretMessage);
+
+            Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
+
+            Console.WriteLine(imageOriginal.Size);
+            Console.WriteLine(stegoObject.Size);
 
 
-            //make three pixel objects
-            Pixel pixel1 = new Pixel(color1, 23, 55);
-            Pixel pixel2 = new Pixel(color2, 198, 2300);
-            Pixel pixel3 = new Pixel(color3, 722, 19);
-
-            //make one new vertex
-            Vertex vertex1 = new Vertex(secretMessage[0], pixel1, pixel2, pixel3);
-
-            //print all pixels
-            Console.WriteLine(pixel1.ToString() + pixel2.ToString() + pixel3.ToString());
-
-            //print vertex
-            Console.WriteLine(vertex1.ToString());
-
-            stegoUI.Start();   
+            stegoUI.Start();
         }
     }
 }

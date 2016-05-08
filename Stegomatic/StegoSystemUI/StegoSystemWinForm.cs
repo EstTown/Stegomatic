@@ -39,7 +39,7 @@ namespace StegomaticProject.StegoSystemUI
             get { return new ModelConfiguration(_mainMenu.EncryptChecked, _mainMenu.CompressChecked); }
         }
 
-        public event DisplayNotificationEventHandler NotifyUser;
+        public event DisplayNotificationEventHandler NotifyUser; // DELETE THIS MAYBE?!
         public event BtnEventHandler DecodeBtn;
         public event BtnEventHandler EncodeBtn;
         public event BtnEventHandler SaveImageBtn;
@@ -98,9 +98,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public void SetDisplayImage(Bitmap newImage)
         {
-            // VERIFY AND DISPLAY IT ON UI
             DisplayImage = newImage;
-            throw new NotImplementedException();
         }
 
         public void ShowNotification(string notification, string title = "")
@@ -238,7 +236,33 @@ namespace StegomaticProject.StegoSystemUI
 
         public void SaveImage()
         {
-            throw new NotImplementedException();
+            SaveFileDialog saveFileWindow = new SaveFileDialog();
+
+            //Image to be saved, goes here
+            //Image should be handled by an outside non-form class
+            Image file = DisplayImage;
+
+            saveFileWindow.Title = "Save image as...";
+            saveFileWindow.DefaultExt = ".png";
+            saveFileWindow.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp";
+            saveFileWindow.ShowDialog();
+
+            if (saveFileWindow.FileName != "")
+            {
+
+                //Filestream is saved here, from manipulated image.
+                //Switch determines which format the image will be saved in.
+
+                switch (saveFileWindow.FilterIndex)
+                {
+                    case 1:
+                        file.Save(saveFileWindow.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                    case 2:
+                        file.Save(saveFileWindow.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                }
+            }
         }
     }
 }

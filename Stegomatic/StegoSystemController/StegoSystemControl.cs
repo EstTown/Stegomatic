@@ -46,7 +46,7 @@ namespace StegomaticProject.StegoSystemController
             }
             catch (NotifyUserException exception)
             {
-                new DisplayNotificationEvent(exception);
+                ShowNotification(new DisplayNotificationEvent(exception));
             }
         }
 
@@ -57,12 +57,17 @@ namespace StegomaticProject.StegoSystemController
                 IConfig config = _stegoUI.Config;
                 string message = _stegoUI.Message;
                 Bitmap coverImage = _stegoUI.DisplayImage;
-                string encryptionKey = _stegoUI.GetEncryptionKey();
+                string encryptionKey = string.Empty;
+
+                if (config.Encrypt)
+                {
+                    encryptionKey = _stegoUI.GetEncryptionKey();
+                    encryptionKey = _verifyUserInput.EncryptionKey(encryptionKey);
+                }
                 string stegoSeed = _stegoUI.GetStegoSeed();
 
-                _verifyUserInput.Message(message);
-                _verifyUserInput.EncryptionKey(encryptionKey);
-                _verifyUserInput.StegoSeed(stegoSeed);
+                message = _verifyUserInput.Message(message);
+                stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
                 Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
@@ -75,8 +80,6 @@ namespace StegomaticProject.StegoSystemController
             {
                 ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
             }
-
-            // CATCH ABORTACTIONEXCEPTIONS AND CLEAN UP HERE? 
         }
 
         public void DecodeImage(BtnEvent btnEvent)
@@ -85,11 +88,15 @@ namespace StegomaticProject.StegoSystemController
             {
                 IConfig config = _stegoUI.Config;
                 Bitmap coverImage = _stegoUI.DisplayImage;
-                string encryptionKey = _stegoUI.GetEncryptionKey();
-                string stegoSeed = _stegoUI.GetStegoSeed();
+                string encryptionKey = string.Empty;
 
-                _verifyUserInput.EncryptionKey(encryptionKey);
-                _verifyUserInput.StegoSeed(stegoSeed);
+                if (config.Encrypt)
+                {
+                    encryptionKey = _stegoUI.GetEncryptionKey();
+                    encryptionKey = _verifyUserInput.EncryptionKey(encryptionKey);
+                }
+                string stegoSeed = _stegoUI.GetStegoSeed();
+                stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
                 string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
@@ -99,13 +106,18 @@ namespace StegomaticProject.StegoSystemController
             {
                 ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
             }
-
-            throw new System.NotImplementedException();
         }
 
         public void SaveImage(BtnEvent btnEvent)
         {
-            _stegoUI.SaveImage();
+            try
+            {
+                _stegoUI.SaveImage();
+            }
+            catch (NotifyUserException exception)
+            {
+                ShowNotification(new DisplayNotificationEvent(exception));
+            }
         }
     }
 }

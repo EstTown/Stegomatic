@@ -8,9 +8,9 @@ namespace StegomaticProject.StegoSystemController
 {
     public interface IVerifyUserInput
     {
-        void File(string path);
-        void Message(string message);
-        void EncryptionKey(string encryptionKey);
-        void StegoSeed(string StegoSeed);
+        string File(string path);
+        string Message(string message);
+        string EncryptionKey(string encryptionKey);
+        string StegoSeed(string StegoSeed);
     }
 }

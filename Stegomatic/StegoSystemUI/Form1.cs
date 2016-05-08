@@ -101,36 +101,6 @@ namespace StegomaticProject.StegoSystemUI
             {
                 SaveImageBtnClick(new BtnEvent());
             }
-
-            SaveFileDialog SaveFileDialog = new SaveFileDialog();
-
-            //Image to be saved, goes here
-            //Image should be handled by an outside non-form class
-            Image file = null;
-
-            SaveFileDialog.Title = "Save image as...";
-            SaveFileDialog.DefaultExt = ".png";
-            SaveFileDialog.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp";
-            SaveFileDialog.ShowDialog();
-
-            if (SaveFileDialog.FileName != "")
-            {
-
-                //Filestream is saved here, from manipulated image.
-                //Switch determines which format the image will be saved in.
-
-                switch (SaveFileDialog.FilterIndex)
-                {
-                    case 1:
-                        file.Save(SaveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
-                        break;
-                    case 2:
-                        file.Save(SaveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
-                        break;
-                }
-
-            }
-
         }
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)

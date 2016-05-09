@@ -236,19 +236,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         private void HelpMethodPixelModify(Vertex vertex) //always uses first sample in vertex
         {
-            byte local = 0;
-            while ((vertex.PixelsForThisVertex[0].EmbeddedValue + local) != vertex.TargetValues[0])
+            int localDifference = 0;
+            while ((vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference) != vertex.TargetValues[0])
             {
-                if (vertex.PixelsForThisVertex[0].Color.R < 127) //always red channel
+                if (vertex.PixelsForThisVertex[0].Color.R <= 127) //always red channel
                 {
-                    local++;
+                    localDifference++;
                 }
                 else
                 {
-                    local--;
+                    localDifference--;
                 }
             }
-            vertex.PixelsForThisVertex[0].ColorDifference = local;
+            vertex.PixelsForThisVertex[0].ColorDifference = (byte)localDifference;
         }
 
 

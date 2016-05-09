@@ -190,6 +190,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     //Console.ReadKey();
 
                     Edge M = SortedInternalList.First();
+                    /*HVIS ALT ER MATCHET BLIVER DER IKKE OPRETTET
+                    KANTER, OG DERFOR KASTER DENNE EN NULLEXCEPTION!!!*/
+
+
                     //Edge FoundInGlobalList = EdgeList.FirstOrDefault(i => i == M);
 
                     tempMatched.Add(M);

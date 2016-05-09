@@ -234,13 +234,13 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        public void SaveImage()
+        public void SaveImage(/*Bitmap image*/)
         {
             SaveFileDialog saveFileWindow = new SaveFileDialog();
 
             //Image to be saved, goes here
             //Image should be handled by an outside non-form class
-            Image file = DisplayImage;
+            Bitmap file = DisplayImage;
 
             saveFileWindow.Title = "Save image as...";
             saveFileWindow.DefaultExt = ".png";

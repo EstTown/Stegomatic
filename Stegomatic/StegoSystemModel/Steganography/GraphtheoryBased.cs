@@ -39,7 +39,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("pixels in list: {0}", PixelList.Count);
 
             //convert secretmessage
-            byte[] newMessage = ChopBytesToBitPairs(message);
+            List<byte> newMessage = ByteArrayToValues(message);
 
             foreach (byte b in newMessage)
             {

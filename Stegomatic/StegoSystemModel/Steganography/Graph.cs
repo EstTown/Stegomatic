@@ -27,12 +27,22 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Starting with constructing vertices");
             Console.ReadKey();
             ConstructVertices(pixelsNeeded, secretMessage);
-            Console.WriteLine("Constructed a bunch of vertices");
+            Console.WriteLine("Constructed a bunch of vertices      -       " + VertexList.Count);
             Console.ReadKey();
             CheckIfMatched();
             ConstructEdges();
             CheckIfMatched();
+            Console.WriteLine("Before calcGraph");
+            Console.WriteLine("VertexList:    " + VertexList.Count);
+            Console.WriteLine("Edgelist:    " + EdgeList.Count);
+            Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
+            Console.ReadKey();
             CalcGraphMatching();
+            Console.WriteLine("SUCCESS!!!!");
+            Console.WriteLine("VertexList:    " + VertexList.Count);
+            Console.WriteLine("Edgelist:    " + EdgeList.Count);
+            Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
+
             CheckIfMatched();
             
         }
@@ -41,13 +51,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             Console.WriteLine("Before swapping pixels");
             Console.ReadKey();
-            PixelSwap(MatchedEdges);
+            PixelSwap();
             Console.WriteLine("Before modifying");
             Console.ReadKey();
             PixelModify();
 
             return PixelList;
         }
+
         private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage)
         {
             int counter = 0;
@@ -58,6 +69,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 counter++;
             }
         }
+
         private void ConstructEdges()
         {
             byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
@@ -75,6 +87,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         if (b == true)
                         {
                             amountOfEdges++;
+                            if (amountOfEdges == 10000) //Hardcoded limit for edges per vert
+                            {
+                                break;
+                            }
                             if (edgeWeight <= lowestWeight)
                             {
                                 lowestWeight = edgeWeight;
@@ -88,6 +104,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 VertexList[i].Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
             }
         }
+
         private bool ConstructASingleEdge(Vertex vertex1, Vertex vertex2, out byte lowestWeight)
         {
             byte weight = GraphTheoryBased.MaxEdgeWeight;
@@ -121,12 +138,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             lowestWeight = 0;
             return false;
         }
+
         private byte CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
         {
             byte weight = (byte)(Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
                      Math.Abs(pixel1.Color.B - pixel2.Color.B));
             return weight;
         }
+
         public void CheckIfMatched() //this will be called multiple times. 
         {
             for (int i = 0; i < VertexList.Count; i++)
@@ -137,79 +156,80 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
         }
+
         private void SortVertexListByEdgeAndWeight()
         {
             VertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
         }
+
         private void CalcGraphMatching()
         {
-            //This will calculate a match for each vertex in the graph
-            
-            //Sort list
             SortVertexListByEdgeAndWeight();
 
-            //Process each vertex in sorted list
-            foreach (Vertex x in VertexList)
+            List<Edge> tempMatched = new List<Edge>();
+
+            foreach (Vertex vert in VertexList)
             {
-                if (x.Active == true && x.NumberOfEdges > 0)
+                if (vert.Active == true && vert.NumberOfEdges > 0)
                 {
-                    //Today we're finding the shortest edge for the vertex 'x'
                     List<Edge> InternalEdgeList = new List<Edge>();
                     foreach (Edge edge in EdgeList)
                     {
-                        if (edge.VertexOne == x || edge.VertexTwo == x)
+                        if (edge.VertexOne == vert || edge.VertexTwo == vert)
                         {
-                            //Look! Look! We caught one!
                             InternalEdgeList.Add(edge);
                         }
                     }
 
-                    //Connected edges are now found, and sorted. Yeay!
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
-                    //Create new Edge, from the loweset weighted edge
-                    Edge M = SortedInternalList.FirstOrDefault();
-                    //Add to list
-                    MatchedEdges.Add(M);
+                    //foreach (var item in InternalEdgeList)
+                    //{
+                    //    Console.WriteLine(item.ToString());
+                    //}
+                    //Console.ReadKey();
 
-                    //Now we're done...
+                    Edge M = SortedInternalList.First();
+                    //Edge FoundInGlobalList = EdgeList.FirstOrDefault(i => i == M);
 
-                    //I was lying... we're not...
-
-                    //Now, lets handle the "dirty work"
-                    //Killingspree and hiding the evidence!
-
-                    //Deactive both verts connected to selected edge
-                    M.VertexOne.Active = false;
-                    M.VertexTwo.Active = false;
-
-                    //Now, let's kill ANY edge who knows of these two verts!
-                    foreach (Edge edge in EdgeList)
-                    {
-                        if (edge.VertexOne == M.VertexOne || edge.VertexTwo == M.VertexOne ||
-                            edge.VertexOne == M.VertexTwo || edge.VertexTwo == M.VertexTwo)
-                        {
-                            //KILL! KILL! KILL!
-                            EdgeList.Remove(edge);
-                        }
-                    }
+                    tempMatched.Add(M);
                 }
             }
-            //Now we should have a list of all selected edges, and no two verts should be connected by more than one edge.
-            //Congratulations! You're now a certified killer! :D
+
+
+            MatchedEdges = DeleteDuplicatesInList(tempMatched);
+
+        }
+
+        private List<Edge> DeleteDuplicatesInList(List<Edge> list)
+        {
+            return list.Distinct().ToList();
         }
 
 
-        private void PixelSwap(List<Edge> matchedEdges)
+        private void PixelSwap()
         {
-            for (int i = 0; i < matchedEdges.Count; i++)
-            {
-                TradePixelValues(matchedEdges[i].VertexPixelOne, matchedEdges[i].VertexPixelTwo);
+            //for (int i = 0; i < MatchedEdges.Count; i++)
+            //{
+            //    TradePixelValues(MatchedEdges[i].VertexPixelOne, MatchedEdges[i].VertexPixelTwo);
 
-                //set vertices, that are now correct, to false
-                MatchedEdges[i].VertexOne.Active = false;
-                MatchedEdges[i].VertexTwo.Active = false;
+            //    //set vertices, that are now correct, to false
+            //    MatchedEdges[i].VertexOne.Active = false;
+            //    MatchedEdges[i].VertexTwo.Active = false;
+            //}
+            //foreach (Edge edge in MatchedEdges)
+            //{
+            //    Console.WriteLine(edge.ToString());
+            //}
+
+            foreach (Edge edge in MatchedEdges)
+            {
+                TradePixelValues(edge.VertexPixelOne, edge.VertexPixelTwo);
+
+                edge.VertexOne.Active = false;
+                edge.VertexTwo.Active = false;
             }
+
         }
         //Method for helping pixels trade values
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
@@ -238,9 +258,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             //print this vertex
             Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "\n"+vertex.TargetValues[0]+"\n\n");
-            Console.ReadKey();
+            //Console.ReadKey();
             int localDifference = 0;
-            while ((vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference) != vertex.TargetValues[0])
+            while ((Math.Abs(vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference)) % GraphTheoryBased.Modulo != vertex.TargetValues[0])
             {
                 if (vertex.PixelsForThisVertex[0].Color.R <= 127) //always red channel
                 {
@@ -250,6 +270,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 {
                     localDifference--;
                 }
+                Console.WriteLine(localDifference);
+
             }
             vertex.PixelsForThisVertex[0].ColorDifference = localDifference;
         }

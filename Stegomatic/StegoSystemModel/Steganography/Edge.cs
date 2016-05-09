@@ -29,12 +29,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private static int _edgecounter = 1; //might not need this, but keep for now
 
         /*Properties for two vertices*/
-        public Vertex VertexOne { get; private set; }
-        public Vertex VertexTwo { get; private set; }
+        public Vertex VertexOne { get; set; }
+        public Vertex VertexTwo { get; set; }
 
         /*Properties for two pixels within the vertices*/
-        public Pixel VertexPixelOne { get; private set; }
-        public Pixel VertexPixelTwo { get; private set; }
+        public Pixel VertexPixelOne { get; set; }
+        public Pixel VertexPixelTwo { get; set; }
 
         /*Property for the weight of the edge*/
         private byte _edgeWeight;   

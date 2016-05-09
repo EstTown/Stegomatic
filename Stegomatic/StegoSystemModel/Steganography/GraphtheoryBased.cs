@@ -40,7 +40,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             //convert secretmessage
             byte[] newMessage = ChopBytesToBitPairs(message);
-            
+
+            foreach (byte b in newMessage)
+            {
+                Console.WriteLine(b);
+            }
 
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);

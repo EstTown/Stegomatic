@@ -46,28 +46,28 @@ namespace StegomaticProject
             IStegoSystemModel stegoModel = new StegoSystemModelClass();
             IStegoSystemUI stegoUI = new StegoSystemWinForm(); //new StegoSystemConsole
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
-            
-        
 
-            ////secret message byte array
-            //byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
-            //string seed = "thisdoesnotreallymatter";
-            ////get coverimage
-            //Bitmap imageOriginal = new Bitmap(@"C:\Users\Dascham\Desktop\image2.png");
-            
-            ////stego-object
-            //Bitmap stegoObject = new Bitmap(imageOriginal);
-            
-            //GraphTheoryBased encoder = new GraphTheoryBased();
 
-            //Console.WriteLine("made an encoder");
-            //Console.ReadKey();
 
-            //stegoObject = encoder.Encode(imageOriginal, seed, secretMessage);
+            //secret message byte array
+            byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
+            string seed = "thisdoesnotreallymatter";
+            //get coverimage
+            Bitmap imageOriginal = new Bitmap(@"C:\Users\Dascham\Desktop\image2.png");
 
-            //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
-            //Console.WriteLine(imageOriginal.Size);
-            //Console.WriteLine(stegoObject.Size);
+            //stego-object
+            Bitmap stegoObject = new Bitmap(imageOriginal);
+
+            GraphTheoryBased encoder = new GraphTheoryBased();
+
+            Console.WriteLine("made an encoder");
+            Console.ReadKey();
+
+            stegoObject = encoder.Encode(imageOriginal, seed, secretMessage);
+
+            Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
+            Console.WriteLine(imageOriginal.Size);
+            Console.WriteLine(stegoObject.Size);
 
 
             stegoUI.Start();

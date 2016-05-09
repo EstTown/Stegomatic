@@ -77,4 +77,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return this.Id + "\n" + this.VertexValue + "\n";
         }
     }
+
+
+
 }

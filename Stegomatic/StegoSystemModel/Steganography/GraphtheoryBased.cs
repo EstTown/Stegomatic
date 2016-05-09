@@ -199,59 +199,44 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
-        
+
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
-        public byte[] ChopBytesToBitPairs(byte[] byteArray)
+        public List<Byte> ByteArrayToValues(byte[] byteArray)
         {
-            /*List fo int values*/
-            List<IEnumerable<byte>> messageValues = new List<IEnumerable <byte>>();
+            List<Byte> Values = new List<byte>();
 
-            foreach (byte value in byteArray)
+            foreach (Byte item in byteArray)
             {
-                messageValues.Add(ConvertBitsToInt(value));
+                BitArray bitValues = new BitArray(BitConverter.GetBytes(item).ToArray());
+                for (int index = 7; index > -1; index -= 2)
+                {
+                    if (bitValues[index] == true && bitValues[index - 1] == true)
+                    {
+                        Values.Add(3);
+                        Console.WriteLine("3");
+                    }
+                    else if (bitValues[index] == true && bitValues[index - 1] == false)
+                    {
+                        Values.Add(2);
+                        Console.WriteLine("2");
+                    }
+                    else if (bitValues[index] == false && bitValues[index - 1] == true)
+                    {
+                        Values.Add(1);
+                        Console.WriteLine("1");
+                    }
+                    else
+                    {
+                        Values.Add(0);
+                        Console.WriteLine("0");
+                    }
+                }
             }
-            int counter = 0;
-            byte[] bytearray2 = new byte[] {};
 
-            foreach (IEnumerable<byte> bytes in messageValues)
-            {
-                bytearray2 = bytes.ToArray();
-            }
-
-
-
-            return bytearray2;
+            return Values;
         }
-        
-        public IEnumerable<byte> ConvertBitsToInt(byte byteValue)
-        {
-            byte value;
-            BitArray bitValues = new BitArray(new byte[] { byteValue });
 
-            for (int index = 7; index > -1; index -= 2)   
-            {
-                if(bitValues[index] == true && bitValues[index - 1] == true)
-                {
-                    value = 3;
-                }
-                else if(bitValues[index] == true && bitValues[index - 1] == false)
-                {
-                    value = 2;
-                }
-                else if(bitValues[index] == false && bitValues[index - 1] == true)
-                {
-                    value = 1;
-                }
-                else
-                {
-                    value = 0;
-                }
-
-                yield return value;
-            }
-        }
-        
         private int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length*PixelsPerByte;

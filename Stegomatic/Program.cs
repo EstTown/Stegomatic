@@ -31,7 +31,7 @@ namespace StegomaticProject
             {
                 for (int j = 0; j < image1.Height; j++)
                 {
-                    if (image1.GetPixel(i, j) == image2.GetPixel(i, j))
+                    if (image1.GetPixel(i, j) != image2.GetPixel(i, j))
                     {
                         localCounter++;
                     }
@@ -53,10 +53,12 @@ namespace StegomaticProject
             //byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
             //string seed = "thisdoesnotreallymatter";
             ////get coverimage
-            ////Bitmap imageOriginal = new Bitmap(@"C:\Users\Dascham\Desktop\image2.png");
+            //Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\PNG_Options.png");
 
             ////stego-object
-            //Bitmap stegoObject = new Bitmap(imageOriginal);
+            //Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\encoded.png");
+
+            //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
 
             //GraphTheoryBased encoder = new GraphTheoryBased();
 

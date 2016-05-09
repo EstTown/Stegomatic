@@ -44,7 +44,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
 
             CheckIfMatched();
-            
+
         }
 
         public List<Pixel> ModifyGraph()
@@ -62,9 +62,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage)
         {
             int counter = 0;
-            for (int i = 0; i < pixelsNeeded; i+=GraphTheoryBased.SamplesVertexRatio)
+            for (int i = 0; i < pixelsNeeded; i += GraphTheoryBased.SamplesVertexRatio)
             {
-                Vertex vertex = new Vertex(secretMessage[counter], PixelList[i], PixelList[i+1], PixelList[i+2]); //this is hardcoded and can maybe rewritten by using a delegate.
+                Vertex vertex = new Vertex(secretMessage[counter], PixelList[i], PixelList[i + 1], PixelList[i + 2]); //this is hardcoded and can maybe rewritten by using a delegate.
                 VertexList.Add(vertex);
                 counter++;
             }
@@ -96,7 +96,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                                 lowestWeight = edgeWeight;
                             }
                         }
-                        
+
                     }
                 }
                 VertexList[i].LowestEdgeWeight = lowestWeight;
@@ -129,7 +129,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
 
-            if (tempEdge.EdgeWeight != 0 ) //edgeweight will never be zero, because a pixel cannot have an embeddedvalue that's equivalent with it's targetvalue
+            if (tempEdge.EdgeWeight != 0) //edgeweight will never be zero, because a pixel cannot have an embeddedvalue that's equivalent with it's targetvalue
             {
                 EdgeList.Add(tempEdge);
                 lowestWeight = weight;
@@ -257,7 +257,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private void HelpMethodPixelModify(Vertex vertex) //always uses first sample in vertex
         {
             //print this vertex
-            Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "\n"+vertex.TargetValues[0]+"\n\n");
+            Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "\n" + vertex.TargetValues[0] + "\n\n");
             //Console.ReadKey();
             int localDifference = 0;
             while ((Math.Abs(vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference)) % GraphTheoryBased.Modulo != vertex.TargetValues[0])

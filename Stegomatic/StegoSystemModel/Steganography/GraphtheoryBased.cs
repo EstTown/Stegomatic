@@ -24,7 +24,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte[] Decode(Bitmap coverImage, string seed)
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
-            
+
 
             //actual decoding
             throw new NotImplementedException();
@@ -41,7 +41,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
 
-            
+
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);
             Console.WriteLine("Before constuct graph");
@@ -59,8 +59,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return coverImage;
         }
-        
-        public byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo) 
+
+        public byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
         {
             byte weight = 0;
             return weight;
@@ -73,7 +73,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             //convert passphrase to ASCII values
             passphrase = ConvertTextToASCIIValue(passphrase);
-            
+
             while (true)
             {
                 bool b = Int32.TryParse(passphrase, out seed);
@@ -105,13 +105,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 convertedPassphrase += Convert.ToString(element);
             }
-            
+
             return convertedPassphrase;
         }
         private void GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             int key = ShortenAndParsePassphraseToInt32(passphrase);
-            int numberOfPixels = image.Width*image.Height;
+            int numberOfPixels = image.Width * image.Height;
 
             //generate sequence of numbers through seed
             Random r = new Random(key);
@@ -123,8 +123,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int tempPosY;
             for (int i = 0; i < pixelsNeeded; i++)
             {
-                tempPosX = pixelPositions[i]%image.Width;
-                tempPosY = pixelPositions[i]/image.Width;
+                tempPosX = pixelPositions[i] % image.Width;
+                tempPosY = pixelPositions[i] / image.Width;
                 //make new pixel 
                 Pixel pixel = new Pixel(image.GetPixel(tempPosX, tempPosY), tempPosX, tempPosY);
                 PixelList.Add(pixel);
@@ -207,7 +207,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             string stringSize = sizeOfEmbeddedData.ToString();
 
             byte[] embeddedDataArrayInfo = new byte[stringSize.Length]; //every char to byte array decimal value
-            
+
             for (int i = 0; i < stringSize.Length; i++)
             {
                 embeddedDataArrayInfo[i] = Convert.ToByte(stringSize[i]);
@@ -259,15 +259,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private int CalculateRequiredPixels(byte[] byteArray)
         {
-            int amount = byteArray.Length*PixelsPerByte;
+            int amount = byteArray.Length * PixelsPerByte;
             return amount;
         }
         private Bitmap EmbedPixelListIntoImage(Bitmap image, int amountOfPixels)//already has acces to coverimage
         {
             for (int i = 0; i < amountOfPixels; i++)
             {
-                image.SetPixel(PixelList[i].PosX, PixelList[i].PosY, 
-                    (Color.FromArgb(PixelList[i].Color.A, PixelList[i].Color.R+PixelList[i].ColorDifference, PixelList[i].Color.G, PixelList[i].Color.B)));
+                image.SetPixel(PixelList[i].PosX, PixelList[i].PosY,
+                    (Color.FromArgb(PixelList[i].Color.A, PixelList[i].Color.R + PixelList[i].ColorDifference, PixelList[i].Color.G, PixelList[i].Color.B)));
             }
             return image;
         }

@@ -76,7 +76,3 @@ namespace StegomaticProject
         }
     }
 }
-
-
-
-

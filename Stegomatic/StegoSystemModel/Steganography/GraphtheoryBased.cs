@@ -41,11 +41,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
 
-            foreach (byte b in newMessage)
-            {
-                Console.WriteLine(b);
-            }
-
+            
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);
             Console.WriteLine("Before constuct graph");

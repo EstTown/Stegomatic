@@ -22,7 +22,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public List<Edge> MatchedEdges = new List<Edge>();
         public int PixelsNeeded { get; }
 
-        public void ConstructGraph(int pixelsNeeded, byte[] secretMessage)
+        public void ConstructGraph(int pixelsNeeded, List<byte> secretMessage)
         {
             Console.WriteLine("Starting with constructing vertices");
             Console.ReadKey();
@@ -44,7 +44,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return PixelList;
         }
-        private void ConstructVertices(int pixelsNeeded, byte[] secretMessage)
+        private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage)
         {
             int counter = 0;
             for (int i = 0; i < pixelsNeeded; i+=GraphTheoryBased.SamplesVertexRatio)

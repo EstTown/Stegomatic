@@ -35,7 +35,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //call bunch of methods that prepare for graph construction
             int amountOfPixels = CalculateRequiredPixels(message);
             Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
-            GetRandomPixelsAddToList1(coverImage, seed, amountOfPixels);
+            GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
             Console.WriteLine("pixels in list: {0}", PixelList.Count);
 
             //convert secretmessage

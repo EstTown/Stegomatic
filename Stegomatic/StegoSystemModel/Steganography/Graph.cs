@@ -183,7 +183,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
-                    Edge M = SortedInternalList.FirstOrDefault();
+                    //foreach (var item in InternalEdgeList)
+                    //{
+                    //    Console.WriteLine(item.ToString());
+                    //}
+                    //Console.ReadKey();
+
+                    Edge M = SortedInternalList.First();
                     //Edge FoundInGlobalList = EdgeList.FirstOrDefault(i => i == M);
 
                     tempMatched.Add(M);
@@ -211,10 +217,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //    MatchedEdges[i].VertexOne.Active = false;
             //    MatchedEdges[i].VertexTwo.Active = false;
             //}
-            foreach (Edge edge in MatchedEdges)
-            {
-                Console.WriteLine(edge.ToString());
-            }
+            //foreach (Edge edge in MatchedEdges)
+            //{
+            //    Console.WriteLine(edge.ToString());
+            //}
 
             foreach (Edge edge in MatchedEdges)
             {
@@ -252,9 +258,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             //print this vertex
             Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "\n"+vertex.TargetValues[0]+"\n\n");
-            Console.ReadKey();
+            //Console.ReadKey();
             int localDifference = 0;
-            while ((Math.Abs(vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference)) != vertex.TargetValues[0])
+            while ((Math.Abs(vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference)) % GraphTheoryBased.Modulo != vertex.TargetValues[0])
             {
                 if (vertex.PixelsForThisVertex[0].Color.R <= 127) //always red channel
                 {
@@ -264,6 +270,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 {
                     localDifference--;
                 }
+                Console.WriteLine(localDifference);
+
             }
             vertex.PixelsForThisVertex[0].ColorDifference = localDifference;
         }

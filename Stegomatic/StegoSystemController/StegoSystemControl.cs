@@ -98,6 +98,9 @@ namespace StegomaticProject.StegoSystemController
             {
                 ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
             }
+            catch (AbortActionException)
+            {
+            }
         }
 
         public void DecodeImage(BtnEvent btnEvent)
@@ -123,6 +126,9 @@ namespace StegomaticProject.StegoSystemController
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
+            }
+            catch (AbortActionException)
+            {
             }
         }
 

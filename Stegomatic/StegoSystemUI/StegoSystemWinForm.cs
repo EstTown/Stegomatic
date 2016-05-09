@@ -130,7 +130,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Encryption key", "Key:");
             }
-            catch (NotifyUserException)
+            catch (Exception)
             {
                 throw;
             }
@@ -142,7 +142,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Steganography seed", "Seed:");
             }
-            catch (NotifyUserException)
+            catch (Exception)
             {
                 throw;
             }
@@ -164,7 +164,7 @@ namespace StegomaticProject.StegoSystemUI
             }
             else
             {
-                throw new NotifyUserException("Action aborted."); // MAKE THIS AN ABORTACTIONEXCEPTION AND CATCH IT?
+                throw new AbortActionException();
             }
 
             popupWindow.Close();

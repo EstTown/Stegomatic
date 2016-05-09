@@ -52,7 +52,8 @@ namespace StegomaticProject.StegoSystemController
 
         private void ShowDecodingSuccessNotification(string message)
         {
-            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message.Length}\"", "Success");
+            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
+            Console.WriteLine(message);
         }
 
         public void OpenImage(BtnEvent e)
@@ -76,6 +77,7 @@ namespace StegomaticProject.StegoSystemController
                 Bitmap coverImage = _stegoUI.DisplayImage;
                 string encryptionKey = string.Empty;
 
+                _verifyUserInput.Image(coverImage);
                 if (config.Encrypt)
                 {
                     encryptionKey = _stegoUI.GetEncryptionKey();
@@ -88,16 +90,7 @@ namespace StegomaticProject.StegoSystemController
 
                 Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                //Prompt to savedialog
-                try
-                {
-                    _stegoUI.SaveImage(stegoObject);
-                }
-                catch (NotifyUserException exception)
-                {
-                    ShowNotification(new DisplayNotificationEvent(exception));
-                }
-
+                _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
             }
@@ -115,6 +108,7 @@ namespace StegomaticProject.StegoSystemController
                 Bitmap coverImage = _stegoUI.DisplayImage;
                 string encryptionKey = string.Empty;
 
+                _verifyUserInput.Image(coverImage);
                 if (config.Encrypt)
                 {
                     encryptionKey = _stegoUI.GetEncryptionKey();

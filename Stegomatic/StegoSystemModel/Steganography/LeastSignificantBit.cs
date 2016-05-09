@@ -14,30 +14,32 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             // Seed is unused.
             string binaryMessage = MessageToBinary(message);
 
-            Console.WriteLine(binaryMessage);
+            Console.WriteLine("Size: " + binaryMessage.Length);
 
             Bitmap stegoObject = HideMessage(coverImage, binaryMessage, Convert.ToInt32(seed));
             return stegoObject;
         }
 
-        private Bitmap HideMessage(Bitmap carrier, string binaryMessage, int alpha)
+        private Bitmap HideMessage(Bitmap carrier, string binaryMessage, int red)
         {
             Color colorOfPixel, newColor;
             int x = 0, y = 0;
 
             for (int i = 0; i < binaryMessage.Length; i++)
             {
-                if (++x > carrier.Width)
+                if (++x >= carrier.Width)
                 {
                     x = 0;
                     y++;
                 }
-                if (binaryMessage[i] == 1)
+                if (binaryMessage[i] == '1')
                 {
                     colorOfPixel = carrier.GetPixel(x, y);
-                    newColor = Color.FromArgb(alpha, colorOfPixel.R, colorOfPixel.G, colorOfPixel.B);
+                    newColor = Color.FromArgb(red, colorOfPixel.G, colorOfPixel.B);
                     carrier.SetPixel(x, y, newColor);
                 }
+
+                // MAKE SURE IT DOESN'T GO OVER THE HEIGHT.
             }
 
             return carrier;
@@ -66,7 +68,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return BinaryToByteArray(binaryMessage);
         }
 
-        private string GetMessage(Bitmap carrier, int alpha)
+        private string GetMessage(Bitmap carrier, int red)
         {
             Color colorOfPixel;
             StringBuilder message = new StringBuilder();
@@ -76,9 +78,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 for (int y = 0; y < carrier.Height; y++)
                 {
                     colorOfPixel = carrier.GetPixel(x, y);
-                    if (colorOfPixel.A == alpha)
+                    if (colorOfPixel.R == red)
                     {
-                        message.Append('1');
+                        message.Append("1");
                     }
                     else
                     {

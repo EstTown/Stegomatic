@@ -32,7 +32,7 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
+            _stegoMethod = new LeastSignificantBit(); 
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
@@ -48,7 +48,7 @@ namespace StegomaticProject.StegoSystemModel
 
             if (decrypt)
             {
-               // byteMessage = _cryptoMethod.Decrypt(decryptionKey, byteMessage);
+                //byteMessage = _cryptoMethod.Decrypt(byteMessage, encryptionKey);
             }
 
             if (decompress)
@@ -57,7 +57,6 @@ namespace StegomaticProject.StegoSystemModel
             }
 
             string message = ByteConverter.ByteArrayToString(byteMessage);
-
             return message;
         }
 

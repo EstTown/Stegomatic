@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using StegomaticProject.CustomExceptions;
+using System.Drawing;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -49,6 +50,14 @@ namespace StegomaticProject.StegoSystemController
                 return string.Empty;
             }
             return stegoSeed;
+        }
+
+        public void Image(Bitmap coverImage)
+        {
+            if (coverImage == null)
+            {
+                throw new NotifyUserException("No image choosen.");
+            }
         }
     }
 }

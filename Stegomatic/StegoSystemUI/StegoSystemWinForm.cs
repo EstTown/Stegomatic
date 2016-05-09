@@ -234,22 +234,20 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        public void SaveImage(Bitmap image)
+        public void SaveImage(Bitmap file)
         {
             SaveFileDialog saveFileWindow = new SaveFileDialog();
 
             //Image to be saved, goes here
             //Image should be handled by an outside non-form class
-            Bitmap file = image;
 
             saveFileWindow.Title = "Save image as...";
             saveFileWindow.DefaultExt = ".png";
             saveFileWindow.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp";
-            saveFileWindow.ShowDialog();
+            DialogResult userResponse = saveFileWindow.ShowDialog();
 
             if (saveFileWindow.FileName != "")
             {
-
                 //Filestream is saved here, from manipulated image.
                 //Switch determines which format the image will be saved in.
 
@@ -262,6 +260,11 @@ namespace StegomaticProject.StegoSystemUI
                         file.Save(saveFileWindow.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
                         break;
                 }
+            }
+
+            if (userResponse != DialogResult.OK)
+            {
+                throw new NotifyUserException("Image not modified.", "Action cancelled");
             }
         }
     }

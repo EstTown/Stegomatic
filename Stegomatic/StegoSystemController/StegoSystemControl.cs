@@ -52,7 +52,14 @@ namespace StegomaticProject.StegoSystemController
 
         private void ShowDecodingSuccessNotification(string message)
         {
+            throw new Exception(message);
+
+
             _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
+
+
+
+
             Console.WriteLine(message);
         }
 

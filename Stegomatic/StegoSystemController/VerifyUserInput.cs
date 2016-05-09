@@ -36,18 +36,18 @@ namespace StegomaticProject.StegoSystemController
 
         public string EncryptionKey(string encryptionKey)
         {
-            if (encryptionKey == null)
+            if (string.IsNullOrEmpty(encryptionKey))
             {
-                return string.Empty;
+                return "123"; //string.Empty;
             }
             return encryptionKey;
         }
 
         public string StegoSeed(string stegoSeed)
         {
-            if (stegoSeed == null)
+            if (string.IsNullOrEmpty(stegoSeed))
             {
-                return string.Empty;
+                return "123"; //string.Empty;
             }
             return stegoSeed;
         }

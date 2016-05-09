@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StegomaticProject.CustomExceptions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,13 +12,21 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     {
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
-            // Seed is unused.
-            string binaryMessage = MessageToBinary(message);
+            try
+            {
+                string binaryMessage = MessageToBinary(message);
+                Bitmap stegoObject = HideMessage(coverImage, binaryMessage, ConvertSeed(seed));
+                return stegoObject;
+            }
+            catch (FormatException)
+            {
+                throw new AbortActionException();
+            }
+        }
 
-            Console.WriteLine("Size: " + binaryMessage.Length);
-
-            Bitmap stegoObject = HideMessage(coverImage, binaryMessage, Convert.ToInt32(seed));
-            return stegoObject;
+        private int ConvertSeed(string seedInput)
+        {
+            return Convert.ToInt32(seedInput);
         }
 
         private Bitmap HideMessage(Bitmap carrier, string binaryMessage, int red)
@@ -64,8 +73,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public byte[] Decode(Bitmap carrier, string seed)
         {
-            string binaryMessage = GetMessage(carrier, Convert.ToInt32(seed));
-            return BinaryToByteArray(binaryMessage);
+            try
+            {
+                string binaryMessage = GetMessage(carrier, ConvertSeed(seed));
+                return BinaryToByteArray(binaryMessage);
+            }
+            catch (FormatException)
+            {
+                throw new AbortActionException();
+            }
         }
 
         private string GetMessage(Bitmap carrier, int red)

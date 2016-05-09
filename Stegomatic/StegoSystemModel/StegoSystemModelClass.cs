@@ -38,12 +38,6 @@ namespace StegomaticProject.StegoSystemModel
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
-            //if (decryptionKey == string.Empty || decryptionKey == null)
-            //{
-            //    decrypt = false;
-            //}
-            // PROP DET OVENSTÅENDE IND I ENCRYPTION KLASSEN??!
-
             byte[] byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
 
             if (decrypt)

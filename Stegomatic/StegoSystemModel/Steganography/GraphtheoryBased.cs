@@ -49,7 +49,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             graph.ConstructGraph(amountOfPixels, newMessage);
             Console.WriteLine("Constructed a new graph");
             Console.ReadKey();
+            Console.WriteLine("will now try to modify graph");
+
             graph.ModifyGraph();
+            Console.WriteLine("Modified graph");
+            Console.ReadKey();
 
             coverImage = EmbedPixelListIntoImage(coverImage, amountOfPixels);
 

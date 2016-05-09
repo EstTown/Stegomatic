@@ -39,7 +39,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public List<Pixel> ModifyGraph()
         {
+            Console.WriteLine("Before swapping pixels");
+            Console.ReadKey();
             PixelSwap(MatchedEdges);
+            Console.WriteLine("Before modifying");
+            Console.ReadKey();
             PixelModify();
 
             return PixelList;

@@ -199,7 +199,29 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
-        
+
+        private byte[] AddMetaData(byte[] array)
+        {
+            int sizeOfEmbeddedData = array.Length;
+
+            string something = sizeOfEmbeddedData.ToString();
+
+            byte[] embeddedByteArray = new byte[something.Length];
+            for (int i = 0; i < something.Length; i++)
+            {
+                embeddedByteArray[i] = Convert.ToByte(something[i]);
+            }
+
+            //define always present character, which seperates metadata from message
+            string seperater = "?";
+
+            byte[] seperaterByteArray = Encoding.ASCII.GetBytes(seperater);
+
+
+            //call help method for combining arrays
+            byte[] array2;
+            return array2;
+        }
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
         public byte[] ChopBytesToBitPairs(byte[] byteArray)

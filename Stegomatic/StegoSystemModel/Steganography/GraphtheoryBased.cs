@@ -219,7 +219,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
 
             //call help method for combining arrays
-            byte[] array2;
+            byte[] array2 = new byte[2];
             return array2;
         }
 

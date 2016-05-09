@@ -26,7 +26,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte EmbeddedValue { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
-        public byte ColorDifference { get; set; }
+        public int ColorDifference { get; set; }
 
         public void CalculateEmbeddedValue()
         {

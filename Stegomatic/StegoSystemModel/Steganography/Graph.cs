@@ -248,7 +248,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     localDifference--;
                 }
             }
-            vertex.PixelsForThisVertex[0].ColorDifference = (byte)localDifference;
+            vertex.PixelsForThisVertex[0].ColorDifference = localDifference;
         }
 
 

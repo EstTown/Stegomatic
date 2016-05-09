@@ -236,6 +236,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         private void HelpMethodPixelModify(Vertex vertex) //always uses first sample in vertex
         {
+            //print this vertex
+            Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "\n"+vertex.TargetValues[0]+"\n\n");
+            Console.ReadKey();
             int localDifference = 0;
             while ((vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference) != vertex.TargetValues[0])
             {

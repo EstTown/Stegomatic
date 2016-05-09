@@ -214,22 +214,18 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     if (bitValues[index] == true && bitValues[index - 1] == true)
                     {
                         Values.Add(3);
-                        Console.WriteLine("3");
                     }
                     else if (bitValues[index] == true && bitValues[index - 1] == false)
                     {
                         Values.Add(2);
-                        Console.WriteLine("2");
                     }
                     else if (bitValues[index] == false && bitValues[index - 1] == true)
                     {
                         Values.Add(1);
-                        Console.WriteLine("1");
                     }
                     else
                     {
                         Values.Add(0);
-                        Console.WriteLine("0");
                     }
                 }
             }

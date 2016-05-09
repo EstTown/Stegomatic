@@ -52,11 +52,10 @@ namespace StegomaticProject.StegoSystemController
 
         private void ShowDecodingSuccessNotification(string message)
         {
-            throw new Exception(message);
 
-
+            message = message.TrimEnd('\0');
             _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
-
+            
 
 
 

@@ -15,6 +15,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             try
             {
                 string binaryMessage = MessageToBinary(message);
+
+                Console.WriteLine(binaryMessage);
+
                 Bitmap stegoObject = HideMessage(coverImage, binaryMessage, ConvertSeed(seed));
                 return stegoObject;
             }
@@ -36,10 +39,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             for (int i = 0; i < binaryMessage.Length; i++)
             {
-                if (++x >= carrier.Width)
+                x++;
+                if (!(x < carrier.Width))
                 {
-                    x = 0;
                     y++;
+                    x = 0;
                 }
                 if (binaryMessage[i] == '1')
                 {
@@ -57,7 +61,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private string MessageToBinary(byte[] message)
         {
             // Converts each element of message to it's string representation in base 2. 
-            return string.Concat(message.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+            return string.Concat(message.Select(b => Convert.ToString(b, 2).PadLeft(4, '0'))); // SHOULD 8 BE 4?
         }
 
         private byte[] BinaryToByteArray(string binaryMessage)
@@ -66,8 +70,18 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             byte[] byteMessage = new byte[numOfBytes];
             for(int i = 0; i < numOfBytes; ++i)
             {
-                byteMessage[i] = Convert.ToByte(binaryMessage.Substring(8 * i, 8), 2);
+                byteMessage[i] = Convert.ToByte(binaryMessage.Substring(4 * i, 4), 2); // 4 or 8??
             }
+
+            //List<byte> s = new List<byte>();
+            //foreach (byte item in byteMessage)
+            //{
+            //    if (item != byte.MinValue)
+            //    {
+            //        s.Add(item);
+            //    }
+            //}
+            //return s.ToArray();
             return byteMessage;
         }
 
@@ -76,6 +90,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             try
             {
                 string binaryMessage = GetMessage(carrier, ConvertSeed(seed));
+
+                binaryMessage = binaryMessage.Remove(0, 1);
+                Console.WriteLine(binaryMessage);
+
                 return BinaryToByteArray(binaryMessage);
             }
             catch (FormatException)
@@ -89,9 +107,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Color colorOfPixel;
             StringBuilder message = new StringBuilder();
 
-            for (int x = 0; x < carrier.Width; x++)
+            //string message2 = string.Empty;
+
+            for (int y = 0; y < carrier.Height; y++)
             {
-                for (int y = 0; y < carrier.Height; y++)
+                for (int x = 0; x < carrier.Width; x++)
                 {
                     colorOfPixel = carrier.GetPixel(x, y);
                     if (colorOfPixel.R == red)

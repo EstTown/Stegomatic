@@ -200,25 +200,27 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         }
 
-        private byte[] AddMetaData(byte[] array)
+        private byte[] AddMetaData(byte[] secretMessage)
         {
-            int sizeOfEmbeddedData = array.Length;
+            int sizeOfEmbeddedData = secretMessage.Length;
 
-            string something = sizeOfEmbeddedData.ToString();
+            string stringSize = sizeOfEmbeddedData.ToString();
 
-            byte[] embeddedByteArray = new byte[something.Length];
-            for (int i = 0; i < something.Length; i++)
+            byte[] embeddedDataArrayInfo = new byte[stringSize.Length]; //every char to byte array decimal value
+            
+            for (int i = 0; i < stringSize.Length; i++)
             {
-                embeddedByteArray[i] = Convert.ToByte(something[i]);
+                embeddedDataArrayInfo[i] = Convert.ToByte(stringSize[i]);
             }
 
             //define always present character, which seperates metadata from message
+            //could be a problem here, but decode part can fix that
             string seperater = "?";
 
             byte[] seperaterByteArray = Encoding.ASCII.GetBytes(seperater);
 
 
-            //call help method for combining arrays
+            //call help method for combining all 3 arrays
             byte[] array2 = new byte[2];
             return array2;
         }

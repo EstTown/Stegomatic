@@ -54,5 +54,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 this._edgeWeight = value;
             }
         }
+
+        public override string ToString()
+        {
+            return EdgeWeight + "\n" + VertexPixelOne.ToString() + "\n" + VertexPixelTwo.ToString() + "\n" +
+                   VertexOne.ToString() + "\n" + VertexTwo.ToString();
+        }
     }
 }

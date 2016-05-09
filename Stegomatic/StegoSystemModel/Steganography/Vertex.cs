@@ -52,7 +52,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //calculate targetvalues
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
-                TargetValues[i] = (byte)(PixelsForThisVertex[i].EmbeddedValue + d);
+                TargetValues[i] = (byte)((PixelsForThisVertex[i].EmbeddedValue + d) % GraphTheoryBased.Modulo);
             }
         }
         public void CalculateVertexValue()

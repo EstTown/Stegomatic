@@ -28,7 +28,6 @@ namespace StegomaticProject.StegoSystemModel
         //    Console.WriteLine("Decoded was clicked!");
         //}
 
-
         public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();

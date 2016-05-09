@@ -26,7 +26,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public event BtnEventHandler DecodeBtnClick;
         public event BtnEventHandler EncodeBtnClick;
-        public event BtnEventHandler SaveImageBtnClick;
+        //public event BtnEventHandler SaveImageBtnClick;
         public event BtnEventHandler OpenImageBtnClick;
 
         public string EnteredText
@@ -96,13 +96,13 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        private void btn_save_Click(object sender, EventArgs e)
-        {
-            if (SaveImageBtnClick != null)
-            {
-                SaveImageBtnClick(new BtnEvent());
-            }
-        }
+        //private void btn_save_Click(object sender, EventArgs e)
+        //{
+        //    if (SaveImageBtnClick != null)
+        //    {
+        //        SaveImageBtnClick(new BtnEvent());
+        //    }
+        //}
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {

@@ -74,7 +74,7 @@ namespace StegomaticProject.StegoSystemUI
             throw new NotImplementedException();
         }
 
-        public void SaveImage()
+        public void SaveImage(Bitmap image)
         {
             throw new NotImplementedException();
         }

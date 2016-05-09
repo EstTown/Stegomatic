@@ -42,7 +42,7 @@ namespace StegomaticProject.StegoSystemUI
         public event DisplayNotificationEventHandler NotifyUser; // DELETE THIS MAYBE?!
         public event BtnEventHandler DecodeBtn;
         public event BtnEventHandler EncodeBtn;
-        public event BtnEventHandler SaveImageBtn;
+        //public event BtnEventHandler SaveImageBtn;
         public event BtnEventHandler OpenImageBtn;
 
         public StegoSystemWinForm()
@@ -59,18 +59,18 @@ namespace StegomaticProject.StegoSystemUI
         {
             _mainMenu.EncodeBtnClick += new BtnEventHandler(this.EncodeBtnClick);
             _mainMenu.DecodeBtnClick += new BtnEventHandler(this.DecodeBtnClick);
-            _mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
+            //_mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
             _mainMenu.OpenImageBtnClick += new BtnEventHandler(this.OpenImageBtnClick);
             // Either we don't need SaveImage here, or we need OpenImage here as well. They may be fine to be handled in the form itself. 
         }
 
-        private void SaveImageBtnClick(BtnEvent e)
-        {
-            if (SaveImageBtn != null)
-            {
-                SaveImageBtn(new BtnEvent());
-            }
-        }
+        //private void SaveImageBtnClick(BtnEvent e)
+        //{
+        //    if (SaveImageBtn != null)
+        //    {
+        //        SaveImageBtn(new BtnEvent());
+        //    }
+        //}
 
         private void OpenImageBtnClick(BtnEvent e)
         {
@@ -234,13 +234,13 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        public void SaveImage(/*Bitmap image*/)
+        public void SaveImage(Bitmap image)
         {
             SaveFileDialog saveFileWindow = new SaveFileDialog();
 
             //Image to be saved, goes here
             //Image should be handled by an outside non-form class
-            Bitmap file = DisplayImage;
+            Bitmap file = image;
 
             saveFileWindow.Title = "Save image as...";
             saveFileWindow.DefaultExt = ".png";

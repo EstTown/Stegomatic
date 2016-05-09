@@ -28,7 +28,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
             _stegoUI.EncodeBtn += new BtnEventHandler(this.EncodeImage);
             _stegoUI.DecodeBtn += new BtnEventHandler(this.DecodeImage);
-            _stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
+            //_stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
         }
 
@@ -88,6 +88,16 @@ namespace StegomaticProject.StegoSystemController
 
                 Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
+                //Prompt to savedialog
+                try
+                {
+                    _stegoUI.SaveImage(stegoObject);
+                }
+                catch (NotifyUserException exception)
+                {
+                    ShowNotification(new DisplayNotificationEvent(exception));
+                }
+
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
             }
@@ -122,16 +132,16 @@ namespace StegomaticProject.StegoSystemController
             }
         }
 
-        public void SaveImage(BtnEvent btnEvent)
-        {
-            try
-            {
-                _stegoUI.SaveImage();
-            }
-            catch (NotifyUserException exception)
-            {
-                ShowNotification(new DisplayNotificationEvent(exception));
-            }
-        }
+        //public void SaveImage(BtnEvent btnEvent)
+        //{
+        //    try
+        //    {
+        //        _stegoUI.SaveImage();
+        //    }
+        //    catch (NotifyUserException exception)
+        //    {
+        //        ShowNotification(new DisplayNotificationEvent(exception));
+        //    }
+        //}
     }
 }

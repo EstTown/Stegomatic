@@ -23,7 +23,7 @@ namespace StegomaticProject.StegoSystemUI
         string GetEncryptionKey();
         string GetStegoSeed();
         void OpenImage();
-        void SaveImage();
+        void SaveImage(Bitmap image);
 
         // Start/End
         void Start();
@@ -33,7 +33,7 @@ namespace StegomaticProject.StegoSystemUI
         event DisplayNotificationEventHandler NotifyUser;
         event BtnEventHandler DecodeBtn;
         event BtnEventHandler EncodeBtn;
-        event BtnEventHandler SaveImageBtn;
+        //event BtnEventHandler SaveImageBtn;
         event BtnEventHandler OpenImageBtn;
     }
 }

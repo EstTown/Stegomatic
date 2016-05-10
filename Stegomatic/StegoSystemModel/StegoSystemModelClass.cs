@@ -24,7 +24,7 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            GraphTheoryBased _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
+            _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
@@ -70,8 +70,8 @@ namespace StegomaticProject.StegoSystemModel
                 //byteMessage = _cryptoMethod.Encrypt(byteMessage, encryptionKey);
             }
 
-            Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
-            return StegoObject;
+            Bitmap stegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
+            return stegoObject;
         }
 
         public int CalcCapacityWithCompressionAndStego(int height, int width)

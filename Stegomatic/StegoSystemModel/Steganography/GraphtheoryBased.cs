@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    class GraphTheoryBased //: IStegoAlgorithm
+    class GraphTheoryBased : IStegoAlgorithm
     {
         public GraphTheoryBased() //constructor
         {
@@ -44,12 +44,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
             //addmetadata to message
-            Console.WriteLine("Before addmetadata");
-            Console.ReadKey();
+            //Console.WriteLine("Before addmetadata");
+            //Console.ReadKey();
             message = AddMetaData(message);
 
-            Console.WriteLine("Before calcrequired");
-            Console.ReadKey();
+            //Console.WriteLine("Before calcrequired");
+            //Console.ReadKey();
             //call bunch of methods that prepare for graph construction
             int amountOfPixels = CalculateRequiredPixels(message);
             //Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
@@ -321,6 +321,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     (Color.FromArgb(PixelList[i].Color.A, PixelList[i].Color.R + PixelList[i].ColorDifference, PixelList[i].Color.G, PixelList[i].Color.B)));
             }
             return image;
+        }
+
+        public int CalculateImageCapacity(int height, int width)
+        {
+            throw new NotImplementedException();
         }
     }
 }

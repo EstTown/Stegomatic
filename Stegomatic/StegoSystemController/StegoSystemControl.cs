@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace StegomaticProject.StegoSystemController
 {
-    public class StegoSystemControl //: IStegoSystemControl
+    public class StegoSystemControl : IStegoSystemControl
     {
         private IStegoSystemModel _stegoModel;
         private IStegoSystemUI _stegoUI;
@@ -23,7 +23,9 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
-        }
+    }
+
+        Bitmap GlobalBitmap = null;
 
         private void SubscribeToEvents()
         {
@@ -42,7 +44,7 @@ namespace StegomaticProject.StegoSystemController
 
         BackgroundWorker worker = new BackgroundWorker();
 
-        Bitmap GlobalBitmap = null;
+        
 
         public void ShowNotification(DisplayNotificationEvent e)
         {
@@ -104,6 +106,19 @@ namespace StegomaticProject.StegoSystemController
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             GlobalBitmap = (Bitmap)e.Result;
+
+            try
+            {
+                _stegoUI.SaveImage(GlobalBitmap);
+            }
+            catch (NotifyUserException exception)
+            {
+                ShowNotification(new DisplayNotificationEvent(exception));
+            }
+
+            _stegoUI.SetDisplayImage(GlobalBitmap);
+
+            //ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
         }
 
         public void EncodeImage(BtnEvent e)
@@ -134,18 +149,21 @@ namespace StegomaticProject.StegoSystemController
 
                 worker.RunWorkerAsync(args);
 
-                //Prompt to savedialog
-                try
-                {
-                    _stegoUI.SaveImage(GlobalBitmap);
-                }
-                catch (NotifyUserException exception)
-                {
-                    ShowNotification(new DisplayNotificationEvent(exception));
-                }
+                //WHEN WORKER IS DONE, AN EVENT WILL FIRE, AND ThreadedEncodeComplete() WILL BE EXECUTED
+                //THIS WILL START A SAVE-DIALOG, ONLY WHEN THE ENCODING-PROCESS IS ACTUALLY COMPELTED
 
-                _stegoUI.SetDisplayImage(GlobalBitmap);
-                ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
+                //try
+                //{
+                //    _stegoUI.SaveImage(GlobalBitmap);
+                //}
+                //catch (NotifyUserException exception)
+                //{
+                //    ShowNotification(new DisplayNotificationEvent(exception));
+                //}
+
+                //_stegoUI.SetDisplayImage(GlobalBitmap);
+                //ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
+
             }
             catch (NotifyUserException exception)
             {

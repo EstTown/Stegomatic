@@ -19,23 +19,13 @@ namespace StegomaticProject.StegoSystemModel
 
         public Func<int, int, int> CalculateImageCapacity { get; set; }
 
-        //public static void EncodeWasCalled(Object sender, EventArgs e)
-        //{
-        //    Console.WriteLine("Encoded was clicked!");
-        //}
-
-        //public static void DecodeWasCalled(Object sender, EventArgs e)
-        //{
-        //    Console.WriteLine("Decoded was clicked!");
-        //}
-
         public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
             _stegoMethod = new LeastSignificantBit();
 
-            CalculateImageCapacity = _stegoMethod.CalculateImageCapacity;
+            CalculateImageCapacity = CalcCapacityWithCompressionAndStego;
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
@@ -75,6 +65,12 @@ namespace StegomaticProject.StegoSystemModel
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
 
             return StegoObject;
+        }
+
+        public int CalcCapacityWithCompressionAndStego(int height, int width)
+        {
+            int capacityOnlyUsingStego = _stegoMethod.CalculateImageCapacity(height, width);
+            return _compressMethod.ApproxSizeAfterCompression(capacityOnlyUsingStego);
         }
     }
 }

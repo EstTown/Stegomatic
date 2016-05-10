@@ -19,6 +19,7 @@ namespace StegomaticProject.StegoSystemController
             this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
             this._verifyUserInput = new VerifyUserInput();
+            _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
         }
@@ -52,7 +53,14 @@ namespace StegomaticProject.StegoSystemController
 
         private void ShowDecodingSuccessNotification(string message)
         {
-            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message.Length}\"", "Success");
+
+            message = message.TrimEnd('\0');
+            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
+            
+
+
+
+            Console.WriteLine(message);
         }
 
         public void OpenImage(BtnEvent e)
@@ -76,6 +84,7 @@ namespace StegomaticProject.StegoSystemController
                 Bitmap coverImage = _stegoUI.DisplayImage;
                 string encryptionKey = string.Empty;
 
+                _verifyUserInput.Image(coverImage);
                 if (config.Encrypt)
                 {
                     encryptionKey = _stegoUI.GetEncryptionKey();
@@ -88,22 +97,16 @@ namespace StegomaticProject.StegoSystemController
 
                 Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                //Prompt to savedialog
-                try
-                {
-                    _stegoUI.SaveImage(stegoObject);
-                }
-                catch (NotifyUserException exception)
-                {
-                    ShowNotification(new DisplayNotificationEvent(exception));
-                }
-
+                _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
             }
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
+            }
+            catch (AbortActionException)
+            {
             }
         }
 
@@ -115,6 +118,7 @@ namespace StegomaticProject.StegoSystemController
                 Bitmap coverImage = _stegoUI.DisplayImage;
                 string encryptionKey = string.Empty;
 
+                _verifyUserInput.Image(coverImage);
                 if (config.Encrypt)
                 {
                     encryptionKey = _stegoUI.GetEncryptionKey();
@@ -129,6 +133,9 @@ namespace StegomaticProject.StegoSystemController
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
+            }
+            catch (AbortActionException)
+            {
             }
         }
 

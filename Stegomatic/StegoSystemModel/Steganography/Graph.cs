@@ -24,36 +24,35 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public void ConstructGraph(int pixelsNeeded, List<byte> secretMessage)
         {
-            Console.WriteLine("Starting with constructing vertices");
-            Console.ReadKey();
+            //Console.WriteLine("Starting with constructing vertices");
+            //Console.ReadKey();
             ConstructVertices(pixelsNeeded, secretMessage);
-            Console.WriteLine("Constructed a bunch of vertices      -       " + VertexList.Count);
-            Console.ReadKey();
+            //Console.WriteLine("Constructed a bunch of vertices      -       " + VertexList.Count);
+            //Console.ReadKey();
             CheckIfMatched();
             ConstructEdges();
             CheckIfMatched();
-            Console.WriteLine("Before calcGraph");
-            Console.WriteLine("VertexList:    " + VertexList.Count);
-            Console.WriteLine("Edgelist:    " + EdgeList.Count);
-            Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
-            Console.ReadKey();
+            //Console.WriteLine("Before calcGraph");
+            //Console.WriteLine("VertexList:    " + VertexList.Count);
+            //Console.WriteLine("Edgelist:    " + EdgeList.Count);
+            //Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
+            //Console.ReadKey();
             CalcGraphMatching();
-            Console.WriteLine("SUCCESS!!!!");
-            Console.WriteLine("VertexList:    " + VertexList.Count);
-            Console.WriteLine("Edgelist:    " + EdgeList.Count);
-            Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
+            //Console.WriteLine("SUCCESS!!!!");
+            //Console.WriteLine("VertexList:    " + VertexList.Count);
+            //Console.WriteLine("Edgelist:    " + EdgeList.Count);
+            //Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
 
             CheckIfMatched();
-
         }
 
         public List<Pixel> ModifyGraph()
         {
-            Console.WriteLine("Before swapping pixels");
-            Console.ReadKey();
+            //Console.WriteLine("Before swapping pixels");
+            //Console.ReadKey();
             PixelSwap();
-            Console.WriteLine("Before modifying");
-            Console.ReadKey();
+            //Console.WriteLine("Before modifying");
+            //Console.ReadKey();
             PixelModify();
 
             return PixelList;
@@ -87,10 +86,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         if (b == true)
                         {
                             amountOfEdges++;
-                            if (amountOfEdges == 10000) //Hardcoded limit for edges per vert
-                            {
-                                break;
-                            }
+                            //if (amountOfEdges == 10000) //Hardcoded limit for edges per vert, for computational reasons. Although, this limit WILL decrease the effectiveness of the algorithm
+                            //{
+                            //    break;
+                            //}
                             if (edgeWeight <= lowestWeight)
                             {
                                 lowestWeight = edgeWeight;
@@ -146,7 +145,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return weight;
         }
 
-        public void CheckIfMatched() //this will be called multiple times. 
+        public void CheckIfMatched()
         {
             for (int i = 0; i < VertexList.Count; i++)
             {
@@ -182,27 +181,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     }
 
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
-
-                    //foreach (var item in InternalEdgeList)
-                    //{
-                    //    Console.WriteLine(item.ToString());
-                    //}
-                    //Console.ReadKey();
-
                     Edge M = SortedInternalList.First();
-                    /*HVIS ALT ER MATCHET BLIVER DER IKKE OPRETTET
-                    KANTER, OG DERFOR KASTER DENNE EN NULLEXCEPTION!!!*/
-
-
-                    //Edge FoundInGlobalList = EdgeList.FirstOrDefault(i => i == M);
-
                     tempMatched.Add(M);
                 }
             }
 
-
             MatchedEdges = DeleteDuplicatesInList(tempMatched);
-
         }
 
         private List<Edge> DeleteDuplicatesInList(List<Edge> list)
@@ -213,19 +197,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private void PixelSwap()
         {
-            //for (int i = 0; i < MatchedEdges.Count; i++)
-            //{
-            //    TradePixelValues(MatchedEdges[i].VertexPixelOne, MatchedEdges[i].VertexPixelTwo);
-
-            //    //set vertices, that are now correct, to false
-            //    MatchedEdges[i].VertexOne.Active = false;
-            //    MatchedEdges[i].VertexTwo.Active = false;
-            //}
-            //foreach (Edge edge in MatchedEdges)
-            //{
-            //    Console.WriteLine(edge.ToString());
-            //}
-
             foreach (Edge edge in MatchedEdges)
             {
                 TradePixelValues(edge.VertexPixelOne, edge.VertexPixelTwo);
@@ -235,7 +206,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
 
         }
-        //Method for helping pixels trade values
+
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
             int tempPosX = pixelOne.PosX;
@@ -258,11 +229,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
         }
+
         private void HelpMethodPixelModify(Vertex vertex) //always uses first sample in vertex
         {
-            //print this vertex
             Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "\n" + vertex.TargetValues[0] + "\n\n");
-            //Console.ReadKey();
             int localDifference = 0;
             while ((Math.Abs(vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference)) % GraphTheoryBased.Modulo != vertex.TargetValues[0])
             {
@@ -277,9 +247,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 Console.WriteLine(localDifference);
 
             }
+
             vertex.PixelsForThisVertex[0].ColorDifference = localDifference;
         }
-
 
     }
 }

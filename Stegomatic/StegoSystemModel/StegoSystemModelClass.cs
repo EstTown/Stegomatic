@@ -8,6 +8,7 @@ using StegomaticProject.StegoSystemModel.Miscellaneous;
 using StegomaticProject.StegoSystemModel.Cryptograhy;
 using StegomaticProject.StegoSystemModel.Steganography;
 using StegomaticProject.StegoSystemUI;
+using System.Threading;
 
 namespace StegomaticProject.StegoSystemModel
 {
@@ -33,6 +34,8 @@ namespace StegomaticProject.StegoSystemModel
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
             _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
+
+            
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
@@ -64,6 +67,7 @@ namespace StegomaticProject.StegoSystemModel
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
             bool encrypt = true, bool compress = true)
         {
+
             byte[] byteMessage = ByteConverter.StringToByteArray(message);
 
             if (compress)

@@ -17,6 +17,7 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
+        public Func<int, int, int> CalculateImageCapacity { get; set; }
 
         //public static void EncodeWasCalled(Object sender, EventArgs e)
         //{
@@ -32,23 +33,19 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
+            _stegoMethod = new LeastSignificantBit();
+
+            CalculateImageCapacity = _stegoMethod.CalculateImageCapacity;
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
-            //if (decryptionKey == string.Empty || decryptionKey == null)
-            //{
-            //    decrypt = false;
-            //}
-            // PROP DET OVENSTÅENDE IND I ENCRYPTION KLASSEN??!
-
             byte[] byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
 
             if (decrypt)
             {
-               // byteMessage = _cryptoMethod.Decrypt(decryptionKey, byteMessage);
+                //byteMessage = _cryptoMethod.Decrypt(byteMessage, encryptionKey);
             }
 
             if (decompress)
@@ -57,7 +54,6 @@ namespace StegomaticProject.StegoSystemModel
             }
 
             string message = ByteConverter.ByteArrayToString(byteMessage);
-
             return message;
         }
 

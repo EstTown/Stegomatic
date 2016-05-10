@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomExceptions\AbortActionException.cs" />
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
     <Compile Include="StegoSystemController\IVerifyUserInput.cs" />
     <Compile Include="StegoSystemController\VerifyUserInput.cs" />

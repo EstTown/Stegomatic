@@ -271,5 +271,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return image;
         }
+
+        public int CalculateImageCapacity(int height, int width)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

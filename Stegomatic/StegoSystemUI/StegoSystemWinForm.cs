@@ -16,6 +16,9 @@ namespace StegomaticProject.StegoSystemUI
     public class StegoSystemWinForm : IStegoSystemUI
     {
         private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
+
+        public Func<int, int, int> ImageCapacityCalculator { get; set; }
+
         public string Message
         {
             get { return _mainMenu.EnteredText; }
@@ -51,12 +54,14 @@ namespace StegomaticProject.StegoSystemUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _mainMenu = new Form1();
-            
+            ImageCapacityCalculator = StandardCapacityCalculator;
+
             SubscribeToEvents();
         }
 
         private void SubscribeToEvents()
         {
+            _mainMenu.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
             _mainMenu.EncodeBtnClick += new BtnEventHandler(this.EncodeBtnClick);
             _mainMenu.DecodeBtnClick += new BtnEventHandler(this.DecodeBtnClick);
             //_mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
@@ -101,15 +106,20 @@ namespace StegomaticProject.StegoSystemUI
             DisplayImage = newImage;
         }
 
+        public void ShowNotification(DisplayNotificationEvent e)
+        {
+            ShowNotification(e.Notification, e.Title);
+        }
+
         public void ShowNotification(string notification, string title = "")
         {
             // Initialize a popup window and show the message!
+            MessageBox.Show(notification, title);
 
-            NotificationWindow userNotificationWindow = new NotificationWindow();
-            userNotificationWindow.Text = title;
-            userNotificationWindow.LabelText = notification;
-            userNotificationWindow.ShowDialog();
-            
+            //NotificationWindow userNotificationWindow = new NotificationWindow();
+            //userNotificationWindow.Text = title;
+            //userNotificationWindow.LabelText = notification;
+            //userNotificationWindow.ShowDialog();
         }
 
         public void Start()
@@ -130,7 +140,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Encryption key", "Key:");
             }
-            catch (NotifyUserException)
+            catch (Exception)
             {
                 throw;
             }
@@ -142,7 +152,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Steganography seed", "Seed:");
             }
-            catch (NotifyUserException)
+            catch (Exception)
             {
                 throw;
             }
@@ -164,7 +174,7 @@ namespace StegomaticProject.StegoSystemUI
             }
             else
             {
-                throw new NotifyUserException("Action aborted."); // MAKE THIS AN ABORTACTIONEXCEPTION AND CATCH IT?
+                throw new AbortActionException();
             }
 
             popupWindow.Close();
@@ -223,9 +233,15 @@ namespace StegomaticProject.StegoSystemUI
                             _mainMenu.ImageDescriptionWidth = imageinfo[0];
                             _mainMenu.ImageDescriptionHeight = imageinfo[1];
                             _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
-                            _mainMenu.ImageDescriptionCapacity = Convert.ToString((image.Height * image.Width * 0.18) / 12);
+                            _mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
+
+                            _mainMenu.ForceUpdateProgressBar();
                         }
                     }
+                }
+                catch (NotifyUserException)
+                {
+                    throw;
                 }
                 catch (Exception e)
                 {
@@ -234,22 +250,20 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        public void SaveImage(Bitmap image)
+        public void SaveImage(Bitmap file)
         {
             SaveFileDialog saveFileWindow = new SaveFileDialog();
 
             //Image to be saved, goes here
             //Image should be handled by an outside non-form class
-            Bitmap file = image;
 
             saveFileWindow.Title = "Save image as...";
             saveFileWindow.DefaultExt = ".png";
             saveFileWindow.Filter = "PNG Files (*.png)|*.png|BMP Files (*.bmp)|*.bmp";
-            saveFileWindow.ShowDialog();
+            DialogResult userResponse = saveFileWindow.ShowDialog();
 
             if (saveFileWindow.FileName != "")
             {
-
                 //Filestream is saved here, from manipulated image.
                 //Switch determines which format the image will be saved in.
 
@@ -263,6 +277,16 @@ namespace StegomaticProject.StegoSystemUI
                         break;
                 }
             }
+
+            if (userResponse != DialogResult.OK)
+            {
+                throw new NotifyUserException("Image not modified.", "Action cancelled");
+            }
+        }
+
+        private int StandardCapacityCalculator(int width, int height)
+        {
+            return Convert.ToInt32((height * width * 0.18) / 12);
         }
     }
 }

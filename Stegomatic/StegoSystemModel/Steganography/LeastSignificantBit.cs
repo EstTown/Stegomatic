@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StegomaticProject.CustomExceptions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -11,31 +12,54 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     {
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
-            // Seed is unused.
-            string binaryMessage = MessageToBinary(message);
+            try
+            {
+                string binaryMessage = MessageToBinary(message);
 
-            Console.WriteLine(binaryMessage);
+                Console.WriteLine(binaryMessage);
 
-            Bitmap stegoObject = HideMessage(coverImage, binaryMessage, Convert.ToInt32(seed));
-            return stegoObject;
+                Bitmap stegoObject = HideMessage(coverImage, binaryMessage, ConvertSeed(seed));
+                return stegoObject;
+            }
+            catch (FormatException)
+            {
+                throw new AbortActionException();
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
         }
 
-        private Bitmap HideMessage(Bitmap carrier, string binaryMessage, int alpha)
+        private int ConvertSeed(string seedInput)
+        {
+            return Convert.ToInt32(seedInput);
+        }
+
+        private Bitmap HideMessage(Bitmap carrier, string binaryMessage, int red)
         {
             Color colorOfPixel, newColor;
             int x = 0, y = 0;
 
             for (int i = 0; i < binaryMessage.Length; i++)
             {
-                if (++x > carrier.Width)
+                x++;
+                if (!(x < carrier.Width))
                 {
-                    x = 0;
                     y++;
+                    x = 0;
                 }
-                if (binaryMessage[i] == 1)
+                if (binaryMessage[i] == '1')
                 {
-                    colorOfPixel = carrier.GetPixel(x, y);
-                    newColor = Color.FromArgb(alpha, colorOfPixel.R, colorOfPixel.G, colorOfPixel.B);
+                    try
+                    {
+                        colorOfPixel = carrier.GetPixel(x, y);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw new NotifyUserException("Image too small.");
+                    }
+                    newColor = Color.FromArgb(red, colorOfPixel.G, colorOfPixel.B);
                     carrier.SetPixel(x, y, newColor);
                 }
             }
@@ -55,30 +79,47 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             byte[] byteMessage = new byte[numOfBytes];
             for(int i = 0; i < numOfBytes; ++i)
             {
-                byteMessage[i] = Convert.ToByte(binaryMessage.Substring(8 * i, 8), 2);
+                byteMessage[i] = Convert.ToByte(binaryMessage.Substring(8 * i, 8), 2); // 4 or 8??
             }
             return byteMessage;
         }
 
         public byte[] Decode(Bitmap carrier, string seed)
         {
-            string binaryMessage = GetMessage(carrier, Convert.ToInt32(seed));
-            return BinaryToByteArray(binaryMessage);
+            try
+            {
+                string binaryMessage = GetMessage(carrier, ConvertSeed(seed));
+
+                binaryMessage = binaryMessage.Remove(0, 1);
+
+                return BinaryToByteArray(binaryMessage);
+            }
+            catch (FormatException)
+            {
+                // Catching conversion fails.
+                throw new AbortActionException(); // REMOVE THESE IF WE DON'T WANT TO STOP IF NUMBERS HAVE BEEN INPUT. 
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
         }
 
-        private string GetMessage(Bitmap carrier, int alpha)
+        private string GetMessage(Bitmap carrier, int red)
         {
             Color colorOfPixel;
             StringBuilder message = new StringBuilder();
 
-            for (int x = 0; x < carrier.Width; x++)
+            //string message2 = string.Empty;
+
+            for (int y = 0; y < carrier.Height; y++)
             {
-                for (int y = 0; y < carrier.Height; y++)
+                for (int x = 0; x < carrier.Width; x++)
                 {
                     colorOfPixel = carrier.GetPixel(x, y);
-                    if (colorOfPixel.A == alpha)
+                    if (colorOfPixel.R == red)
                     {
-                        message.Append('1');
+                        message.Append("1");
                     }
                     else
                     {
@@ -87,6 +128,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
             return message.ToString();
+        }
+
+        public int CalculateImageCapacity(int height, int width)
+        {
+            return (height * width) / 16;
         }
     }
 }

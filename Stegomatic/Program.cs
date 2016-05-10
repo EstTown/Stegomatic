@@ -49,27 +49,27 @@ namespace StegomaticProject
 
 
 
-            //secret message byte array
-            byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
-            string seed = "thisdoesnotreallymatter";
-            //get coverimage
-            Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\image2.png");
+            ////secret message byte array
+            //byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
+            //string seed = "thisdoesnotreallymatter";
+            ////get coverimage
+            //Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\white100.png");
 
-            //stego-object
-            Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\enc.png");
+            ////stego-object
+            //Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\MODDED.png");
 
-            Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
+            //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
 
-            GraphTheoryBased encoder = new GraphTheoryBased();
+            //GraphTheoryBased encoder = new GraphTheoryBased();
 
-            Console.WriteLine("made an encoder");
-            Console.ReadKey();
+            //Console.WriteLine("made an encoder");
+            //Console.ReadKey();
 
-            stegoObject = encoder.Encode(imageOriginal, seed, secretMessage);
+            //stegoObject = encoder.Encode(imageOriginal, seed, secretMessage);
 
-            Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
-            Console.WriteLine(imageOriginal.Size);
-            Console.WriteLine(stegoObject.Size);
+            //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
+            //Console.WriteLine(imageOriginal.Size);
+            //Console.WriteLine(stegoObject.Size);
 
 
             stegoUI.Start();

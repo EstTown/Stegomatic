@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    class GraphTheoryBased : IStegoAlgorithm
+    class GraphTheoryBased //: IStegoAlgorithm
     {
         public GraphTheoryBased() //constructor
         {
@@ -24,14 +24,32 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public byte[] Decode(Bitmap coverImage, string seed)
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
+            //could always decode 10 characters, which would be 40 vertices, which would be 120 pixels
+            int amountOfPixels = 120;
+            GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
+
+            Graph graph = new Graph(PixelList, amountOfPixels);
+            graph.ConstructGraph(amountOfPixels);
 
 
             //actual decoding
-            throw new NotImplementedException();
+
+
+
+            byte[] something = new byte[10];
+            return something;
         }
+
 
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
+            //addmetadata to message
+            Console.WriteLine("Before addmetadata");
+            Console.ReadKey();
+            message = AddMetaData(message);
+
+            Console.WriteLine("Before calcrequired");
+            Console.ReadKey();
             //call bunch of methods that prepare for graph construction
             int amountOfPixels = CalculateRequiredPixels(message);
             //Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
@@ -200,30 +218,64 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         }
 
+
         private byte[] AddMetaData(byte[] secretMessage)
         {
             int sizeOfEmbeddedData = secretMessage.Length;
 
-            string stringSize = sizeOfEmbeddedData.ToString();
+            string stringSize = Convert.ToString(sizeOfEmbeddedData);
 
-            byte[] embeddedDataArrayInfo = new byte[stringSize.Length]; //every char to byte array decimal value
+            byte[] embeddedDataArrayInfo = new byte[] { }; //every char to byte array decimal value
 
-            for (int i = 0; i < stringSize.Length; i++)
-            {
-                embeddedDataArrayInfo[i] = Convert.ToByte(stringSize[i]);
-            }
+            embeddedDataArrayInfo = Encoding.ASCII.GetBytes(stringSize);
 
             //define always present character, which seperates metadata from message
             //could be a problem here, but decode part can fix that
             string seperater = "?";
 
-            byte[] seperaterByteArray = Encoding.ASCII.GetBytes(seperater);
+            byte[] seperaterByteArray = new byte[] { };
+            seperaterByteArray = Encoding.ASCII.GetBytes(seperater);
 
-
-            //call help method for combining all 3 arrays
-            byte[] array2 = new byte[2];
-            return array2;
+            
+            return CombineArrays(embeddedDataArrayInfo, seperaterByteArray, secretMessage);
         }
+        private byte[] CombineArrays(byte[] array1, byte[] array2, byte[] array3)
+        {
+            byte[] combinedArray = new byte[array1.Length+array2.Length+array3.Length];
+
+            int localCounter = 0;
+
+            for (int i = 0; i < array1.Length; i++)
+            {
+                combinedArray[localCounter] = array1[i];
+                localCounter++;
+            }
+            for (int i = 0; i < array2.Length; i++)
+            {
+                combinedArray[localCounter] = array2[i];
+                localCounter++;
+            }
+            for (int i = 0; i < array3.Length; i++)
+            {
+                combinedArray[localCounter] = array3[i];
+                localCounter++;
+            }
+
+            //print can be removed
+            for (int i = 0; i < 20; i++)
+            {
+                if (combinedArray[i] != 0)
+                    Console.WriteLine(combinedArray[i]);
+            }
+            return combinedArray;
+        }
+
+
+
+
+
+
+
 
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
         public List<Byte> ByteArrayToValues(byte[] byteArray)
@@ -256,7 +308,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return Values;
         }
-
         private int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length * PixelsPerByte;
@@ -271,6 +322,5 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return image;
         }
-
     }
 }

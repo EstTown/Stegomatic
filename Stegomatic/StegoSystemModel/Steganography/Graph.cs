@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public List<Edge> MatchedEdges = new List<Edge>();
         public int PixelsNeeded { get; }
 
+
+        public List<DecodeVertex> ConstructGraph(int pixelsNeeded)
+        {
+            List<DecodeVertex> decodeVertexList = ConstructVertices(pixelsNeeded);
+
+            return decodeVertexList;
+        }
         public void ConstructGraph(int pixelsNeeded, List<byte> secretMessage)
         {
             //Console.WriteLine("Starting with constructing vertices");
@@ -60,23 +68,24 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return PixelList;
         }
 
-        private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage)
+        private List<DecodeVertex> ConstructVertices(int pixelsNeeded)
         {
-            int counter = 0;
+            List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
             for (int i = 0; i < pixelsNeeded; i += GraphTheoryBased.SamplesVertexRatio)
             {
-                EncodeVertex vertex = new EncodeVertex(secretMessage[counter], PixelList[i], PixelList[i + 1], PixelList[i + 2]); //this is hardcoded and can maybe rewritten by using a delegate.
-                EncodeVertexList.Add(vertex);
-                counter++;
+                
+                DecodeVertex vertex = new DecodeVertex(PixelList[i], PixelList[i + 1], PixelList[i + 2]); //this is hardcoded and can maybe rewritten by using a delegate.
+                decodeVertexList.Add(vertex);
             }
+            return decodeVertexList;
         }
-        private void ConstructVertices(int pixelsNeeded)
+        private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage) //don't touch this
         {
             int counter = 0;
             for (int i = 0; i < pixelsNeeded; i += GraphTheoryBased.SamplesVertexRatio)
             {
-                DecodeVertex decodeVertex = new DecodeVertex(PixelList[i], PixelList[i + 1], PixelList[i + 2]); //this is hardcoded and can maybe rewritten by using a delegate.
-                DecodeVertexList.Add(decodeVertex);
+                EncodeVertex encodeVertex = new EncodeVertex(secretMessage[counter], PixelList[i], PixelList[i + 1], PixelList[i + 2]); //this is hardcoded and can maybe rewritten by using a delegate.
+                EncodeVertexList.Add(encodeVertex);
                 counter++;
             }
         }

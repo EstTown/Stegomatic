@@ -10,5 +10,6 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
     {
         byte[] Compress(byte[] message);
         byte[] Decompress(byte[] message);
+        int ApproxSizeAfterCompression(int sizeBeforeCompression);
     }
 }

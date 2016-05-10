@@ -49,5 +49,10 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
         {
             return messageStream.ToArray();
         }
+
+        public int ApproxSizeAfterCompression(int imageCapacityBeforeCompression)
+        {
+            return imageCapacityBeforeCompression * 2;
+        }
     }
 }

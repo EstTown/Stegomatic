@@ -1,4 +1,5 @@
-﻿using StegomaticProject.StegoSystemUI.Events;
+﻿using StegomaticProject.CustomExceptions;
+using StegomaticProject.StegoSystemUI.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +25,7 @@ namespace StegomaticProject.StegoSystemUI
             //btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
             //btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
-
+        public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtnClick;
         public event BtnEventHandler EncodeBtnClick;
         //public event BtnEventHandler SaveImageBtnClick;
@@ -81,7 +82,7 @@ namespace StegomaticProject.StegoSystemUI
             
         }
 
-        public void btn_open_Click(object sender, EventArgs e)
+        private void btn_open_Click(object sender, EventArgs e)
         {
             if (OpenImageBtnClick != null)
             {
@@ -106,6 +107,18 @@ namespace StegomaticProject.StegoSystemUI
         //    }
         //}
 
+        public void ForceUpdateProgressBar()
+        {
+            try
+            {
+                txtbox_input_TextChanged(this, new EventArgs());
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
+        }
+
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
             try
@@ -113,13 +126,13 @@ namespace StegomaticProject.StegoSystemUI
                 // Update character-count when change is happening
                 if (label_capacity.Text == String.Empty)
                 {
-                    label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString();
+                    label_char.Text = "Characters: " + txtbox_input.Text.Length;
                 }
                 else
                 {
                     progressBar1.Visible = true;
 
-                    label_char.Text = "Characters: " + (txtbox_input.Text.Length).ToString() + " / " + label_capacity.Text;
+                    label_char.Text = "Characters: " + txtbox_input.Text.Length + " / " + label_capacity.Text;
 
                     double capacity = Convert.ToDouble(label_capacity.Text);
                     double text = txtbox_input.Text.Length;
@@ -127,11 +140,13 @@ namespace StegomaticProject.StegoSystemUI
                     progressBar1.Value = Convert.ToInt32((text / capacity) * 100);
                 }
             }
-            catch (Exception ex)
+            catch (ArgumentOutOfRangeException)
             {
-                MessageBox.Show(ex.Message);
+                if (NotifyUser != null)
+                {
+                    NotifyUser(new DisplayNotificationEvent(new NotifyUserException("Too many characters")));
+                }
             }
-            
         }
 
         private void btn_decode_Click(object sender, EventArgs e)

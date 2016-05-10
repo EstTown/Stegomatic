@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3249698C-BCBB-443F-81A1-F5E5CCD30982}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StegomaticProject</RootNamespace>
     <AssemblyName>StegomaticProject</AssemblyName>
@@ -68,8 +68,10 @@
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
     <Compile Include="StegoSystemController\IVerifyUserInput.cs" />
     <Compile Include="StegoSystemController\VerifyUserInput.cs" />
+    <Compile Include="StegoSystemModel\Steganography\DecodeVertex.cs" />
     <Compile Include="StegoSystemModel\Steganography\Graph.cs" />
     <Compile Include="StegoSystemModel\Steganography\LeastSignificantBit.cs" />
+    <Compile Include="StegoSystemModel\Steganography\VertexBase.cs" />
     <Compile Include="StegoSystemModel\StegoSystemModelClass.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\RijndaelCrypto.cs" />
     <Compile Include="StegoSystemModel\Cryptograhy\ICryptoMethod.cs" />
@@ -79,7 +81,7 @@
     <Compile Include="StegoSystemModel\Steganography\GraphTheoryBased.cs" />
     <Compile Include="StegoSystemModel\Steganography\IStegoAlgorithm.cs" />
     <Compile Include="StegoSystemModel\Steganography\Pixel.cs" />
-    <Compile Include="StegoSystemModel\Steganography\Vertex.cs" />
+    <Compile Include="StegoSystemModel\Steganography\EncodeVertex.cs" />
     <Compile Include="StegoSystemUI\Config\ModelConfiguration.cs" />
     <Compile Include="StegoSystemUI\Config\IConfig.cs" />
     <Compile Include="StegoSystemController\IStegoSystemControl.cs" />

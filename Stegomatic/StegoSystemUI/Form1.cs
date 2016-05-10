@@ -14,10 +14,11 @@ namespace StegomaticProject.StegoSystemUI
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
-            InitializeComponent();
 
+            InitializeComponent();
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
             //btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
@@ -77,6 +78,7 @@ namespace StegomaticProject.StegoSystemUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
         }
 
         public void btn_open_Click(object sender, EventArgs e)

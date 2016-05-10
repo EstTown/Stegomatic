@@ -10,7 +10,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     class Edge
     {
         /*Constructor for the class*/
-        public Edge(Vertex vertOne, Vertex vertTwo, Pixel vertPixOne, Pixel vertPixTwo, byte edgeweight)
+        public Edge(EncodeVertex vertOne, EncodeVertex vertTwo, Pixel vertPixOne, Pixel vertPixTwo, byte edgeweight)
         {
             /*Gives the edge a unique ID*/
             this.EdgeID = _edgecounter;
@@ -29,8 +29,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private static int _edgecounter = 1; //might not need this, but keep for now
 
         /*Properties for two vertices*/
-        public Vertex VertexOne { get; set; }
-        public Vertex VertexTwo { get; set; }
+        public EncodeVertex VertexOne { get; set; }
+        public EncodeVertex VertexTwo { get; set; }
 
         /*Properties for two pixels within the vertices*/
         public Pixel VertexPixelOne { get; set; }

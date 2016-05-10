@@ -249,7 +249,6 @@ namespace StegomaticProject.StegoSystemUI
 
             if (saveFileWindow.FileName != "")
             {
-
                 //Filestream is saved here, from manipulated image.
                 //Switch determines which format the image will be saved in.
 

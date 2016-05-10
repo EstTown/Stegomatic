@@ -7,38 +7,22 @@ using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    class Vertex
+    class EncodeVertex : VertexBase
     {
-        public Vertex(byte partOfSecretMessage, params Pixel[] pixels)
+        public EncodeVertex(byte partOfSecretMessage, params Pixel[] pixels) : base(pixels) 
         {
-            //assign unique ID
-            this.Id = _id;
-            _id++;
-
             //all vertices will be set to active, no matter what
             this.Active = false;
 
-            //assign "NumberOfSamples" amount of samples (pixels) to this vertex
-            PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
-            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
-            {
-                PixelsForThisVertex[i] = pixels[i];
-            }
-            
             this.PartOfSecretMessage = partOfSecretMessage;
-            CalculateVertexValue();
+
             CalculateTargetValues();
         }
-        private static short _id = 0;
-        public short Id { get; }
-
+        
         public byte LowestEdgeWeight { get; set; }
         public short NumberOfEdges { get; set; }
 
         public bool Active;
-        public byte VertexValue; //value that has to correspond to a certain part of the secret message
-        
-        public Pixel[] PixelsForThisVertex;
         public byte[] TargetValues;
         public byte PartOfSecretMessage;
 
@@ -55,15 +39,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 TargetValues[i] = (byte)((PixelsForThisVertex[i].EmbeddedValue + d) % GraphTheoryBased.Modulo);
             }
         }
-        public void CalculateVertexValue()
-        {
-            byte temp = 0;
-            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
-            {
-                temp += PixelsForThisVertex[i].EmbeddedValue;
-            }
-            this.VertexValue = (byte)(temp%GraphTheoryBased.Modulo);
-        }
         public void AssignWeightToVertex(byte weight)
         {
             LowestEdgeWeight = weight;
@@ -77,7 +52,4 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return this.Id + "\n" + this.VertexValue + "\n";
         }
     }
-
-
-
 }

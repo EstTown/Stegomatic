@@ -57,6 +57,7 @@ namespace StegomaticProject.StegoSystemUI
 
         private void SubscribeToEvents()
         {
+            _mainMenu.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
             _mainMenu.EncodeBtnClick += new BtnEventHandler(this.EncodeBtnClick);
             _mainMenu.DecodeBtnClick += new BtnEventHandler(this.DecodeBtnClick);
             //_mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
@@ -99,6 +100,11 @@ namespace StegomaticProject.StegoSystemUI
         public void SetDisplayImage(Bitmap newImage)
         {
             DisplayImage = newImage;
+        }
+
+        public void ShowNotification(DisplayNotificationEvent e)
+        {
+            ShowNotification(e.Notification, e.Title);
         }
 
         public void ShowNotification(string notification, string title = "")
@@ -224,8 +230,14 @@ namespace StegomaticProject.StegoSystemUI
                             _mainMenu.ImageDescriptionHeight = imageinfo[1];
                             _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
                             _mainMenu.ImageDescriptionCapacity = Convert.ToString((image.Height * image.Width * 0.18) / 12);
+
+                            _mainMenu.UpdateProgressBar();
                         }
                     }
+                }
+                catch (NotifyUserException)
+                {
+                    throw;
                 }
                 catch (Exception e)
                 {

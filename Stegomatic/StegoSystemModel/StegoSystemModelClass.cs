@@ -8,6 +8,7 @@ using StegomaticProject.StegoSystemModel.Miscellaneous;
 using StegomaticProject.StegoSystemModel.Cryptograhy;
 using StegomaticProject.StegoSystemModel.Steganography;
 using StegomaticProject.StegoSystemUI;
+using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.StegoSystemModel
 {
@@ -31,7 +32,16 @@ namespace StegomaticProject.StegoSystemModel
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
-            byte[] byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
+            byte[] byteMessage;
+
+            try
+            {
+                byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
 
             if (decrypt)
             {
@@ -50,7 +60,16 @@ namespace StegomaticProject.StegoSystemModel
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
             bool encrypt = true, bool compress = true)
         {
-            byte[] byteMessage = ByteConverter.StringToByteArray(message);
+            byte[] byteMessage;
+
+            try
+            {
+                byteMessage = ByteConverter.StringToByteArray(message);
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
 
             if (compress)
             {
@@ -63,7 +82,6 @@ namespace StegomaticProject.StegoSystemModel
             }
 
             Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
-
             return StegoObject;
         }
 

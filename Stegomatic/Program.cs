@@ -52,11 +52,11 @@ namespace StegomaticProject
             ////secret message byte array
             //byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
             //string seed = "thisdoesnotreallymatter";
-            ////get coverimage
-            //Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\white100.png");
+            //get coverimage
+            //Bitmap imageOriginal = new Bitmap(@"C:\Users\Dascham\Desktop\image2.png");
 
             ////stego-object
-            //Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\MODDED.png");
+            //Bitmap stegoObject = new Bitmap(@"C:\Users\Dascham\Desktop\Encode4.png");
 
             //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
 

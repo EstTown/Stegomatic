@@ -105,7 +105,7 @@ namespace StegomaticProject.StegoSystemUI
         //    }
         //}
 
-        public void UpdateProgressBar()
+        public void ForceUpdateProgressBar()
         {
             try
             {

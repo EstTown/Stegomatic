@@ -16,6 +16,9 @@ namespace StegomaticProject.StegoSystemUI
     public class StegoSystemWinForm : IStegoSystemUI
     {
         private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
+
+        public Func<int, int, int> ImageCapacityCalculator { get; set; }
+
         public string Message
         {
             get { return _mainMenu.EnteredText; }
@@ -51,7 +54,8 @@ namespace StegomaticProject.StegoSystemUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _mainMenu = new Form1();
-            
+            ImageCapacityCalculator = StandardCapacityCalculator;
+
             SubscribeToEvents();
         }
 
@@ -229,9 +233,9 @@ namespace StegomaticProject.StegoSystemUI
                             _mainMenu.ImageDescriptionWidth = imageinfo[0];
                             _mainMenu.ImageDescriptionHeight = imageinfo[1];
                             _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
-                            _mainMenu.ImageDescriptionCapacity = Convert.ToString((image.Height * image.Width * 0.18) / 12);
+                            _mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
 
-                            _mainMenu.UpdateProgressBar();
+                            _mainMenu.ForceUpdateProgressBar();
                         }
                     }
                 }
@@ -278,6 +282,11 @@ namespace StegomaticProject.StegoSystemUI
             {
                 throw new NotifyUserException("Image not modified.", "Action cancelled");
             }
+        }
+
+        private int StandardCapacityCalculator(int width, int height)
+        {
+            return Convert.ToInt32((height * width * 0.18) / 12);
         }
     }
 }

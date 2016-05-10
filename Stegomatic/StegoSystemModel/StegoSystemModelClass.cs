@@ -17,6 +17,7 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
+        public Func<int, int, int> CalculateImageCapacity { get; set; }
 
         //public static void EncodeWasCalled(Object sender, EventArgs e)
         //{
@@ -32,7 +33,9 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new LeastSignificantBit(); 
+            _stegoMethod = new LeastSignificantBit();
+
+            CalculateImageCapacity = _stegoMethod.CalculateImageCapacity;
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 

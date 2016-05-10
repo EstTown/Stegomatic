@@ -97,7 +97,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         if (b == true)
                         {
                             amountOfEdges++;
-                            if (amountOfEdges == 10000) //Hardcoded limit for edges per vert
+                            if (amountOfEdges == 32000) //Hardcoded limit for edges per vert
                             {
                                 break;
                             }
@@ -106,7 +106,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                                 lowestWeight = edgeWeight;
                             }
                         }
-
                     }
                 }
                 EncodeVertexList[i].LowestEdgeWeight = lowestWeight;
@@ -117,7 +116,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private bool ConstructASingleEdge(EncodeVertex vertex1, EncodeVertex vertex2, out byte lowestWeight)
         {
-            byte weight = GraphTheoryBased.MaxEdgeWeight;
+            int weight = GraphTheoryBased.MaxEdgeWeight;
             Edge tempEdge = new Edge(null, null, null, null, 0);
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
@@ -133,7 +132,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         {
                             weight = CalculateWeightForOneEdge(vertex1.PixelsForThisVertex[i],
                                 vertex2.PixelsForThisVertex[j]);
-                            tempEdge = new Edge(vertex1, vertex2, vertex1.PixelsForThisVertex[i], vertex2.PixelsForThisVertex[j], weight);
+                            tempEdge = new Edge(vertex1, vertex2, vertex1.PixelsForThisVertex[i], vertex2.PixelsForThisVertex[j], (byte)weight);
                         }
                     }
                 }
@@ -142,16 +141,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             if (tempEdge.EdgeWeight != 0) //edgeweight will never be zero, because a pixel cannot have an embeddedvalue that's equivalent with it's targetvalue
             {
                 EdgeList.Add(tempEdge);
-                lowestWeight = weight;
+                lowestWeight = (byte)weight;
                 return true;
             }
             lowestWeight = 0;
             return false;
         }
 
-        private byte CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
+        private int CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
         {
-            byte weight = (byte)(Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
+            int weight = (Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
                      Math.Abs(pixel1.Color.B - pixel2.Color.B));
             return weight;
         }
@@ -198,15 +197,21 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     //    Console.WriteLine(item.ToString());
                     //}
                     //Console.ReadKey();
-
-                    Edge M = SortedInternalList.First();
+                    if (SortedInternalList.FirstOrDefault() == null)
+                    {
+                        
+                    }
+                    else
+                    {
+                        Edge M = SortedInternalList.First();
+                        tempMatched.Add(M);
+                    }
                     /*HVIS ALT ER MATCHET BLIVER DER IKKE OPRETTET
                     KANTER, OG DERFOR KASTER DENNE EN NULLEXCEPTION!!!*/
 
 
                     //Edge FoundInGlobalList = EdgeList.FirstOrDefault(i => i == M);
 
-                    tempMatched.Add(M);
                 }
             }
 

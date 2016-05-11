@@ -36,13 +36,13 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
             // Backgroundworker to have WinForm run on a different thread as the model
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+            _worker.WorkerReportsProgress = true;
+            _worker.WorkerSupportsCancellation = true;
+            _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
+            _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
         }
 
-        BackgroundWorker worker = new BackgroundWorker();
+        private BackgroundWorker _worker = new BackgroundWorker();
 
         
 
@@ -155,7 +155,7 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                worker.RunWorkerAsync(args);
+                _worker.RunWorkerAsync(args);
 
                 //WHEN WORKER IS DONE, AN EVENT WILL FIRE, AND ThreadedEncodeComplete() WILL BE EXECUTED
                 //THIS WILL START A SAVE-DIALOG, ONLY WHEN THE ENCODING-PROCESS IS ACTUALLY COMPELTED

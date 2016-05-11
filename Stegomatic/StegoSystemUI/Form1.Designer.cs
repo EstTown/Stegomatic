@@ -291,10 +291,11 @@
             this.checkBox_compression.AutoSize = true;
             this.checkBox_compression.Location = new System.Drawing.Point(629, 384);
             this.checkBox_compression.Name = "checkBox_compression";
-            this.checkBox_compression.Size = new System.Drawing.Size(124, 17);
+            this.checkBox_compression.Size = new System.Drawing.Size(121, 17);
             this.checkBox_compression.TabIndex = 16;
             this.checkBox_compression.Text = "Enable compression";
             this.checkBox_compression.UseVisualStyleBackColor = true;
+            this.checkBox_compression.CheckedChanged += new System.EventHandler(this.checkBox_compression_CheckedChanged);
             // 
             // progressBar1
             // 

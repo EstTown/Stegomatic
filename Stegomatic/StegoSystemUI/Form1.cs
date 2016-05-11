@@ -18,7 +18,6 @@ namespace StegomaticProject.StegoSystemUI
 
         public Form1()
         {
-
             InitializeComponent();
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
@@ -30,6 +29,7 @@ namespace StegomaticProject.StegoSystemUI
         public event BtnEventHandler EncodeBtnClick;
         //public event BtnEventHandler SaveImageBtnClick;
         public event BtnEventHandler OpenImageBtnClick;
+        public event BtnEventHandler CompressionCheckToggle;
 
         public string EnteredText
         {
@@ -172,5 +172,12 @@ namespace StegomaticProject.StegoSystemUI
             
         }
 
+        private void checkBox_compression_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CompressionCheckToggle != null)
+            {
+                CompressionCheckToggle(new BtnEvent());
+            }
+        }
     }
 }

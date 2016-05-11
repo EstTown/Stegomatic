@@ -16,7 +16,7 @@ namespace StegomaticProject.StegoSystemUI
         string PathOfCoverImage { get; }
         Bitmap DisplayImage { get; }
         IConfig Config { get; }
-        Func<int, int, int> ImageCapacityCalculator { get; set; }
+        Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
 
         // Modify UI
         void SetDisplayImage(Bitmap newImage);

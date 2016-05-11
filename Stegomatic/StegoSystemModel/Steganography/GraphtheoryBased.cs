@@ -271,12 +271,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
 
-
-
-
-
-
-
+        
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
         public List<Byte> ByteArrayToValues(byte[] byteArray)
         {

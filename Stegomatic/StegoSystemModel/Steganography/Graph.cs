@@ -80,6 +80,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return decodeVertexList;
         }
         private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage) //don't touch this
+
         {
             int counter = 0;
             for (int i = 0; i < pixelsNeeded; i += GraphTheoryBased.SamplesVertexRatio)

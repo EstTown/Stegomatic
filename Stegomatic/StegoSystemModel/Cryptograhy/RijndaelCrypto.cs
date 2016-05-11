@@ -11,10 +11,9 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
     public class RijndaelCrypto : ICryptoMethod
     {
         /*Metod for decryption of the ciphertext*/
-        public string Decrypt(string cipherText, string password)
+        public byte[] Decrypt(byte[] cipherText, string password)
         {
-            string plaintext = null;
-            byte[] encrypted = Convert.FromBase64String(cipherText);
+            byte[] plaintext;
 
             /*New instance of the AES-class*/
             using (RijndaelManaged aesAlg = new RijndaelManaged())
@@ -29,14 +28,20 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
                 /*Streams for decryption*/
-                using (MemoryStream msDecrypt = new MemoryStream(encrypted))
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        //using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        //{
+                        //    /*Reads the decrypted bytes from the stream to a string*/
+                        //    plaintext = srDecrypt.ReadToEnd();
+                        //}
+
+                        using (MemoryStream resultStream = new MemoryStream())
                         {
-                            /*Reads the decrypted bytes from the stream to a string*/
-                            plaintext = srDecrypt.ReadToEnd();
+                            csDecrypt.CopyTo(resultStream);
+                            plaintext = resultStream.ToArray();
                         }
                     }
                 }
@@ -47,10 +52,9 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
         }
 
         /*Method for encryption of the plaintext*/
-        public string Encrypt(string plainText, string password)
+        public byte[] Encrypt(byte[] plainText, string password)
         {
-            byte[] encrypted;
-            string cipherText = null;
+            byte[] cipherText;
 
             /*New instance of the AES-class*/
             using (RijndaelManaged aesAlg = new RijndaelManaged())
@@ -75,13 +79,13 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
                             swEncrypt.Write(plainText);
                         }
                         /*Byte-array to encrypted text*/
-                        encrypted = msEncrypt.ToArray();
+                        cipherText = msEncrypt.ToArray();
                     }
                 }
             }
 
             /*Returns ciphertext as string*/
-            return cipherText = Convert.ToBase64String(encrypted);
+            return cipherText; // = Convert.ToBase64String(encrypted);
         }
     }
 }

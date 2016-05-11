@@ -54,19 +54,19 @@ namespace StegomaticProject.StegoSystemModel
             }
 
 
-            string message = Encoding.UTF8.GetString(byteMessage);
+            //string message = Encoding.UTF8.GetString(byteMessage);
 
 
-            //string message = ByteConverter.ByteArrayToString(byteMessage);
+            string message = ByteConverter.ByteArrayToString(byteMessage);
             return message;
         }
 
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
             bool encrypt = true, bool compress = true)
         {
-            byte[] byteMessage = Encoding.UTF8.GetBytes(message);
+            //byte[] byteMessage = Encoding.UTF8.GetBytes(message);
 
-            //byte[] byteMessage = ByteConverter.StringToByteArray(message);
+            byte[] byteMessage = ByteConverter.StringToByteArray(message);
 
             if (compress)
             {

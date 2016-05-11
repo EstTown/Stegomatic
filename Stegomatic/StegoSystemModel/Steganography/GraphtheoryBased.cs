@@ -303,6 +303,66 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return Values;
         }
+
+        public List<Byte> ValuesToByteArray(List<int> input)
+        {
+            input.Reverse();
+
+            List<byte> byteList = new List<byte>();
+
+            BitArray bitArray = new BitArray(8);
+            int i = 0;
+
+            foreach (var item in input)
+            {
+                if (item == 0)
+                {
+                    bitArray[i] = false;
+                    bitArray[i + 1] = false;
+                }
+                else if (item == 1)
+                {
+                    bitArray[i] = true;
+                    bitArray[i + 1] = false;
+
+                }
+                else if (item == 2)
+                {
+                    bitArray[i] = false;
+                    bitArray[i + 1] = true;
+                }
+                else if (item == 3)
+                {
+                    bitArray[i] = true;
+                    bitArray[i + 1] = true;
+                }
+
+                i += 2;
+
+                if (i == 8)
+                {
+                    byteList.Add(ConvertToByte(bitArray));
+                    i = 0;
+                    bitArray = null;
+                }
+            }
+            return byteList;
+        }
+
+        private byte ConvertToByte(BitArray bits)
+        {
+            if (bits.Count != 8)
+            {
+                throw new ArgumentException("bits");
+            }
+            byte[] bytes = new byte[1];
+            bits.CopyTo(bytes, 0);
+            return bytes[0];
+        }
+
+
+
+
         private int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length * PixelsPerByte;

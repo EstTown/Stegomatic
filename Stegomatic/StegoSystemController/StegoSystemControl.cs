@@ -22,7 +22,7 @@ namespace StegomaticProject.StegoSystemController
             this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
             this._verifyUserInput = new VerifyUserInput();
-            //_stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
+            _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
     }

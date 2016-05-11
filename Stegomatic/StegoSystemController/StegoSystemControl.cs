@@ -25,7 +25,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
-        }
+    }
 
         Bitmap GlobalBitmap = null;
 
@@ -37,14 +37,14 @@ namespace StegomaticProject.StegoSystemController
             //_stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
-            
+            // Backgroundworker to have WinForm run on a different thread as the model
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
         }
 
-        BackgroundWorker worker = new BackgroundWorker();
+        private BackgroundWorker _worker = new BackgroundWorker();
 
         
 
@@ -108,7 +108,7 @@ namespace StegomaticProject.StegoSystemController
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             GlobalBitmap = (Bitmap)e.Result;
-
+            
             try
             {
                 _stegoUI.SaveImage(GlobalBitmap);
@@ -149,7 +149,7 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                worker.RunWorkerAsync(args);
+                _worker.RunWorkerAsync(args);
 
                 //WHEN WORKER IS DONE, AN EVENT WILL FIRE, AND ThreadedEncodeComplete() WILL BE EXECUTED
                 //THIS WILL START A SAVE-DIALOG, ONLY WHEN THE ENCODING-PROCESS IS ACTUALLY COMPELTED
@@ -203,7 +203,7 @@ namespace StegomaticProject.StegoSystemController
                 ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
             }
             catch (AbortActionException)
-            { 
+            {
             }
         }
 

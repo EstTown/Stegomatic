@@ -18,7 +18,7 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
-        public Func<int, int, int> CalculateImageCapacity { get; set; }
+        public Func<int, int, bool, int> CalculateImageCapacity { get; set; }
 
         public StegoSystemModelClass()
         {
@@ -78,10 +78,14 @@ namespace StegomaticProject.StegoSystemModel
             return stegoObject;
         }
 
-        public int CalcCapacityWithCompressionAndStego(int height, int width)
+        public int CalcCapacityWithCompressionAndStego(int height, int width, bool compress)
         {
-            int capacityOnlyUsingStego = _stegoMethod.CalculateImageCapacity(height, width);
-            return _compressMethod.ApproxSizeAfterCompression(capacityOnlyUsingStego);
+            int capacity = _stegoMethod.CalculateImageCapacity(height, width); 
+            if (compress)
+            {
+                capacity = _compressMethod.ApproxSizeAfterCompression(capacity);
+            }
+            return capacity;
         }
     }
 }

@@ -304,7 +304,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return Values;
         }
 
-        public List<Byte> ValuesToByteArray(List<int> input)
+        public List<Byte> ValuesToByteArray(List<DecodeVertex> input)
         {
             input.Reverse();
 
@@ -315,23 +315,23 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             foreach (var item in input)
             {
-                if (item == 0)
+                if (item.VertexValue == 0)
                 {
                     bitArray[i] = false;
                     bitArray[i + 1] = false;
                 }
-                else if (item == 1)
+                else if (item.VertexValue == 1)
                 {
                     bitArray[i] = true;
                     bitArray[i + 1] = false;
 
                 }
-                else if (item == 2)
+                else if (item.VertexValue == 2)
                 {
                     bitArray[i] = false;
                     bitArray[i + 1] = true;
                 }
-                else if (item == 3)
+                else if (item.VertexValue == 3)
                 {
                     bitArray[i] = true;
                     bitArray[i + 1] = true;
@@ -359,9 +359,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             bits.CopyTo(bytes, 0);
             return bytes[0];
         }
-
-
-
 
         private int CalculateRequiredPixels(byte[] byteArray)
         {

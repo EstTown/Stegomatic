@@ -45,18 +45,18 @@ namespace StegomaticProject
         {
             IStegoSystemModel stegoModel = new StegoSystemModelClass();
             IStegoSystemUI stegoUI = new StegoSystemWinForm(); //new StegoSystemConsole
-            IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
+            /*IStegoSystemControl*/ StegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
 
 
             ////secret message byte array
             //byte[] secretMessage = ConvertTextToASCIIValue("This is my super secret message that will never be decoded");
             //string seed = "thisdoesnotreallymatter";
-            //get coverimage
-            //Bitmap imageOriginal = new Bitmap(@"C:\Users\Dascham\Desktop\image2.png");
+            ////get coverimage
+            //Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\white100.png");
 
             ////stego-object
-            //Bitmap stegoObject = new Bitmap(@"C:\Users\Dascham\Desktop\Encode4.png");
+            //Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\MODDED.png");
 
             //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
 

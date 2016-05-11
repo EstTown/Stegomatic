@@ -233,16 +233,16 @@ namespace StegomaticProject.StegoSystemUI
                             _mainMenu.ImageDescriptionWidth = imageinfo[0];
                             _mainMenu.ImageDescriptionHeight = imageinfo[1];
                             _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
-                            _mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
+                            //_mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
 
-                            _mainMenu.ForceUpdateProgressBar();
+                            //_mainMenu.ForceUpdateProgressBar();
                         }
                     }
                 }
-                catch (NotifyUserException)
-                {
-                    throw;
-                }
+                //catch (NotifyUserException)
+                //{
+                //    throw;
+                //}
                 catch (Exception e)
                 {
                     throw new NotifyUserException("Error: Could not read file. Original error: " + e.Message, "Error");

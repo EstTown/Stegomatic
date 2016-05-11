@@ -33,24 +33,24 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         public void ConstructGraph(int pixelsNeeded, List<byte> secretMessage)
         {
-            Console.WriteLine("Starting with constructing vertices");
-            Console.ReadKey();
+            //Console.WriteLine("Starting with constructing vertices");
+            //Console.ReadKey();
             ConstructVertices(pixelsNeeded, secretMessage);
-            Console.WriteLine("Constructed a bunch of vertices      -       " + EncodeVertexList.Count);
-            Console.ReadKey();
+            //Console.WriteLine("Constructed a bunch of vertices      -       " + EncodeVertexList.Count);
+            //Console.ReadKey();
             CheckIfMatched();
             ConstructEdges();
             CheckIfMatched();
-            Console.WriteLine("Before calcGraph");
-            Console.WriteLine("VertexList:    " + EncodeVertexList.Count);
-            Console.WriteLine("Edgelist:    " + EdgeList.Count);
-            Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
-            Console.ReadKey();
+            //Console.WriteLine("Before calcGraph");
+            //Console.WriteLine("VertexList:    " + EncodeVertexList.Count);
+            //Console.WriteLine("Edgelist:    " + EdgeList.Count);
+            //Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
+            //Console.ReadKey();
             CalcGraphMatching();
-            Console.WriteLine("SUCCESS!!!!");
-            Console.WriteLine("VertexList:    " + EncodeVertexList.Count);
-            Console.WriteLine("Edgelist:    " + EdgeList.Count);
-            Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
+            //Console.WriteLine("SUCCESS!!!!");
+            //Console.WriteLine("VertexList:    " + EncodeVertexList.Count);
+            //Console.WriteLine("Edgelist:    " + EdgeList.Count);
+            //Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
 
             CheckIfMatched();
 
@@ -58,11 +58,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public List<Pixel> ModifyGraph()
         {
-            Console.WriteLine("Before swapping pixels");
-            Console.ReadKey();
+            //Console.WriteLine("Before swapping pixels");
+            //Console.ReadKey();
             PixelSwap();
-            Console.WriteLine("Before modifying");
-            Console.ReadKey();
+            //Console.WriteLine("Before modifying");
+            //Console.ReadKey();
             PixelModify();
 
             return PixelList;

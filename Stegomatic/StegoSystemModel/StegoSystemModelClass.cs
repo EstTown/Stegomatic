@@ -8,6 +8,7 @@ using StegomaticProject.StegoSystemModel.Miscellaneous;
 using StegomaticProject.StegoSystemModel.Cryptograhy;
 using StegomaticProject.StegoSystemModel.Steganography;
 using StegomaticProject.StegoSystemUI;
+using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.StegoSystemModel
 {
@@ -23,15 +24,22 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new LeastSignificantBit();
-
-            CalculateImageCapacity = CalcCapacityWithCompressionAndStego;
+            _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
-            byte[] byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
+            byte[] byteMessage;
+
+            try
+            {
+                byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
+            }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
 
             if (decrypt)
             {
@@ -62,9 +70,8 @@ namespace StegomaticProject.StegoSystemModel
                 //byteMessage = _cryptoMethod.Encrypt(byteMessage, encryptionKey);
             }
 
-            Bitmap StegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
-
-            return StegoObject;
+            Bitmap stegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
+            return stegoObject;
         }
 
         public int CalcCapacityWithCompressionAndStego(int height, int width)

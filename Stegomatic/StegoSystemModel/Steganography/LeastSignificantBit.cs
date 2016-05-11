@@ -25,6 +25,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 throw new AbortActionException();
             }
+            catch (NotifyUserException)
+            {
+                throw;
+            }
         }
 
         private int ConvertSeed(string seedInput)
@@ -47,12 +51,17 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
                 if (binaryMessage[i] == '1')
                 {
-                    colorOfPixel = carrier.GetPixel(x, y);
+                    try
+                    {
+                        colorOfPixel = carrier.GetPixel(x, y);
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw new NotifyUserException("Image too small.");
+                    }
                     newColor = Color.FromArgb(red, colorOfPixel.G, colorOfPixel.B);
                     carrier.SetPixel(x, y, newColor);
                 }
-
-                // MAKE SURE IT DOESN'T GO OVER THE HEIGHT.
             }
 
             return carrier;
@@ -87,7 +96,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             catch (FormatException)
             {
-                throw new AbortActionException();
+                // Catching conversion fails.
+                throw new AbortActionException(); // REMOVE THESE IF WE DON'T WANT TO STOP IF NUMBERS HAVE BEEN INPUT. 
+            }
+            catch (NotifyUserException)
+            {
+                throw;
             }
         }
 

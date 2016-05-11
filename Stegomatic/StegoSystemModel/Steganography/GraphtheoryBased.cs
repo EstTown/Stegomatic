@@ -44,17 +44,17 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
             //addmetadata to message
-            Console.WriteLine("Before addmetadata");
-            Console.ReadKey();
+            //Console.WriteLine("Before addmetadata");
+            //Console.ReadKey();
             message = AddMetaData(message);
 
-            Console.WriteLine("Before calcrequired");
-            Console.ReadKey();
+            //Console.WriteLine("Before calcrequired");
+            //Console.ReadKey();
             //call bunch of methods that prepare for graph construction
             int amountOfPixels = CalculateRequiredPixels(message);
-            Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
+            //Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
             GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
-            Console.WriteLine("pixels in list: {0}", PixelList.Count);
+            //Console.WriteLine("pixels in list: {0}", PixelList.Count);
 
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
@@ -62,16 +62,16 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             //at some point we need to calculate a graph, therefore make new graph
             Graph graph = new Graph(PixelList, amountOfPixels);
-            Console.WriteLine("Before constuct graph");
-            Console.ReadKey();
+            //Console.WriteLine("Before constuct graph");
+            //Console.ReadKey();
             graph.ConstructGraph(amountOfPixels, newMessage);
-            Console.WriteLine("Constructed a new graph");
-            Console.ReadKey();
-            Console.WriteLine("will now try to modify graph");
+            //Console.WriteLine("Constructed a new graph");
+            //Console.ReadKey();
+            //Console.WriteLine("will now try to modify graph");
 
             graph.ModifyGraph();
-            Console.WriteLine("Modified graph");
-            Console.ReadKey();
+            //Console.WriteLine("Modified graph");
+            //Console.ReadKey();
 
             coverImage = EmbedPixelListIntoImage(coverImage, amountOfPixels);
 

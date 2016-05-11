@@ -130,8 +130,6 @@ namespace StegomaticProject.StegoSystemUI
         public void Terminate()
         {
             _mainMenu.Dispose();
-            // Har vi overhovedet brug for dette eller er krydset i hjørnet nok? 
-            // Hvis ikke, så gør det til en NotSupportedException();
         }
 
         public string GetEncryptionKey()
@@ -140,7 +138,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Encryption key", "Key:");
             }
-            catch (Exception)
+            catch (AbortActionException)
             {
                 throw;
             }
@@ -152,7 +150,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Steganography seed", "Seed:");
             }
-            catch (Exception)
+            catch (AbortActionException)
             {
                 throw;
             }
@@ -225,29 +223,34 @@ namespace StegomaticProject.StegoSystemUI
                             // Display image
                             this.SetDisplayImage(ImageToBitmap(image));
 
-                            // Get image info
-                            string[] imageinfo = ImageData.GetImageInfo(image, filename);
-
-                            // Set labels to imageinfo
-                            _mainMenu.ImageDescriptionAbout = "About image: " + imageinfo[3];
-                            _mainMenu.ImageDescriptionWidth = imageinfo[0];
-                            _mainMenu.ImageDescriptionHeight = imageinfo[1];
-                            _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
-                            //_mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
-
-                            //_mainMenu.ForceUpdateProgressBar();
+                            DisplayImageInfo(image, filename);
                         }
                     }
                 }
-                //catch (NotifyUserException)
-                //{
-                //    throw;
-                //}
+                catch (NotifyUserException)
+                {
+                    throw;
+                }
                 catch (Exception e)
                 {
-                    throw new NotifyUserException("Error: Could not read file. Original error: " + e.Message, "Error");
+                    throw new NotifyUserException("Could not read file. Original error: " + e.Message, "Error");
                 }
             }
+        }
+
+        private void DisplayImageInfo(Image image, string filename)
+        {
+            // Get image info
+            string[] imageinfo = ImageData.GetImageInfo(image, filename);
+
+            // Set labels to imageinfo
+            _mainMenu.ImageDescriptionAbout = "About image: " + imageinfo[3];
+            _mainMenu.ImageDescriptionWidth = imageinfo[0];
+            _mainMenu.ImageDescriptionHeight = imageinfo[1];
+            _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
+            _mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
+
+            _mainMenu.ForceUpdateProgressBar();
         }
 
         public void SaveImage(Bitmap file)

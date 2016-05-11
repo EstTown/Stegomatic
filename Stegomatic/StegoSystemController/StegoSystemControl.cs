@@ -22,7 +22,7 @@ namespace StegomaticProject.StegoSystemController
             this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
             this._verifyUserInput = new VerifyUserInput();
-            _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
+            //_stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
     }
@@ -38,10 +38,10 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
             // Backgroundworker to have WinForm run on a different thread as the model
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
-            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+            _worker.WorkerReportsProgress = true;
+            _worker.WorkerSupportsCancellation = true;
+            _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
+            _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
         }
 
         private BackgroundWorker _worker = new BackgroundWorker();
@@ -190,9 +190,8 @@ namespace StegomaticProject.StegoSystemController
                 string stegoSeed = _stegoUI.GetStegoSeed();
                 stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
-                byte[] messageByteArray = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+                string message= _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                string message = Encoding.UTF8.GetString(messageByteArray);
                 //GraphTheoryBased a = new GraphTheoryBased();
                 //string message = a.Decode(coverImage, stegoSeed);
 

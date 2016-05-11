@@ -29,7 +29,7 @@ namespace StegomaticProject.StegoSystemModel
             CalculateImageCapacity = CalcCapacityWithCompressionAndStego;
         }
 
-        public byte[] DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
+        public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
             byte[] byteMessage;
@@ -53,8 +53,12 @@ namespace StegomaticProject.StegoSystemModel
                 byteMessage = _compressMethod.Decompress(byteMessage);
             }
 
+
+            string message = Encoding.UTF8.GetString(byteMessage);
+
+
             //string message = ByteConverter.ByteArrayToString(byteMessage);
-            return byteMessage;
+            return message;
         }
 
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 

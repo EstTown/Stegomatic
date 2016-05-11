@@ -6,6 +6,8 @@ using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.CustomExceptions;
 using System.ComponentModel;
+using StegomaticProject.StegoSystemModel.Steganography;
+using System.Text;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -20,12 +22,12 @@ namespace StegomaticProject.StegoSystemController
             this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
             this._verifyUserInput = new VerifyUserInput();
-            _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
+            //_stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
     }
 
-        private Bitmap _stegoObject = null;
+        Bitmap GlobalBitmap = null;
 
         private void SubscribeToEvents()
         {
@@ -51,14 +53,10 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ShowNotification(e.Notification, e.Title);
         }
 
-        private void ShowEncodingSuccessNotification(string encryptionKey, string stegoSeed, bool encrypt, bool compress)
+        private void ShowEncodingSuccessNotification(bool encrypt, string encryptionKey, string stegoSeed)
         {
             string notification = string.Empty;
-            notification = "Message successfully encoded. \n";
-            if (compress)
-            {
-                notification += "Compressed";
-            }
+            notification = "Message encoded successfully. \n";
             if (encrypt)
             {
                 notification += $"EncryptionKey = {encryptionKey}\n";
@@ -95,38 +93,34 @@ namespace StegomaticProject.StegoSystemController
         private void ThreadedEncode(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
-            Tuple<Bitmap, string, string, string, bool, bool> EncodingArgument = e.Argument as Tuple<Bitmap, string, string, string, bool, bool>;
+            Tuple<Bitmap, string, string, string, bool, bool> arg = e.Argument as Tuple<Bitmap, string, string, string, bool, bool>;
 
-            Bitmap coverImage = EncodingArgument.Item1;
-            String message = EncodingArgument.Item2;
-            string encryptionKey = EncodingArgument.Item3;
-            string stegoSeed = EncodingArgument.Item4;
-            bool encrypt = EncodingArgument.Item5;
-            bool compress = EncodingArgument.Item6;
+            Bitmap coverImage = arg.Item1;
+            string message = arg.Item2;
+            string encryptionKey = arg.Item3;
+            string stegoSeed = arg.Item4;
+            bool encrypt = arg.Item5;
+            bool compress = arg.Item6;
 
-            Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
-
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
-
-            e.Result = EncodingInfo;
+            e.Result = (Bitmap)_stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
         }
 
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
-            _stegoObject = EncodingInfo.Item1;
+            GlobalBitmap = (Bitmap)e.Result;
             
             try
             {
-                _stegoUI.SaveImage(_stegoObject);
+                _stegoUI.SaveImage(GlobalBitmap);
             }
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception));
             }
 
-            _stegoUI.SetDisplayImage(_stegoObject);
-            ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
+            _stegoUI.SetDisplayImage(GlobalBitmap);
+
+            //ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
         }
 
         public void EncodeImage(BtnEvent e)
@@ -170,20 +164,12 @@ namespace StegomaticProject.StegoSystemController
                 //}
 
                 //_stegoUI.SetDisplayImage(GlobalBitmap);
-
-
-
-
-                // FIND A WAY TO MAKE THIS INTO A SUCCESSNOTIFICATION AND ONLY DISPLAY ONCE THE BACKGROUNDWORKER IS DONE.
-
+                //ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
 
             }
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
-            }
-            catch (AbortActionException)
-            {
             }
         }
 
@@ -204,7 +190,11 @@ namespace StegomaticProject.StegoSystemController
                 string stegoSeed = _stegoUI.GetStegoSeed();
                 stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
-                string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+                string message= _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+
+                //GraphTheoryBased a = new GraphTheoryBased();
+                //string message = a.Decode(coverImage, stegoSeed);
+
                 ShowDecodingSuccessNotification(message);
             }
             catch (NotifyUserException exception)

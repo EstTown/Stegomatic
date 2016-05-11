@@ -68,14 +68,9 @@ namespace StegomaticProject.StegoSystemController
 
         private void ShowDecodingSuccessNotification(string message)
         {
-
+            // REMOVE THE EMPTY PARTS OF THE MESSAGE SOMEHOW??!!
             message = message.TrimEnd('\0');
             _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
-            
-
-
-
-            Console.WriteLine(message);
         }
 
         public void OpenImage(BtnEvent e)
@@ -170,6 +165,9 @@ namespace StegomaticProject.StegoSystemController
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
+            }
+            catch (AbortActionException)
+            {
             }
         }
 

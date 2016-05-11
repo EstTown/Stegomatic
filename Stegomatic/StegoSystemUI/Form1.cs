@@ -116,6 +116,8 @@ namespace StegomaticProject.StegoSystemUI
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
+            // TEXT HERE!!
+
             try
             {
                 // Update character-count when change is happening

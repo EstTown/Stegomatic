@@ -6,6 +6,8 @@ using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.CustomExceptions;
 using System.ComponentModel;
+using StegomaticProject.StegoSystemModel.Steganography;
+using System.Text;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -23,7 +25,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
-    }
+        }
 
         Bitmap GlobalBitmap = null;
 
@@ -94,7 +96,7 @@ namespace StegomaticProject.StegoSystemController
             Tuple<Bitmap, string, string, string, bool, bool> arg = e.Argument as Tuple<Bitmap, string, string, string, bool, bool>;
 
             Bitmap coverImage = arg.Item1;
-            String message = arg.Item2;
+            string message = arg.Item2;
             string encryptionKey = arg.Item3;
             string stegoSeed = arg.Item4;
             bool encrypt = arg.Item5;
@@ -188,7 +190,12 @@ namespace StegomaticProject.StegoSystemController
                 string stegoSeed = _stegoUI.GetStegoSeed();
                 stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
-                string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+                byte[] messageByteArray = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+
+                string message = Encoding.UTF8.GetString(messageByteArray);
+                //GraphTheoryBased a = new GraphTheoryBased();
+                //string message = a.Decode(coverImage, stegoSeed);
+
                 ShowDecodingSuccessNotification(message);
             }
             catch (NotifyUserException exception)
@@ -196,7 +203,7 @@ namespace StegomaticProject.StegoSystemController
                 ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
             }
             catch (AbortActionException)
-            {
+            { 
             }
         }
 

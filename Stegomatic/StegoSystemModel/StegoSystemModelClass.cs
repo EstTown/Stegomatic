@@ -27,7 +27,7 @@ namespace StegomaticProject.StegoSystemModel
             _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
         }
 
-        public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
+        public byte[] DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
             byte[] byteMessage;
@@ -51,14 +51,16 @@ namespace StegomaticProject.StegoSystemModel
                 byteMessage = _compressMethod.Decompress(byteMessage);
             }
 
-            string message = ByteConverter.ByteArrayToString(byteMessage);
-            return message;
+            //string message = ByteConverter.ByteArrayToString(byteMessage);
+            return byteMessage;
         }
 
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
             bool encrypt = true, bool compress = true)
         {
-            byte[] byteMessage = ByteConverter.StringToByteArray(message);
+            byte[] byteMessage = Encoding.UTF8.GetBytes(message);
+
+            //byte[] byteMessage = ByteConverter.StringToByteArray(message);
 
             if (compress)
             {

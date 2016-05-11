@@ -25,19 +25,26 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
             //could always decode 10 characters, which would be 40 vertices, which would be 120 pixels
+
             int amountOfPixels = 120;
             GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
             Graph graph = new Graph(PixelList, amountOfPixels);
-            graph.ConstructGraph(amountOfPixels);
+            List<DecodeVertex> decodeVertexList = graph.ConstructGraph(amountOfPixels);
 
 
+
+            //for (int i = 0; i < 12; i++)
+            //{
+            //    Console.WriteLine(decodeVertexList[i].VertexValue);
+            //}
             //actual decoding
 
 
 
-            byte[] something = new byte[10];
-            return something;
+            List<byte> c = ValuesToByteArray(decodeVertexList);
+
+            return c.ToArray();
         }
 
 
@@ -46,7 +53,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //addmetadata to message
             //Console.WriteLine("Before addmetadata");
             //Console.ReadKey();
-            message = AddMetaData(message);
+            //message = AddMetaData(message);
 
             //Console.WriteLine("Before calcrequired");
             //Console.ReadKey();
@@ -70,9 +77,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //Console.WriteLine("will now try to modify graph");
 
             graph.ModifyGraph();
+
             //Console.WriteLine("Modified graph");
             //Console.ReadKey();
-
+            //Console.WriteLine(PixelList[0].ColorDifference);
             coverImage = EmbedPixelListIntoImage(coverImage, amountOfPixels);
 
             return coverImage;
@@ -227,14 +235,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             byte[] embeddedDataArrayInfo = new byte[] { }; //every char to byte array decimal value
 
-            embeddedDataArrayInfo = Encoding.ASCII.GetBytes(stringSize);
+            embeddedDataArrayInfo = Encoding.UTF8.GetBytes(stringSize);
 
             //define always present character, which seperates metadata from message
             //could be a problem here, but decode part can fix that
             string seperater = "?";
 
             byte[] seperaterByteArray = new byte[] { };
-            seperaterByteArray = Encoding.ASCII.GetBytes(seperater);
+            seperaterByteArray = Encoding.UTF8.GetBytes(seperater);
 
             
             return CombineArrays(embeddedDataArrayInfo, seperaterByteArray, secretMessage);
@@ -307,7 +315,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public List<Byte> ValuesToByteArray(List<DecodeVertex> input)
         {
             input.Reverse();
-
             List<byte> byteList = new List<byte>();
 
             BitArray bitArray = new BitArray(8);
@@ -324,7 +331,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 {
                     bitArray[i] = true;
                     bitArray[i + 1] = false;
-
                 }
                 else if (item.VertexValue == 2)
                 {
@@ -343,9 +349,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 {
                     byteList.Add(ConvertToByte(bitArray));
                     i = 0;
-                    bitArray = null;
                 }
             }
+
+            byteList.Reverse();
+
             return byteList;
         }
 
@@ -369,8 +377,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             for (int i = 0; i < amountOfPixels; i++)
             {
+                //Console.WriteLine(PixelList[i].Color);
                 image.SetPixel(PixelList[i].PosX, PixelList[i].PosY,
                     (Color.FromArgb(PixelList[i].Color.A, PixelList[i].Color.R + PixelList[i].ColorDifference, PixelList[i].Color.G, PixelList[i].Color.B)));
+                //Console.WriteLine(image.GetPixel(PixelList[i].PosX,PixelList[i].PosY));
+                //Console.ReadKey();
             }
             return image;
         }

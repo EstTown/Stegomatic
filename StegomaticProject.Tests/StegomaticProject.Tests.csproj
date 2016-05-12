@@ -41,6 +41,7 @@
     <Compile Include="ControllerTests\VerifyUserInputTests.cs" />
     <Compile Include="ModelTests\ByteConverterTests.cs" />
     <Compile Include="ModelTests\GZipStreamCompressionTests.cs" />
+    <Compile Include="ModelTests\RijndaelCryptoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelTests\StegoSystemModelClassTests.cs" />
   </ItemGroup>

@@ -251,7 +251,7 @@ namespace StegomaticProject.StegoSystemUI
             _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
             _mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height, _mainMenu.CompressChecked));
 
-            _mainMenu.ForceUpdateProgressBar();
+            _mainMenu.ForceUpdateCapacityBar();
         }
 
         private void ForceUpdateImageCapacity(BtnEvent e)
@@ -260,7 +260,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 _mainMenu.ImageDescriptionCapacity = Convert.ToString(
                     ImageCapacityCalculator(Convert.ToInt32(_mainMenu.ImageDescriptionWidth), Convert.ToInt32(_mainMenu.ImageDescriptionHeight), _mainMenu.CompressChecked));
-                _mainMenu.ForceUpdateProgressBar();
+                _mainMenu.ForceUpdateCapacityBar();
             }
         }
 

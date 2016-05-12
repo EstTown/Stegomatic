@@ -21,8 +21,6 @@ namespace StegomaticProject.StegoSystemUI
             InitializeComponent();
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
-            //btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
-            //btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
         public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtnClick;
@@ -88,7 +86,6 @@ namespace StegomaticProject.StegoSystemUI
             {
                 OpenImageBtnClick(new BtnEvent());
             }
-
         }
 
         private void btn_encode_Click(object sender, EventArgs e)
@@ -107,7 +104,7 @@ namespace StegomaticProject.StegoSystemUI
         //    }
         //}
 
-        public void ForceUpdateProgressBar()
+        public void ForceUpdateCapacityBar()
         {
             txtbox_input_TextChanged(this, new EventArgs());
         }
@@ -116,18 +113,18 @@ namespace StegomaticProject.StegoSystemUI
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
-            // TEXT HERE!!
+            // Updates capacity bar whenever text in the textbox of the UI is changed.
 
             try
             {
                 // Update character-count when change is happening
                 if (label_capacity.Text == String.Empty)
                 {
-                    ProgressBarUpdateNoValidImage();
+                    CapacityBarUpdateNoValidImage();
                 }
                 else
                 {
-                    ProgressBarUpdateValidImage();
+                    CapacityBarUpdateValidImage();
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -139,8 +136,13 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        private void ProgressBarUpdateValidImage()
+        private void CapacityBarUpdateValidImage()
         {
+            // Updates the capacity bar character count and then tries to update the capacity bar visually. 
+            // If this fails then an exception is thrown and the bar's visual value is set to maximum, though only
+            // if it has not previously been done. This causes the input of too many characters to only throw one
+            // exception for each time it crosses the maximum threshhold. 
+
             double input = txtbox_input.Text.Length;
             double capacity = Convert.ToDouble(label_capacity.Text);
             progressBar1.Visible = true;
@@ -162,7 +164,7 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        private void ProgressBarUpdateNoValidImage()
+        private void CapacityBarUpdateNoValidImage()
         {
             progressBar1.Visible = false;
             label_char.Text = "Characters: " + txtbox_input.Text.Length;

@@ -36,10 +36,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerTests\VerifyUserInputTests.cs" />
     <Compile Include="ModelTests\ByteConverterTests.cs" />
+    <Compile Include="ModelTests\GraphTheoryBasedTests.cs" />
     <Compile Include="ModelTests\GZipStreamCompressionTests.cs" />
     <Compile Include="ModelTests\RijndaelCryptoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

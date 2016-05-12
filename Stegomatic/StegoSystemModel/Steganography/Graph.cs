@@ -11,19 +11,18 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Graph
     {
-        //Constructor for the class
         public Graph(List<Pixel> pixelList, int pixelsNeeded)
         {
             this.PixelList = pixelList;
             this.PixelsNeeded = pixelsNeeded;
         }
+
         public List<Pixel> PixelList;
         public List<EncodeVertex> EncodeVertexList = new List<EncodeVertex>();
         public List<DecodeVertex> DecodeVertexList = new List<DecodeVertex>();
         public List<Edge> EdgeList = new List<Edge>();
         public List<Edge> MatchedEdges = new List<Edge>();
         public int PixelsNeeded { get; }
-
 
         public List<DecodeVertex> ConstructGraph(int pixelsNeeded)
         {
@@ -33,40 +32,23 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         public void ConstructGraph(int pixelsNeeded, List<byte> secretMessage)
         {
-            //Console.WriteLine("Starting with constructing vertices");
-            //Console.ReadKey();
+
             ConstructVertices(pixelsNeeded, secretMessage);
-            //Console.WriteLine("Constructed a bunch of vertices      -       " + EncodeVertexList.Count);
-            //Console.ReadKey();
-
-            //CheckIfMatched();
-            //ConstructEdges();
-            //CheckIfMatched();
-
-            //Console.WriteLine("Before calcGraph");
-            //Console.WriteLine("VertexList:    " + EncodeVertexList.Count);
-            //Console.WriteLine("Edgelist:    " + EdgeList.Count);
-            //Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
-            //Console.ReadKey();
-
-            //CalcGraphMatching();
-
-            //Console.WriteLine("SUCCESS!!!!");
-            //Console.WriteLine("VertexList:    " + EncodeVertexList.Count);
-            //Console.WriteLine("Edgelist:    " + EdgeList.Count);
-            //Console.WriteLine("MatchedEdgelist:    " + MatchedEdges.Count);
 
             CheckIfMatched();
+            ConstructEdges();
+            CheckIfMatched();
 
+            CalcGraphMatching();
+
+            CheckIfMatched();
         }
 
         public List<Pixel> ModifyGraph()
         {
-            //Console.WriteLine("Before swapping pixels");
-            //Console.ReadKey();
-            //PixelSwap();
-            //Console.WriteLine("Before modifying");
-            //Console.ReadKey();
+            PixelSwap(); 
+
+            CheckIfMatched();
             PixelModify();
 
             return PixelList;
@@ -77,13 +59,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
             for (int i = 0; i < pixelsNeeded; i += GraphTheoryBased.SamplesVertexRatio)
             {
-                
                 DecodeVertex vertex = new DecodeVertex(PixelList[i], PixelList[i + 1], PixelList[i + 2]); //this is hardcoded and can maybe rewritten by using a delegate.
                 decodeVertexList.Add(vertex);
             }
             return decodeVertexList;
         }
-        private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage) //don't touch this
+
+        private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage)
 
         {
             int counter = 0;
@@ -94,6 +76,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 counter++;
             }
         }
+
         private void ConstructEdges()
         {
             byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
@@ -206,11 +189,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
-                    //foreach (var item in InternalEdgeList)
-                    //{
-                    //    Console.WriteLine(item.ToString());
-                    //}
-                    //Console.ReadKey();
                     if (SortedInternalList.FirstOrDefault() == null)
                     {
                         
@@ -220,15 +198,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         Edge M = SortedInternalList.First();
                         tempMatched.Add(M);
                     }
-                    /*HVIS ALT ER MATCHET BLIVER DER IKKE OPRETTET
-                    KANTER, OG DERFOR KASTER DENNE EN NULLEXCEPTION!!!*/
-
-
-                    //Edge FoundInGlobalList = EdgeList.FirstOrDefault(i => i == M);
 
                 }
             }
-
 
             MatchedEdges = DeleteDuplicatesInList(tempMatched);
 
@@ -239,22 +211,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return list.Distinct().ToList();
         }
 
-
         private void PixelSwap()
         {
-            //for (int i = 0; i < MatchedEdges.Count; i++)
-            //{
-            //    TradePixelValues(MatchedEdges[i].VertexPixelOne, MatchedEdges[i].VertexPixelTwo);
-
-            //    //set vertices, that are now correct, to false
-            //    MatchedEdges[i].VertexOne.Active = false;
-            //    MatchedEdges[i].VertexTwo.Active = false;
-            //}
-            //foreach (Edge edge in MatchedEdges)
-            //{
-            //    Console.WriteLine(edge.ToString());
-            //}
-
             foreach (Edge edge in MatchedEdges)
             {
                 TradePixelValues(edge.VertexPixelOne, edge.VertexPixelTwo);
@@ -262,9 +220,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 edge.VertexOne.Active = false;
                 edge.VertexTwo.Active = false;
             }
-
         }
-        //Method for helping pixels trade values
+
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
             int tempPosX = pixelOne.PosX;
@@ -279,55 +236,45 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private void PixelModify()
         {
-            for (int i = 0; i < EncodeVertexList.Count; i++)
+            foreach (var item in EncodeVertexList)
             {
-                if (EncodeVertexList[i].Active == true)
+                Console.WriteLine("in pixModify");
+                Console.WriteLine(item.Active + "   " + item.VertexValue);
+            }
+
+            foreach (var item in EncodeVertexList)
+            {
+                if (item.Active == true)
                 {
-                    HelpMethodPixelModify(EncodeVertexList[i]);
+                    HelpMethodPixelModify(item);
                 }
             }
         }
-        private void HelpMethodPixelModify(EncodeVertex vertex) //always uses first sample in vertex
+
+        private void HelpMethodPixelModify(EncodeVertex vertex)
         {
-            //print this vertex
-            //Console.WriteLine(vertex.PixelsForThisVertex[0].EmbeddedValue + "   " + vertex.TargetValues[0] + "      ");
-            int localDifference = 0;
-
-            if (vertex.PixelsForThisVertex[0].Color.R <= 127)
+            for (int i = 0; i < 3; i++)
             {
-                while (mod((vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[0])
-                {
-                    localDifference++;
-                }
-            }
+                int localDifference = 0;
 
-            if (vertex.PixelsForThisVertex[0].Color.R > 127)
-            {
-                while (mod((vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[0])
+                if (vertex.PixelsForThisVertex[i].Color.R <= 127)
                 {
-                    localDifference--;
+                    while (mod((vertex.PixelsForThisVertex[i].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[i])
+                    {
+                        localDifference++;
+                    }
                 }
 
+                else if (vertex.PixelsForThisVertex[i].Color.R > 127)
+                {
+                    while (mod((vertex.PixelsForThisVertex[i].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[i])
+                    {
+                        localDifference--;
+                    }
+
+                }
+                vertex.PixelsForThisVertex[i].ColorDifference = localDifference;
             }
-
-            //while ((vertex.PixelsForThisVertex[0].EmbeddedValue + localDifference) % GraphTheoryBased.Modulo != vertex.TargetValues[0])
-            //{
-            //    if (vertex.PixelsForThisVertex[0].Color.R <= 127) //always red channel
-            //    {
-            //        localDifference++;
-            //    }
-            //    else
-            //    {
-            //        localDifference--;
-            //    }
-
-            //    //Console.WriteLine(localDifference + "\n");
-            //    ////Console.ReadKey();
-
-            //}
-            vertex.PixelsForThisVertex[0].ColorDifference = localDifference;
-            //Console.WriteLine(localDifference + "\n");
-            //Console.ReadKey();
         }
 
         private int mod(int x, int m)

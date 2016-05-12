@@ -23,20 +23,20 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public short NumberOfEdges { get; set; }
 
         public bool Active;
-        public byte[] TargetValues;
+        public int[] TargetValues;
         public byte PartOfSecretMessage;
 
         public void CalculateTargetValues()
         {
-            TargetValues = new byte[GraphTheoryBased.SamplesVertexRatio];
+            TargetValues = new int[GraphTheoryBased.SamplesVertexRatio];
 
             //calculate difference. It could be zero, and if it is, the vertex is already matched, and therefore the targetvalues are of no use. Put in if statement probably. if (d == 0) {dont calculate anything, waste of time}
-            byte d = (byte) Math.Abs(this.VertexValue - this.PartOfSecretMessage);
+            int d =  Math.Abs(this.VertexValue - this.PartOfSecretMessage);
 
             //calculate targetvalues
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
-                TargetValues[i] = (byte)((PixelsForThisVertex[i].EmbeddedValue + d) % GraphTheoryBased.Modulo);
+                TargetValues[i] = ((PixelsForThisVertex[i].EmbeddedValue + d) % GraphTheoryBased.Modulo);
             }
         }
         public void AssignWeightToVertex(byte weight)

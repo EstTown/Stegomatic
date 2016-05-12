@@ -14,7 +14,7 @@ namespace StegomaticProject.Tests.ModelTests
         private ICryptoMethod _cryptoTest;
 
         [OneTimeSetUp]
-        public void CryptoSetUp()
+        public void Initialize()
         {
             _cryptoTest = new RijndaelCrypto();
         }
@@ -37,12 +37,25 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
         [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
         [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
-        public void DecryptEncrypt_String_ResultIsEqual(string text)
+        public void Encrypt_String_ResultNotEqual(string text)
         {
             string password = "pa$$word";
-            string decryptedText = _cryptoTest.Decrypt(text, password);
-            string cipherText = _cryptoTest.Encrypt(decryptedText, password);
-            Assert.AreEqual(text, cipherText);
+            string cipherText = _cryptoTest.Encrypt(text, password);
+            Assert.AreNotEqual(text, cipherText);
+        }
+
+        [TestCase("1234567890")]
+        [TestCase("abcdefghijklmnopqrstuxyzæøå")]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
+        [TestCase("!#¤%&/()=?")]
+        [TestCase("1aA!")]
+        public void Encrypt_Password_PasswordChangesResult(string password1)
+        {
+            string text = "abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå";
+            string password2 = "pa$$word";
+            string cipherText1 = _cryptoTest.Encrypt(text, password1);
+            string cipherText2 = _cryptoTest.Encrypt(text, password2);
+            Assert.AreNotEqual(cipherText1, cipherText2);
         }
     }
 }

@@ -27,8 +27,6 @@ namespace StegomaticProject.StegoSystemController
             SubscribeToEvents();
     }
 
-        Bitmap GlobalBitmap = null;
-
         private void SubscribeToEvents()
         {
             _stegoUI.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
@@ -45,8 +43,6 @@ namespace StegomaticProject.StegoSystemController
         }
 
         private BackgroundWorker _worker = new BackgroundWorker();
-
-        
 
         public void ShowNotification(DisplayNotificationEvent e)
         {
@@ -153,9 +149,10 @@ namespace StegomaticProject.StegoSystemController
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
                 _worker.RunWorkerAsync(args);
-
                 //WHEN WORKER IS DONE, AN EVENT WILL FIRE, AND ThreadedEncodeComplete() WILL BE EXECUTED
                 //THIS WILL START A SAVE-DIALOG, ONLY WHEN THE ENCODING-PROCESS IS ACTUALLY COMPELTED
+
+
 
                 //try
                 //{

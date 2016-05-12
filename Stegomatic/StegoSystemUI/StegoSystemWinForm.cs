@@ -256,9 +256,12 @@ namespace StegomaticProject.StegoSystemUI
 
         private void ForceUpdateImageCapacity(BtnEvent e)
         {
-            _mainMenu.ImageDescriptionCapacity = Convert.ToString(
-                ImageCapacityCalculator(Convert.ToInt32(_mainMenu.ImageDescriptionWidth), Convert.ToInt32(_mainMenu.ImageDescriptionHeight), _mainMenu.CompressChecked));
-            _mainMenu.ForceUpdateProgressBar();
+            if (DisplayImage != null)
+            {
+                _mainMenu.ImageDescriptionCapacity = Convert.ToString(
+                    ImageCapacityCalculator(Convert.ToInt32(_mainMenu.ImageDescriptionWidth), Convert.ToInt32(_mainMenu.ImageDescriptionHeight), _mainMenu.CompressChecked));
+                _mainMenu.ForceUpdateProgressBar();
+            }
         }
 
         public void SaveImage(Bitmap file)

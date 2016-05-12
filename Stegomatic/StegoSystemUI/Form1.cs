@@ -109,44 +109,63 @@ namespace StegomaticProject.StegoSystemUI
 
         public void ForceUpdateProgressBar()
         {
-            try
-            {
-                txtbox_input_TextChanged(this, new EventArgs());
-            }
-            catch (NotifyUserException)
-            {
-                throw;
-            }
+            txtbox_input_TextChanged(this, new EventArgs());
         }
+
+        private bool _previouslyOverLimit = false;
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
+            // TEXT HERE!!
+
             try
             {
                 // Update character-count when change is happening
                 if (label_capacity.Text == String.Empty)
                 {
-                    label_char.Text = "Characters: " + txtbox_input.Text.Length;
+                    ProgressBarUpdateNoValidImage();
                 }
                 else
                 {
-                    progressBar1.Visible = true;
-
-                    label_char.Text = "Characters: " + txtbox_input.Text.Length + " / " + label_capacity.Text;
-
-                    double capacity = Convert.ToDouble(label_capacity.Text);
-                    double text = txtbox_input.Text.Length;
-
-                    progressBar1.Value = Convert.ToInt32((text / capacity) * 100);
+                    ProgressBarUpdateValidImage();
                 }
             }
             catch (ArgumentOutOfRangeException)
             {
                 if (NotifyUser != null)
                 {
-                    NotifyUser(new DisplayNotificationEvent(new NotifyUserException("Too many characters")));
+                    NotifyUser(new DisplayNotificationEvent(new NotifyUserException("Too many characters, the message might not fit inside the image.")));
                 }
             }
+        }
+
+        private void ProgressBarUpdateValidImage()
+        {
+            double input = txtbox_input.Text.Length;
+            double capacity = Convert.ToDouble(label_capacity.Text);
+            progressBar1.Visible = true;
+            label_char.Text = "Characters: " + input + " / " + capacity;
+
+            try
+            {
+                progressBar1.Value = Convert.ToInt32((input / capacity) * 100);
+                _previouslyOverLimit = false;        
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                if (!_previouslyOverLimit)
+                {
+                    progressBar1.Value = progressBar1.Maximum;
+                    _previouslyOverLimit = true;
+                    throw;
+                }
+            }
+        }
+
+        private void ProgressBarUpdateNoValidImage()
+        {
+            progressBar1.Visible = false;
+            label_char.Text = "Characters: " + txtbox_input.Text.Length;
         }
 
         private void btn_decode_Click(object sender, EventArgs e)

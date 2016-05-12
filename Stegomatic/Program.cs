@@ -15,7 +15,7 @@ using System.Drawing.Imaging;
 
 namespace StegomaticProject
 {
-    class Program
+    public class Program
     {
         private static byte[] ConvertTextToASCIIValue(string message)
         {

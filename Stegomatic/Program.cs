@@ -14,7 +14,7 @@ using StegomaticProject.StegoSystemModel.Steganography;
 
 namespace StegomaticProject
 {
-    class Program
+    public class Program
     {
         private static byte[] ConvertTextToASCIIValue(string message)
         {

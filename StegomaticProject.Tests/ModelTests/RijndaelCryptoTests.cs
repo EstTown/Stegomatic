@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using StegomaticProject.StegoSystemModel.Cryptograhy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace StegomaticProject.Tests.ModelTests
         [OneTimeSetUp]
         public void CryptoSetUp()
         {
-
+            _cryptoTest = new RijndaelCrypto();
         }
 
         [TestCase("1234567890123456789012345678901234567890")]
@@ -25,7 +26,10 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
         public void EncryptDecrypt_String_ResultIsEqual(string text)
         {
-            string cipherText = 
+            string password = "pa$$word";
+            string cipherText = _cryptoTest.Encrypt(text, password);
+            string decryptedText = _cryptoTest.Decrypt(cipherText, password);
+            Assert.AreEqual(text, decryptedText);
         }
 
         [TestCase("1234567890123456789012345678901234567890")]
@@ -35,7 +39,10 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
         public void DecryptEncrypt_String_ResultIsEqual(string text)
         {
-
+            string password = "pa$$word";
+            string decryptedText = _cryptoTest.Decrypt(text, password);
+            string cipherText = _cryptoTest.Encrypt(decryptedText, password);
+            Assert.AreEqual(text, cipherText);
         }
     }
 }

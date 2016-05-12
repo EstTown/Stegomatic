@@ -16,7 +16,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             
             //assign "NumberOfSamples" amount of samples (pixels) to this vertex
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
-            for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
+            for (int i = 0; i < pixels.Count(); i++)
             {
                 PixelsForThisVertex[i] = pixels[i];
             }
@@ -25,16 +25,18 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private static short _id = 0;
         public short Id { get; set; }
         public Pixel[] PixelsForThisVertex;
-        public byte VertexValue; //value that has to correspond to a certain part of the secret message
+        public int VertexValue; //value that has to correspond to a certain part of the secret message
 
         public void CalculateVertexValue()
         {
-            byte temp = 0;
+            int temp = 0;
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 temp += PixelsForThisVertex[i].EmbeddedValue;
+                //Console.WriteLine(PixelsForThisVertex[i].EmbeddedValue + "              " + temp );
+                //Console.ReadKey();
             }
-            this.VertexValue = (byte)(temp % GraphTheoryBased.Modulo);
+            this.VertexValue = (temp % GraphTheoryBased.Modulo);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public void ModifyGraph(List<Edge> matchedEdges, List<EncodeVertex> encodeVertexList)
         {
             //these methods change pixels, which they do through edges and vertices, which have references to pixels.
-            PixelSwap(matchedEdges);
+            //PixelSwap(matchedEdges);
             PixelModify(encodeVertexList);
             
         }

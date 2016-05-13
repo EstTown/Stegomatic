@@ -35,11 +35,19 @@ namespace StegomaticProject.StegoSystemController
             //_stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
-            // Backgroundworker to have WinForm run on a different thread as the model
+            SubscribeBackgroundWorkerEvents();
+            
+        }
+
+        private void SubscribeBackgroundWorkerEvents()
+        {
+            // Backgroundworker to have WinForm run on a different thread as the model.
             _worker.WorkerReportsProgress = true;
             _worker.WorkerSupportsCancellation = true;
             _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
             _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+
+            // BACKGROUNDWORKER 2??? TO DECODE?
         }
 
         private BackgroundWorker _worker = new BackgroundWorker();
@@ -112,14 +120,13 @@ namespace StegomaticProject.StegoSystemController
             try
             {
                 _stegoUI.SaveImage(stegoObject);
+                _stegoUI.SetDisplayImage(stegoObject);
+                ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
             }
             catch (NotifyUserException exception)
             {
                 ShowNotification(new DisplayNotificationEvent(exception));
             }
-
-            _stegoUI.SetDisplayImage(stegoObject);
-            ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
         }
 
         public void EncodeImage(BtnEvent e)
@@ -149,9 +156,8 @@ namespace StegomaticProject.StegoSystemController
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
                 _worker.RunWorkerAsync(args);
-                //WHEN WORKER IS DONE, AN EVENT WILL FIRE, AND ThreadedEncodeComplete() WILL BE EXECUTED
-                //THIS WILL START A SAVE-DIALOG, ONLY WHEN THE ENCODING-PROCESS IS ACTUALLY COMPELTED
-
+                // When worker is done and event will fire and ThreadedEncodeComplete() will be executed, which
+                // will start a save-dialog when the encoding-process is completed.
 
 
                 //try
@@ -169,7 +175,7 @@ namespace StegomaticProject.StegoSystemController
             }
             catch (NotifyUserException exception)
             {
-                ShowNotification(new DisplayNotificationEvent(exception /* ADD STACK TRACE?? */));
+                ShowNotification(new DisplayNotificationEvent(exception));
             }
             catch (AbortActionException)
             {

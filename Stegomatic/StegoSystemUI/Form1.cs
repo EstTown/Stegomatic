@@ -21,6 +21,8 @@ namespace StegomaticProject.StegoSystemUI
             InitializeComponent();
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
+            checkBox_compression.Checked = true;
+            checkBox_encryption.Checked = false;
         }
         public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtnClick;

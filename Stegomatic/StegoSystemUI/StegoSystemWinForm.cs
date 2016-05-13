@@ -198,6 +198,12 @@ namespace StegomaticProject.StegoSystemUI
             return bitmapImage;
         }
 
+        public void ProgressBar()
+        {
+            ProgressPopup progress = new ProgressPopup();
+            progress.Show(new ProgressPopup());
+        }
+
         public void OpenImage()
         {
             Stream stream = null;

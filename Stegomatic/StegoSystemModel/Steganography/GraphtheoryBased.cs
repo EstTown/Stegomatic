@@ -22,7 +22,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
             //could always decode 10 characters, which would be 40 vertices, which would be 120 pixels
-            int amountOfPixels = 288;
+            int amountOfPixels = 240;
             List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
             Graph graph = new Graph();
@@ -39,7 +39,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //message = AddMetaData(message);
             int amountOfPixels = CalculateRequiredPixels(message);
             List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
-
+            
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
             
@@ -48,32 +48,32 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             List<EncodeVertex> encodeVertexList;
             List<Edge> listOfEdges = graph.ConstructGraph(pixelList, amountOfPixels, newMessage, out encodeVertexList);
 
-            Console.WriteLine("In graphtheorybased");
-            int counter2 = 1;
-            foreach (EncodeVertex encodeVertex in encodeVertexList)
-            {
-                Console.Write(encodeVertex.PixelsForThisVertex[0].ColorDifference+" ");
-                if (counter2 % 4 == 0)
-                {
-                    Console.Write(" ");
-                }
-                counter2++;
-            }
-            Console.WriteLine();
+            //Console.WriteLine("In graphtheorybased");
+            //int counter2 = 1;
+            //foreach (EncodeVertex encodeVertex in encodeVertexList)
+            //{
+            //    Console.Write(encodeVertex.PixelsForThisVertex[0].ColorDifference+" ");
+            //    if (counter2 % 4 == 0)
+            //    {
+            //        Console.Write(" ");
+            //    }
+            //    counter2++;
+            //}
+            //Console.WriteLine();
 
-            //we print encodevertexList vertexvalue
-            counter2 = 1;
-            foreach (EncodeVertex encodeVertex in encodeVertexList)
-            {
-                Console.Write(encodeVertex.VertexValue + " ");
-                if (counter2%4 == 0)
-                {
-                    Console.Write(" ");
-                }
-                counter2++;
-            }
-            Console.ReadKey();
-            Console.WriteLine();
+            ////we print encodevertexList vertexvalue
+            //counter2 = 1;
+            //foreach (EncodeVertex encodeVertex in encodeVertexList)
+            //{
+            //    Console.Write(encodeVertex.VertexValue + " ");
+            //    if (counter2%4 == 0)
+            //    {
+            //        Console.Write(" ");
+            //    }
+            //    counter2++;
+            //}
+            //Console.ReadKey();
+            //Console.WriteLine();
 
 
 
@@ -86,33 +86,33 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             List<Pixel> embeddedPixelList = new List<Pixel>();
             embeddedPixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
-            Graph newGraph = new Graph();
-            List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
-            decodeVertexList = newGraph.ConstructGraph(embeddedPixelList, amountOfPixels);
-            counter2 = 1;
-            foreach (DecodeVertex decodeVertex in decodeVertexList)
-            {
-                Console.Write(decodeVertex.VertexValue+ " ");
-                if (counter2 % 4 == 0)
-                {
-                    Console.Write(" ");
-                }
-                counter2++;
-            }
+            //Graph newGraph = new Graph();
+            //List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
+            //decodeVertexList = newGraph.ConstructGraph(embeddedPixelList, amountOfPixels);
+            //counter2 = 1;
+            //foreach (DecodeVertex decodeVertex in decodeVertexList)
+            //{
+            //    Console.Write(decodeVertex.VertexValue+ " ");
+            //    if (counter2 % 4 == 0)
+            //    {
+            //        Console.Write(" ");
+            //    }
+            //    counter2++;
+            //}
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            counter2 = 1;
-            foreach (EncodeVertex encodeVertex in encodeVertexList)
-            {
-                Console.Write(encodeVertex.PixelsForThisVertex[0].ColorDifference+" ");
-                if (counter2 % 4 == 0)
-                {
-                    Console.Write(" ");
-                }
-                counter2++;
-            }
-            Console.ReadKey();
+            //counter2 = 1;
+            //foreach (EncodeVertex encodeVertex in encodeVertexList)
+            //{
+            //    Console.Write(encodeVertex.PixelsForThisVertex[0].ColorDifference+" ");
+            //    if (counter2 % 4 == 0)
+            //    {
+            //        Console.Write(" ");
+            //    }
+            //    counter2++;
+            //}
+            //Console.ReadKey();
             
             return coverImage;
         }
@@ -301,12 +301,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 localCounter++;
             }
 
-            //print can be removed
-            for (int i = 0; i < 20; i++)
-            {
-                if (combinedArray[i] != 0)
-                    Console.WriteLine(combinedArray[i]);
-            }
+            ////print can be removed
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    if (combinedArray[i] != 0)
+            //        Console.WriteLine(combinedArray[i]);
+            //}
             return combinedArray;
         }
 

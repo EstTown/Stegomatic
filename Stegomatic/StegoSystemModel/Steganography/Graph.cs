@@ -30,14 +30,14 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             List<EncodeVertex> encodeVertexList = ConstructVertices(pixelList, pixelsNeeded, secretMessage);
             CheckIfMatched(encodeVertexList);
-            /*
+            
             List<Edge> listOfEdges = ConstructEdges(encodeVertexList);
             CheckIfMatched(encodeVertexList);
             List<Edge> matchedEdges = CalcGraphMatching(encodeVertexList, listOfEdges);
             CheckIfMatched(encodeVertexList);
-            */
+            
             vertexList = encodeVertexList; //
-            return null;
+            return matchedEdges;
         }
 
         public void ModifyGraph(List<Edge> matchedEdges, List<EncodeVertex> encodeVertexList)
@@ -199,16 +199,36 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                 }
             }
-
+            Console.WriteLine("Verts:   " + encodeVertexList.Count);
+            Console.WriteLine("Before -     " + tempMatched.Count);
             List<Edge> matchedEdges = DeleteDuplicatesInList(tempMatched);
+            //List<Edge> matchedEdges = tempMatched;
+            Console.WriteLine("After -     " + matchedEdges.Count);
+
 
             return matchedEdges;
         }
 
         private List<Edge> DeleteDuplicatesInList(List<Edge> list)
         {
-            return list.Distinct().ToList();
+            return list.Where(x => CheckIfEdgeIsUnique(list, x) == true).ToList();
         }
+
+        private bool CheckIfEdgeIsUnique(List<Edge> list, Edge edge)
+        {
+            bool tmp = true;
+
+            //If it's not unique, it's set to 'false'
+            foreach (Edge item in list)
+            {
+                if (edge.VertexOne == item.VertexTwo)
+                {
+                    tmp = false;
+                }
+            }
+            return tmp;
+        }
+
 
         private void PixelSwap(List<Edge> matchedEdges)
         {
@@ -225,6 +245,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //    Console.WriteLine(edge.ToString());
             //}
 
+            Console.WriteLine(matchedEdges.Count);
+            Console.ReadKey();
             foreach (Edge edge in matchedEdges)
             {
                 TradePixelValues(edge.VertexPixelOne, edge.VertexPixelTwo);

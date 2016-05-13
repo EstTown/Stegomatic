@@ -44,12 +44,15 @@ namespace StegomaticProject.StegoSystemModel
                 {
                     cipherText = _cryptoMethod.Decrypt(cipherText, decryptionKey);
                 }
-                return cipherText;
+                string message = Encoding.UTF8.GetString(byteMessage);
+                return message;
             }
             catch (NotifyUserException)
             {
                 throw;
             }
+
+            
         }
 
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 

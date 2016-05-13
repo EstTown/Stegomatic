@@ -63,13 +63,13 @@ namespace StegomaticProject.StegoSystemController
             notification = "Message successfully encoded. \n";
             if (compress)
             {
-                notification += "Compressed";
+                notification += "Compressed \n";
             }
             if (encrypt)
             {
-                notification += $"EncryptionKey = {encryptionKey}\n";
+                notification += $"EncryptionKey = {encryptionKey} \n";
             }
-            notification += $"StegoSeed = {stegoSeed}";
+            notification += $"Password = {stegoSeed}";
 
             _stegoUI.ShowNotification(notification, "Success");
         }

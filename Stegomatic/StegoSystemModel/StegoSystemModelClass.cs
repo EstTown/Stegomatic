@@ -39,7 +39,7 @@ namespace StegomaticProject.StegoSystemModel
                 {
                     byteMessage = _compressMethod.Decompress(byteMessage);
                 }
-                string cipherText = ByteConverter.ByteArrayToString(byteMessage);
+                string cipherText = Encoding.UTF8.GetString(byteMessage);
                 if (decrypt)
                 {
                     cipherText = _cryptoMethod.Decrypt(cipherText, decryptionKey);
@@ -62,7 +62,7 @@ namespace StegomaticProject.StegoSystemModel
                 {
                     message = _cryptoMethod.Encrypt(message, encryptionKey);
                 }
-                byteMessage = ByteConverter.StringToByteArray(message);
+                byteMessage = Encoding.UTF8.GetBytes(message);
                 if (compress)
                 {
                     byteMessage = _compressMethod.Compress(byteMessage);

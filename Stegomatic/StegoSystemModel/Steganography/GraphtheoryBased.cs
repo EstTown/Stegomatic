@@ -26,7 +26,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
             //could always decode 10 characters, which would be 40 vertices, which would be 120 pixels
 
-            int amountOfPixels = 120;
+            int amountOfPixels = 16800;
             GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
             Graph graph = new Graph(PixelList, amountOfPixels);
@@ -355,7 +355,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public int CalculateImageCapacity(int height, int width)
         {
-            throw new NotImplementedException();
+            return (height*width)/12;
         }
     }
 }

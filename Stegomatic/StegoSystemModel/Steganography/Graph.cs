@@ -35,18 +35,18 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             ConstructVertices(pixelsNeeded, secretMessage);
 
-            CheckIfMatched();
-            ConstructEdges();
-            CheckIfMatched();
+            //CheckIfMatched();
+            //ConstructEdges();
+            //CheckIfMatched();
 
-            CalcGraphMatching();
+            //CalcGraphMatching();
 
             CheckIfMatched();
         }
 
         public List<Pixel> ModifyGraph()
         {
-            PixelSwap(); 
+            //PixelSwap(); 
 
             CheckIfMatched();
             PixelModify();

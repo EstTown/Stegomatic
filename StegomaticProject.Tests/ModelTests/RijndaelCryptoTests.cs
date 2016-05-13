@@ -12,11 +12,13 @@ namespace StegomaticProject.Tests.ModelTests
     public class RijndaelCryptoTests
     {
         private ICryptoMethod _cryptoTest;
+        string _standardPassword;
 
         [OneTimeSetUp]
         public void Initialize()
         {
             _cryptoTest = new RijndaelCrypto();
+            _standardPassword = "pa$$word";
         }
 
         [TestCase("1234567890123456789012345678901234567890")]
@@ -26,9 +28,8 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
         public void EncryptDecrypt_String_ResultIsEqual(string text)
         {
-            string password = "pa$$word";
-            string cipherText = _cryptoTest.Encrypt(text, password);
-            string decryptedText = _cryptoTest.Decrypt(cipherText, password);
+            string cipherText = _cryptoTest.Encrypt(text, _standardPassword);
+            string decryptedText = _cryptoTest.Decrypt(cipherText, _standardPassword);
             Assert.AreEqual(text, decryptedText);
         }
 
@@ -39,8 +40,7 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
         public void Encrypt_String_ResultNotEqual(string text)
         {
-            string password = "pa$$word";
-            string cipherText = _cryptoTest.Encrypt(text, password);
+            string cipherText = _cryptoTest.Encrypt(text, _standardPassword);
             Assert.AreNotEqual(text, cipherText);
         }
 
@@ -52,9 +52,8 @@ namespace StegomaticProject.Tests.ModelTests
         public void Encrypt_Password_PasswordChangesResult(string password1)
         {
             string text = "abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå";
-            string password2 = "pa$$word";
             string cipherText1 = _cryptoTest.Encrypt(text, password1);
-            string cipherText2 = _cryptoTest.Encrypt(text, password2);
+            string cipherText2 = _cryptoTest.Encrypt(text, _standardPassword);
             Assert.AreNotEqual(cipherText1, cipherText2);
         }
     }

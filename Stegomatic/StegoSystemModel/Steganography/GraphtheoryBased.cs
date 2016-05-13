@@ -116,7 +116,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return convertedPassphrase;
         }
-        private void GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
+        private List<Pixel> GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             List<Pixel> pixelList = new List<Pixel>();
             int key = ShortenAndParsePassphraseToInt32(passphrase);
@@ -336,7 +336,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return byteList;
         }
-
         private byte ConvertToByte(BitArray bits)
         {
             if (bits.Count != 8)
@@ -347,58 +346,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             bits.CopyTo(bytes, 0);
             return bytes[0];
         }
-
-        public List<byte> ValuesToByteArray(List<DecodeVertex> input)
-        {
-            input.Reverse();
-            List<byte> byteList = new List<byte>();
-
-            BitArray bitArray = new BitArray(8);
-            int i = 0;
-
-            foreach (var item in input)
-            {
-                if (item.VertexValue == 0)
-                {
-                    bitArray[i] = false;
-                    bitArray[i + 1] = false;
-                }
-                else if (item.VertexValue == 1)
-                {
-                    bitArray[i] = true;
-                    bitArray[i + 1] = false;
-                }
-                else if (item.VertexValue == 2)
-                {
-                    bitArray[i] = false;
-                    bitArray[i + 1] = true;
-                }
-                else if (item.VertexValue == 3)
-                {
-                    bitArray[i] = true;
-                    bitArray[i + 1] = true;
-                }
-                i += 2;
-
-                if (i == 8)
-                {
-                    byteList.Add(ConvertToByte(bitArray));
-                    i = 0;
-                }
-            }
-            byteList.Reverse();
-            return byteList;
-        }
-        private byte ConvertToByte(BitArray bits)
-        {
-            if (bits.Count != 8)
-            {
-                throw new ArgumentException("bits");
-            }
-            byte[] bytes = new byte[1];
-            bits.CopyTo(bytes, 0);
-            return bytes[0];
-        }
+        
         private int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length * PixelsPerByte;

@@ -57,7 +57,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return decodeVertexList;
         }
-        private void ConstructVertices(int pixelsNeeded, List<byte> secretMessage) //don't touch this
+        private List<EncodeVertex> ConstructVertices(List<Pixel> pixelList, int pixelsNeeded, List<byte> secretMessage)
 
         {
             List<EncodeVertex> encodeVertexList = new List<EncodeVertex>();
@@ -70,7 +70,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return encodeVertexList;
         }
-        private void ConstructEdges()
+        private List<Edge> ConstructEdges(List<EncodeVertex> encodeVertexList)
         {
             List<Edge> listOfEdges = new List<Edge>();
             byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
@@ -227,6 +227,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 edge.VertexOne.Active = false;
                 edge.VertexTwo.Active = false;
             }
+        }
 
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
@@ -243,13 +244,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private void PixelModify(List<EncodeVertex> encodeVertexList)
         {
-            foreach (var item in EncodeVertexList)
+            foreach (var item in encodeVertexList)
             {
                 Console.WriteLine("in pixModify");
                 Console.WriteLine(item.Active + "   " + item.VertexValue);
             }
 
-            foreach (var item in EncodeVertexList)
+            foreach (var item in encodeVertexList)
             {
                 if (item.Active == true)
                 {

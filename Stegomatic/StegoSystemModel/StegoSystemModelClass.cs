@@ -39,20 +39,21 @@ namespace StegomaticProject.StegoSystemModel
                 {
                     byteMessage = _compressMethod.Decompress(byteMessage);
                 }
-                string cipherText = Encoding.UTF8.GetString(byteMessage);
+                string message = ByteConverter.ByteArrayToString(byteMessage);
                 if (decrypt)
                 {
-                    cipherText = _cryptoMethod.Decrypt(cipherText, decryptionKey);
+                    message = _cryptoMethod.Decrypt(message, decryptionKey);
                 }
-                string message = Encoding.UTF8.GetString(byteMessage);
                 return message;
             }
             catch (NotifyUserException)
             {
                 throw;
             }
-
-            
+            catch (AbortActionException)
+            {
+                throw;
+            }
         }
 
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
@@ -60,12 +61,11 @@ namespace StegomaticProject.StegoSystemModel
         {
             try
             {
-                byte[] byteMessage;
                 if (encrypt)
                 {
                     message = _cryptoMethod.Encrypt(message, encryptionKey);
                 }
-                byteMessage = Encoding.UTF8.GetBytes(message);
+                byte[] byteMessage = ByteConverter.StringToByteArray(message);
                 if (compress)
                 {
                     byteMessage = _compressMethod.Compress(byteMessage);
@@ -77,7 +77,10 @@ namespace StegomaticProject.StegoSystemModel
             {
                 throw;
             }
-            
+            catch (AbortActionException)
+            {
+                throw;
+            }
         }
 
         public int CalcCapacityWithCompressionAndStego(int height, int width, bool compress)

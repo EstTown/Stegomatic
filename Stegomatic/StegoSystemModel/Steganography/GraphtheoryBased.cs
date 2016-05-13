@@ -38,12 +38,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int amountOfPixels = CalculateRequiredPixels(message);
             List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
-            foreach (Pixel pixel in pixelList)
-            {
-                Console.WriteLine(pixel.ToString());
-            }
-            Console.ReadKey();
-
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
             
@@ -106,6 +100,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return seed;
         }
+
         private string ConvertTextToASCIIValue(string passphrase)
         {
 
@@ -121,7 +116,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return convertedPassphrase;
         }
-        private List<Pixel> GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
+        private void GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             List<Pixel> pixelList = new List<Pixel>();
             int key = ShortenAndParsePassphraseToInt32(passphrase);
@@ -210,11 +205,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
                 i++;
             }
-
-            //Print log when done
-            Console.WriteLine("Pixels imported successfully!");
-            Console.WriteLine("Pixels: " + i + " were successfully extracted.");
-
         }
         */
         
@@ -226,18 +216,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             byte[] embeddedDataArrayInfo = new byte[] { }; //every char to byte array decimal value
 
-            embeddedDataArrayInfo = Encoding.ASCII.GetBytes(stringSize);
+            embeddedDataArrayInfo = Encoding.UTF8.GetBytes(stringSize);
 
             //define always present character, which seperates metadata from message
             //could be a problem here, but decode part can fix that
             string seperater = "?";
 
             byte[] seperaterByteArray = new byte[] { };
-            seperaterByteArray = Encoding.ASCII.GetBytes(seperater);
+            seperaterByteArray = Encoding.UTF8.GetBytes(seperater);
 
             
             return CombineArrays(embeddedDataArrayInfo, seperaterByteArray, secretMessage);
         }
+
         private byte[] CombineArrays(byte[] array1, byte[] array2, byte[] array3)
         {
             byte[] combinedArray = new byte[array1.Length+array2.Length+array3.Length];
@@ -298,8 +289,63 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     }
                 }
             }
-
             return Values;
+        }
+
+        public List<byte> ValuesToByteArray(List<DecodeVertex> input)
+        {
+            input.Reverse();
+            List<byte> byteList = new List<byte>();
+
+            BitArray bitArray = new BitArray(8);
+            int i = 0;
+
+            foreach (var item in input)
+            {
+                if (item.VertexValue == 0)
+                {
+                    bitArray[i] = false;
+                    bitArray[i + 1] = false;
+                }
+                else if (item.VertexValue == 1)
+                {
+                    bitArray[i] = true;
+                    bitArray[i + 1] = false;
+                }
+                else if (item.VertexValue == 2)
+                {
+                    bitArray[i] = false;
+                    bitArray[i + 1] = true;
+                }
+                else if (item.VertexValue == 3)
+                {
+                    bitArray[i] = true;
+                    bitArray[i + 1] = true;
+                }
+
+                i += 2;
+
+                if (i == 8)
+                {
+                    byteList.Add(ConvertToByte(bitArray));
+                    i = 0;
+                }
+            }
+
+            byteList.Reverse();
+
+            return byteList;
+        }
+
+        private byte ConvertToByte(BitArray bits)
+        {
+            if (bits.Count != 8)
+            {
+                throw new ArgumentException("bits");
+            }
+            byte[] bytes = new byte[1];
+            bits.CopyTo(bytes, 0);
+            return bytes[0];
         }
 
         public List<byte> ValuesToByteArray(List<DecodeVertex> input)

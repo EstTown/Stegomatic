@@ -18,18 +18,16 @@ namespace StegomaticProject.StegoSystemUI
 
         public Form1()
         {
-
             InitializeComponent();
             //Event, listening to changes in textbox - used for updating char-count
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
-            //btn_encode.Click += new EventHandler(StegoSystemModelClass.EncodeWasCalled);
-            //btn_decode.Click += new EventHandler(StegoSystemModelClass.DecodeWasCalled);
         }
         public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtnClick;
         public event BtnEventHandler EncodeBtnClick;
         //public event BtnEventHandler SaveImageBtnClick;
         public event BtnEventHandler OpenImageBtnClick;
+        public event BtnEventHandler CompressionCheckToggle;
 
         public string EnteredText
         {
@@ -88,7 +86,6 @@ namespace StegomaticProject.StegoSystemUI
             {
                 OpenImageBtnClick(new BtnEvent());
             }
-
         }
 
         private void btn_encode_Click(object sender, EventArgs e)
@@ -107,46 +104,70 @@ namespace StegomaticProject.StegoSystemUI
         //    }
         //}
 
-        public void ForceUpdateProgressBar()
+        public void ForceUpdateCapacityBar()
         {
-            try
-            {
-                txtbox_input_TextChanged(this, new EventArgs());
-            }
-            catch (NotifyUserException)
-            {
-                throw;
-            }
+            txtbox_input_TextChanged(this, new EventArgs());
         }
+
+        private bool _previouslyOverLimit = false;
 
         private void txtbox_input_TextChanged(object sender, EventArgs e)
         {
+            // Updates capacity bar whenever text in the textbox of the UI is changed.
+
             try
             {
                 // Update character-count when change is happening
                 if (label_capacity.Text == String.Empty)
                 {
-                    label_char.Text = "Characters: " + txtbox_input.Text.Length;
+                    CapacityBarUpdateNoValidImage();
                 }
                 else
                 {
-                    progressBar1.Visible = true;
-
-                    label_char.Text = "Characters: " + txtbox_input.Text.Length + " / " + label_capacity.Text;
-
-                    double capacity = Convert.ToDouble(label_capacity.Text);
-                    double text = txtbox_input.Text.Length;
-
-                    progressBar1.Value = Convert.ToInt32((text / capacity) * 100);
+                    CapacityBarUpdateValidImage();
                 }
             }
             catch (ArgumentOutOfRangeException)
             {
                 if (NotifyUser != null)
                 {
-                    NotifyUser(new DisplayNotificationEvent(new NotifyUserException("Too many characters")));
+                    NotifyUser(new DisplayNotificationEvent(new NotifyUserException("Too many characters, the message might not fit inside the image.")));
                 }
             }
+        }
+
+        private void CapacityBarUpdateValidImage()
+        {
+            // Updates the capacity bar character count and then tries to update the capacity bar visually. 
+            // If this fails then an exception is thrown and the bar's visual value is set to maximum, though only
+            // if it has not previously been done. This causes the input of too many characters to only throw one
+            // exception for each time it crosses the maximum threshhold. 
+
+            double input = txtbox_input.Text.Length;
+            double capacity = Convert.ToDouble(label_capacity.Text);
+            progressBar1.Visible = true;
+            label_char.Text = "Characters: " + input + " / " + capacity;
+
+            try
+            {
+                progressBar1.Value = Convert.ToInt32((input / capacity) * 100);
+                _previouslyOverLimit = false;        
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                if (!_previouslyOverLimit)
+                {
+                    progressBar1.Value = progressBar1.Maximum;
+                    _previouslyOverLimit = true;
+                    throw;
+                }
+            }
+        }
+
+        private void CapacityBarUpdateNoValidImage()
+        {
+            progressBar1.Visible = false;
+            label_char.Text = "Characters: " + txtbox_input.Text.Length;
         }
 
         private void btn_decode_Click(object sender, EventArgs e)
@@ -172,5 +193,12 @@ namespace StegomaticProject.StegoSystemUI
             
         }
 
+        private void checkBox_compression_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CompressionCheckToggle != null)
+            {
+                CompressionCheckToggle(new BtnEvent());
+            }
+        }
     }
 }

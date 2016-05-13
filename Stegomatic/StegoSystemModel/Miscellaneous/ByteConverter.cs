@@ -11,12 +11,14 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
     {
         static public byte[] StringToByteArray(string text)
         {
-            return Encoding.Unicode.GetBytes(text);
+            return Encoding.UTF8.GetBytes(text);
+            //return Encoding.Unicode.GetBytes(text);
         }
 
         static public string ByteArrayToString(byte[] byteArray)
         {
-            return Encoding.Unicode.GetString(byteArray);
+            return Encoding.UTF8.GetString(byteArray);
+            //return Encoding.Unicode.GetString(byteArray);
         }
     }
 }

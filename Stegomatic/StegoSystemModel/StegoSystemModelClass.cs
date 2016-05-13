@@ -18,37 +18,37 @@ namespace StegomaticProject.StegoSystemModel
         private ICryptoMethod _cryptoMethod;
         private IStegoAlgorithm _stegoMethod;
 
-        public Func<int, int, int> CalculateImageCapacity { get; set; }
+        public Func<int, int, bool, int> CalculateImageCapacity { get; set; }
 
         public StegoSystemModelClass()
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphTheoryBased(); // GraphTheoryBased();
+            _stegoMethod = new GraphTheoryBased(); //new LeastSignificantBit(); 
+
+            CalculateImageCapacity = CalcCapacityWithCompressionAndStego;
         }
 
         public string DecodeMessageFromImage(Bitmap coverImage, string decryptionKey, string stegoSeed, 
             bool decrypt = true, bool decompress = true)
         {
-            byte[] byteMessage;
-
             try
             {
-                byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
+                byte[] byteMessage = _stegoMethod.Decode(coverImage, stegoSeed);
+                if (decompress)
+                {
+                    byteMessage = _compressMethod.Decompress(byteMessage);
+                }
+                string cipherText = ByteConverter.ByteArrayToString(byteMessage);
+                if (decrypt)
+                {
+                    cipherText = _cryptoMethod.Decrypt(cipherText, decryptionKey);
+                }
+                return cipherText;
             }
             catch (NotifyUserException)
             {
                 throw;
-            }
-
-            if (decrypt)
-            {
-                //byteMessage = _cryptoMethod.Decrypt(byteMessage, encryptionKey);
-            }
-
-            if (decompress)
-            {
-                byteMessage = _compressMethod.Decompress(byteMessage);
             }
 
             string message = Encoding.UTF8.GetString(byteMessage);
@@ -58,26 +58,36 @@ namespace StegomaticProject.StegoSystemModel
         public Bitmap EncodeMessageInImage(Bitmap coverImage, string message, string encryptionKey, string stegoSeed, 
             bool encrypt = true, bool compress = true)
         {
-            byte[] byteMessage = Encoding.UTF8.GetBytes(message);
-
-            if (compress)
+            try
             {
-                byteMessage = _compressMethod.Compress(byteMessage);
+                byte[] byteMessage;
+                if (encrypt)
+                {
+                    message = _cryptoMethod.Encrypt(message, encryptionKey);
+                }
+                byteMessage = ByteConverter.StringToByteArray(message);
+                if (compress)
+                {
+                    byteMessage = _compressMethod.Compress(byteMessage);
+                }
+                Bitmap stegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
+                return stegoObject;
             }
-
-            if (encrypt)
+            catch (NotifyUserException)
             {
-                //byteMessage = _cryptoMethod.Encrypt(byteMessage, encryptionKey);
+                throw;
             }
-
-            Bitmap stegoObject = _stegoMethod.Encode(coverImage, stegoSeed, byteMessage);
-            return stegoObject;
+            
         }
 
-        public int CalcCapacityWithCompressionAndStego(int height, int width)
+        public int CalcCapacityWithCompressionAndStego(int height, int width, bool compress)
         {
-            int capacityOnlyUsingStego = _stegoMethod.CalculateImageCapacity(height, width);
-            return _compressMethod.ApproxSizeAfterCompression(capacityOnlyUsingStego);
+            int capacity = _stegoMethod.CalculateImageCapacity(height, width); 
+            if (compress)
+            {
+                capacity = _compressMethod.ApproxSizeAfterCompression(capacity);
+            }
+            return capacity;
         }
     }
 }

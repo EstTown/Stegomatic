@@ -81,7 +81,8 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
             }
 
             /*Returns ciphertext as string*/
-            return cipherText = Convert.ToBase64String(encrypted);
+            cipherText = Convert.ToBase64String(encrypted);
+            return cipherText;
         }
     }
 }

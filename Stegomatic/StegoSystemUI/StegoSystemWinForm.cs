@@ -17,7 +17,7 @@ namespace StegomaticProject.StegoSystemUI
     {
         private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
 
-        public Func<int, int, int> ImageCapacityCalculator { get; set; }
+        public Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
 
         public string Message
         {
@@ -67,6 +67,7 @@ namespace StegomaticProject.StegoSystemUI
             //_mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
             _mainMenu.OpenImageBtnClick += new BtnEventHandler(this.OpenImageBtnClick);
             // Either we don't need SaveImage here, or we need OpenImage here as well. They may be fine to be handled in the form itself. 
+            _mainMenu.CompressionCheckToggle += new BtnEventHandler(this.ForceUpdateImageCapacity);
         }
 
         //private void SaveImageBtnClick(BtnEvent e)
@@ -130,8 +131,6 @@ namespace StegomaticProject.StegoSystemUI
         public void Terminate()
         {
             _mainMenu.Dispose();
-            // Har vi overhovedet brug for dette eller er krydset i hjørnet nok? 
-            // Hvis ikke, så gør det til en NotSupportedException();
         }
 
         public string GetEncryptionKey()
@@ -140,7 +139,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Encryption key", "Key:");
             }
-            catch (Exception)
+            catch (AbortActionException)
             {
                 throw;
             }
@@ -152,7 +151,7 @@ namespace StegomaticProject.StegoSystemUI
             {
                 return GetUserStringPopup("Steganography seed", "Seed:");
             }
-            catch (Exception)
+            catch (AbortActionException)
             {
                 throw;
             }
@@ -225,28 +224,43 @@ namespace StegomaticProject.StegoSystemUI
                             // Display image
                             this.SetDisplayImage(ImageToBitmap(image));
 
-                            // Get image info
-                            string[] imageinfo = ImageData.GetImageInfo(image, filename);
-
-                            // Set labels to imageinfo
-                            _mainMenu.ImageDescriptionAbout = "About image: " + imageinfo[3];
-                            _mainMenu.ImageDescriptionWidth = imageinfo[0];
-                            _mainMenu.ImageDescriptionHeight = imageinfo[1];
-                            _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
-                            //_mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height));
-
-                            //_mainMenu.ForceUpdateProgressBar();
+                            DisplayImageInfo(image, filename);
                         }
                     }
                 }
-                //catch (NotifyUserException)
-                //{
-                //    throw;
-                //}
+                catch (NotifyUserException)
+                {
+                    throw;
+                }
                 catch (Exception e)
                 {
-                    throw new NotifyUserException("Error: Could not read file. Original error: " + e.Message, "Error");
+                    throw new NotifyUserException("Could not read file. Original error: " + e.Message, "Error");
                 }
+            }
+        }
+
+        private void DisplayImageInfo(Image image, string filename)
+        {
+            // Get image info
+            string[] imageinfo = ImageData.GetImageInfo(image, filename);
+
+            // Set labels to imageinfo
+            _mainMenu.ImageDescriptionAbout = "About image: " + imageinfo[3];
+            _mainMenu.ImageDescriptionWidth = imageinfo[0];
+            _mainMenu.ImageDescriptionHeight = imageinfo[1];
+            _mainMenu.ImageDescriptionFilesize = imageinfo[2] + " Bytes";
+            _mainMenu.ImageDescriptionCapacity = Convert.ToString(ImageCapacityCalculator(image.Width, image.Height, _mainMenu.CompressChecked));
+
+            _mainMenu.ForceUpdateCapacityBar();
+        }
+
+        private void ForceUpdateImageCapacity(BtnEvent e)
+        {
+            if (DisplayImage != null)
+            {
+                _mainMenu.ImageDescriptionCapacity = Convert.ToString(
+                    ImageCapacityCalculator(Convert.ToInt32(_mainMenu.ImageDescriptionWidth), Convert.ToInt32(_mainMenu.ImageDescriptionHeight), _mainMenu.CompressChecked));
+                _mainMenu.ForceUpdateCapacityBar();
             }
         }
 
@@ -284,7 +298,7 @@ namespace StegomaticProject.StegoSystemUI
             }
         }
 
-        private int StandardCapacityCalculator(int width, int height)
+        private int StandardCapacityCalculator(int width, int height, bool compress)
         {
             return Convert.ToInt32((height * width * 0.18) / 12);
         }

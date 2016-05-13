@@ -15,15 +15,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             try
             {
                 string binaryMessage = MessageToBinary(message);
-
-                Console.WriteLine(binaryMessage);
-
                 Bitmap stegoObject = HideMessage(coverImage, binaryMessage, ConvertSeed(seed));
                 return stegoObject;
-            }
-            catch (FormatException)
-            {
-                throw new AbortActionException();
             }
             catch (NotifyUserException)
             {
@@ -33,7 +26,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private int ConvertSeed(string seedInput)
         {
-            return Convert.ToInt32(seedInput);
+            List<int> seed = new List<int>();
+            foreach (char ch in seedInput)
+            {
+                seed.Add((int)ch);
+            }
+            return seed.Sum() % byte.MaxValue;
         }
 
         private Bitmap HideMessage(Bitmap carrier, string binaryMessage, int red)
@@ -63,7 +61,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     carrier.SetPixel(x, y, newColor);
                 }
             }
-
             return carrier;
         }
 
@@ -94,11 +91,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                 return BinaryToByteArray(binaryMessage);
             }
-            catch (FormatException)
-            {
-                // Catching conversion fails.
-                throw new AbortActionException(); // REMOVE THESE IF WE DON'T WANT TO STOP IF NUMBERS HAVE BEEN INPUT. 
-            }
             catch (NotifyUserException)
             {
                 throw;
@@ -109,8 +101,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             Color colorOfPixel;
             StringBuilder message = new StringBuilder();
-
-            //string message2 = string.Empty;
 
             for (int y = 0; y < carrier.Height; y++)
             {

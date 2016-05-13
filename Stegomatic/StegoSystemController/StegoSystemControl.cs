@@ -8,6 +8,7 @@ using StegomaticProject.CustomExceptions;
 using System.ComponentModel;
 using StegomaticProject.StegoSystemModel.Steganography;
 using System.Text;
+using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -40,6 +41,7 @@ namespace StegomaticProject.StegoSystemController
             _worker.WorkerSupportsCancellation = true;
             _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
             _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+            //_worker.WorkerReportsProgress += new ProgressChangedEventHandler(ThreadedReportProgress);
         }
 
         private BackgroundWorker _worker = new BackgroundWorker();
@@ -121,6 +123,15 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.SetDisplayImage(stegoObject);
             ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
         }
+
+        //private void ThreadedReportProgress(object sender, ProgressChangedEventArgs e)
+        //{
+        //    // Change the value of the ProgressBar to the BackgroundWorker progress.
+            
+        //    progressBar1.Value = e.ProgressPercentage;
+        //    // Set the text.
+        //    this.Text = e.ProgressPercentage.ToString();
+        //}
 
         public void EncodeImage(BtnEvent e)
         {

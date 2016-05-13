@@ -45,6 +45,8 @@ namespace StegomaticProject.StegoSystemModel
                     cipherText = _cryptoMethod.Decrypt(cipherText, decryptionKey);
                 }
                 string message = Encoding.UTF8.GetString(byteMessage);
+                Console.WriteLine(message.Length);
+
                 return message;
             }
             catch (NotifyUserException)

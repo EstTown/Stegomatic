@@ -11,12 +11,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class GraphTheoryBased : IStegoAlgorithm
     {
-        public GraphTheoryBased() //constructor
-        {
-
-        }
-
-        public List<Pixel> PixelList = new List<Pixel>();
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
@@ -25,56 +19,57 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
             //could always decode 10 characters, which would be 40 vertices, which would be 120 pixels
-            int amountOfPixels = 120;
-            GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
+            int amountOfPixels = 12;
+            List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
-            Graph graph = new Graph(PixelList, amountOfPixels);
-            graph.ConstructGraph(amountOfPixels);
-
+            Graph graph = new Graph();
+            List<DecodeVertex> decodeVertexList = graph.ConstructGraph(pixelList, amountOfPixels);
 
             //actual decoding
 
-
-
-            byte[] something = new byte[10];
-            return something;
+            List<byte> byteList = new List<byte>();
+             byteList = ValuesToByteArray(decodeVertexList);
+            return byteList.ToArray();
         }
-
-
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
-            //addmetadata to message
-            //Console.WriteLine("Before addmetadata");
-            //Console.ReadKey();
-            message = AddMetaData(message);
-
-            //Console.WriteLine("Before calcrequired");
-            //Console.ReadKey();
-            //call bunch of methods that prepare for graph construction
+            //message = AddMetaData(message);
+            
             int amountOfPixels = CalculateRequiredPixels(message);
-            //Console.WriteLine("Pixels calculated: {0}", amountOfPixels);
-            GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
-            //Console.WriteLine("pixels in list: {0}", PixelList.Count);
+            List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
+
+            foreach (Pixel pixel in pixelList)
+            {
+                Console.WriteLine(pixel.ToString());
+            }
+            Console.ReadKey();
 
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
-
+            
 
             //at some point we need to calculate a graph, therefore make new graph
-            Graph graph = new Graph(PixelList, amountOfPixels);
-            //Console.WriteLine("Before constuct graph");
-            //Console.ReadKey();
-            graph.ConstructGraph(amountOfPixels, newMessage);
-            //Console.WriteLine("Constructed a new graph");
-            //Console.ReadKey();
-            //Console.WriteLine("will now try to modify graph");
+            Graph graph = new Graph();
+            List<EncodeVertex> encodeVertexList;
+            List<Edge> listOfEdges = graph.ConstructGraph(pixelList, amountOfPixels, newMessage, out encodeVertexList);
 
-            graph.ModifyGraph();
-            //Console.WriteLine("Modified graph");
-            //Console.ReadKey();
+            graph.ModifyGraph(listOfEdges, encodeVertexList);
 
-            coverImage = EmbedPixelListIntoImage(coverImage, amountOfPixels);
+            foreach (Pixel pixel in pixelList)
+            {
+                Console.WriteLine(pixel.ToString() +"    " + pixel.ColorDifference);
+            }
+            Console.ReadKey();
 
+            coverImage = EmbedPixelListIntoImage(pixelList, coverImage, amountOfPixels);
+
+            pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
+            Console.WriteLine();
+            foreach (Pixel pixel in pixelList)
+            {
+                Console.WriteLine(pixel.ToString());
+            }
+            Console.ReadKey();
             return coverImage;
         }
 
@@ -126,8 +121,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return convertedPassphrase;
         }
-        private void GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
+        private List<Pixel> GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
+            List<Pixel> pixelList = new List<Pixel>();
             int key = ShortenAndParsePassphraseToInt32(passphrase);
             int numberOfPixels = image.Width * image.Height;
 
@@ -145,9 +141,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 tempPosY = pixelPositions[i] / image.Width;
                 //make new pixel 
                 Pixel pixel = new Pixel(image.GetPixel(tempPosX, tempPosY), tempPosX, tempPosY);
-                PixelList.Add(pixel);
+                pixelList.Add(pixel);
             }
+            return pixelList;
         }
+
+        /*
         private void GetRandomPixelsAddToList1(Bitmap image, string passphrase, int amount)
         {
             //Create array at the lenght of a 'amount of total pixels'
@@ -217,8 +216,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             Console.WriteLine("Pixels: " + i + " were successfully extracted.");
 
         }
-
-
+        */
+        
         private byte[] AddMetaData(byte[] secretMessage)
         {
             int sizeOfEmbeddedData = secretMessage.Length;
@@ -270,14 +269,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return combinedArray;
         }
 
-
         
         /*Method for getting the value of bitpairs into a list of ints from a byte-array*/
-        public List<Byte> ByteArrayToValues(byte[] byteArray)
+        public List<byte> ByteArrayToValues(byte[] byteArray)
         {
-            List<Byte> Values = new List<byte>();
+            List<byte> Values = new List<byte>();
 
-            foreach (Byte item in byteArray)
+            foreach (byte item in byteArray)
             {
                 BitArray bitValues = new BitArray(BitConverter.GetBytes(item).ToArray());
                 for (int index = 7; index > -1; index -= 2)
@@ -303,17 +301,69 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return Values;
         }
+
+        public List<byte> ValuesToByteArray(List<DecodeVertex> input)
+        {
+            input.Reverse();
+            List<byte> byteList = new List<byte>();
+
+            BitArray bitArray = new BitArray(8);
+            int i = 0;
+
+            foreach (var item in input)
+            {
+                if (item.VertexValue == 0)
+                {
+                    bitArray[i] = false;
+                    bitArray[i + 1] = false;
+                }
+                else if (item.VertexValue == 1)
+                {
+                    bitArray[i] = true;
+                    bitArray[i + 1] = false;
+                }
+                else if (item.VertexValue == 2)
+                {
+                    bitArray[i] = false;
+                    bitArray[i + 1] = true;
+                }
+                else if (item.VertexValue == 3)
+                {
+                    bitArray[i] = true;
+                    bitArray[i + 1] = true;
+                }
+                i += 2;
+
+                if (i == 8)
+                {
+                    byteList.Add(ConvertToByte(bitArray));
+                    i = 0;
+                }
+            }
+            byteList.Reverse();
+            return byteList;
+        }
+        private byte ConvertToByte(BitArray bits)
+        {
+            if (bits.Count != 8)
+            {
+                throw new ArgumentException("bits");
+            }
+            byte[] bytes = new byte[1];
+            bits.CopyTo(bytes, 0);
+            return bytes[0];
+        }
         private int CalculateRequiredPixels(byte[] byteArray)
         {
             int amount = byteArray.Length * PixelsPerByte;
             return amount;
         }
-        private Bitmap EmbedPixelListIntoImage(Bitmap image, int amountOfPixels)//already has acces to coverimage
+        private Bitmap EmbedPixelListIntoImage(List<Pixel> pixelList,Bitmap image, int amountOfPixels)//already has acces to coverimage
         {
             for (int i = 0; i < amountOfPixels; i++)
             {
-                image.SetPixel(PixelList[i].PosX, PixelList[i].PosY,
-                    (Color.FromArgb(PixelList[i].Color.A, PixelList[i].Color.R + PixelList[i].ColorDifference, PixelList[i].Color.G, PixelList[i].Color.B)));
+                image.SetPixel(pixelList[i].PosX, pixelList[i].PosY,
+                    (Color.FromArgb(pixelList[i].Color.A, pixelList[i].Color.R + pixelList[i].ColorDifference, pixelList[i].Color.G, pixelList[i].Color.B)));
             }
             return image;
         }

@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,45 @@ namespace StegomaticProject.Tests.ModelTests
             _standardMessage = "1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!";
             _standardByteMessage = ByteConverter.StringToByteArray(_standardMessage);
             _standardStegoObject = _stegoTest.Encode(_image, _standardSeed, _standardByteMessage);
+
+            byte[] byteArray = new byte[1] {83};
+
+
         }
+
+        [TestCase(83, 81)]
+
+        public List<byte> ByteArrayToValues(byte[] byteArray)
+        {
+            List<byte> Values = new List<byte>();
+
+            foreach (byte item in byteArray)
+            {
+                BitArray bitValues = new BitArray(BitConverter.GetBytes(item).ToArray());
+                for (int index = 7; index > -1; index -= 2)
+                {
+                    if (bitValues[index] == true && bitValues[index - 1] == true)
+                    {
+                        Values.Add(3);
+                    }
+                    else if (bitValues[index] == true && bitValues[index - 1] == false)
+                    {
+                        Values.Add(2);
+                    }
+                    else if (bitValues[index] == false && bitValues[index - 1] == true)
+                    {
+                        Values.Add(1);
+                    }
+                    else
+                    {
+                        Values.Add(0);
+                    }
+                }
+            }
+            return Values;
+        }
+
+
 
         [TestCase("1234567890123456789012345678901234567890")]
         [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]

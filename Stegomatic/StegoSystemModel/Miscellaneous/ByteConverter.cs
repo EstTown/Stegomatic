@@ -17,7 +17,7 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 
         static public string ByteArrayToString(byte[] byteArray)
         {
-            return Encoding.UTF8.GetString(byteArray);
+            return Encoding.UTF8.GetString(byteArray).TrimEnd('\0');
             //return Encoding.Unicode.GetString(byteArray);
         }
     }

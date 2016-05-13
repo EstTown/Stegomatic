@@ -31,7 +31,7 @@ namespace StegomaticProject.Tests.ModelTests
             Graphics g = Graphics.FromImage(_image);
             g.Clear(Color.Blue);
 
-            // _stegoTest = new GraphTheoryBased();
+            _stegoTest = new GraphTheoryBased();
             _standardSeed = "123";
             _standardMessage = "1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!";
             _standardByteMessage = ByteConverter.StringToByteArray(_standardMessage);
@@ -42,7 +42,23 @@ namespace StegomaticProject.Tests.ModelTests
 
         }
 
-        [TestCase(83, 81)]
+        private int ImagePixelDifference(Bitmap original, Bitmap modified)
+        {
+            int pixelDifferences = 0;
+            for (int y = 0; y < original.Height; y++)
+            {
+                for (int x = 0; x < original.Width; x++)
+                {
+                    if (!original.GetPixel(x, y).Equals(modified.GetPixel(x, y)))
+                    {
+                        pixelDifferences++;
+                    }
+                }
+            }
+            return pixelDifferences;
+        }
+
+        [TestCase(83, 81)/*, expected = ""*/]
 
         public List<byte> ByteArrayToValues(byte[] byteArray)
         {
@@ -74,8 +90,6 @@ namespace StegomaticProject.Tests.ModelTests
             return Values;
         }
 
-
-
         [TestCase("1234567890123456789012345678901234567890")]
         [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
         [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
@@ -85,20 +99,20 @@ namespace StegomaticProject.Tests.ModelTests
         {
             byte[] byteMessage = ByteConverter.StringToByteArray(text);
             Bitmap stegoObject = _stegoTest.Encode(_image, _standardSeed, byteMessage);
-            Assert.AreNotEqual(stegoObject, _image);
+            Assert.Greater(ImagePixelDifference(stegoObject, _image), 0);
         }
 
-        [TestCase("1234567890123456789012345678901234567890")]
-        [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
-        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
-        [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
-        [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
-        public void Decode_PlainImage_ResultIsEmpty(string seed)
-        {
-            byte[] byteMessage = _stegoTest.Decode(_image, seed);
-            string message = ByteConverter.ByteArrayToString(byteMessage);
-            Assert.IsEmpty(message);
-        }
+        //[TestCase("1234567890123456789012345678901234567890")]
+        //[TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
+        //[TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
+        //[TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
+        //[TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
+        //public void Decode_PlainImage_ResultIsEmpty(string seed)
+        //{
+        //    byte[] byteMessage = _stegoTest.Decode(_image, seed);
+        //    string message = ByteConverter.ByteArrayToString(byteMessage);
+        //    Assert.IsEmpty(message);
+        //}
 
         [TestCase("1234567890123456789012345678901234567890")]
         [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
@@ -108,7 +122,7 @@ namespace StegomaticProject.Tests.ModelTests
         public void Encode_Seed_SeedAffectsResult(string seed)
         {
             Bitmap stegoObject = _stegoTest.Encode(_image, seed, _standardByteMessage);
-            Assert.AreNotEqual(stegoObject, _standardStegoObject);
+            Assert.Greater(ImagePixelDifference(stegoObject, _standardStegoObject), 0);
         }
 
         public void Decode_InvalidSeed_DoesNotDecode()

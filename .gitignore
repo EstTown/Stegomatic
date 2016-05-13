@@ -216,3 +216,6 @@ ModelManifest.xml
 /Stegomatic/StegoSystemModel/StegoSystemModelClass-DESKTOP-TJJDDLA.cs
 /Stegomatic/StegoSystemModel/StegoSystemModelClass-Asus1Jonathan.cs
 /Stegomatic/StegoSystemModel/Cryptograhy/RijndaelCrypto-Asus1Jonathan.cs
+/Stegomatic/StegoSystemController/StegoSystemControl-DESKTOP-TJJDDLA.cs
+/StegomaticProject.Tests/ModelTests/GraphTheoryBasedTests-DESKTOP-TJJDDLA.cs
+/-DESKTOP-TJJDDLA.gitignore

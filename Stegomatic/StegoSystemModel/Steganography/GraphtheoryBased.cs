@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    class GraphTheoryBased : IStegoAlgorithm
+    public class GraphTheoryBased : IStegoAlgorithm
     {
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
@@ -117,7 +117,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return coverImage;
         }
 
-        public byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
+        private byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
         {
             byte weight = 0;
             return weight;
@@ -342,7 +342,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return Values;
         }
 
-        public List<byte> ValuesToByteArray(List<DecodeVertex> input)
+        private List<byte> ValuesToByteArray(List<DecodeVertex> input)
         {
             input.Reverse();
             List<byte> byteList = new List<byte>();

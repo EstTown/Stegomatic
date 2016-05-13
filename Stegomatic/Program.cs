@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -44,15 +45,78 @@ namespace StegomaticProject
         [STAThread]
         static void Main(string[] args)
         {
+            
             IStegoSystemModel stegoModel = new StegoSystemModelClass();
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
+
+
 
             //Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\white100.png");
             //Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\MODDED.png");
             //Console.WriteLine(ImageCompare(imageOriginal, stegoObject));
 
+            
             stegoUI.Start();
+
+
+
+
+
+
+
+            /* Test Code, for testing Bytearraytovalues and valuestobytearray
+            GraphTheoryBased algorithm = new GraphTheoryBased();
+
+
+
+
+            //byte array message
+            
+            
+            string message = "SSSSS334384fjjdsfjfh";
+            Console.WriteLine(message);
+
+
+            byte[] messageByte = Encoding.UTF8.GetBytes(message);
+
+            foreach (var b in messageByte)
+            {
+                Console.Write(b+" ");
+            }
+            Console.WriteLine();
+
+            List<byte> byteList = algorithm.ByteArrayToValues(messageByte);
+
+            int counter = 1;
+            foreach (byte b in byteList)
+            {
+                Console.Write(b);
+                if (counter%4 == 0)
+                {
+                    Console.WriteLine();
+                }
+                counter++;
+            }
+
+            List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
+            for (int i = 0; i < byteList.Count; i++)
+            {
+                DecodeVertex vertex = new DecodeVertex(null, null, null);
+                vertex.VertexValue = byteList[i];
+                decodeVertexList.Add(vertex);
+            }
+
+            List<byte> byteList2 = algorithm.ValuesToByteArray(decodeVertexList);
+
+            foreach (byte b in byteList2)
+            {
+                Console.Write(b +" ");                                
+            }
+
+            Console.ReadKey();
+
+            */
 
         }
     }

@@ -8,6 +8,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class VertexBase
     {
+        public VertexBase()
+        {
+            
+        }
         public VertexBase(params Pixel[] pixels)
         {
             //assign unique ID

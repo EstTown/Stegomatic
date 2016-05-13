@@ -20,6 +20,7 @@ namespace StegomaticProject.Tests.ModelTests
         string _standardMessage;
         byte[] _standardByteMessage;
         Bitmap _standardStegoObject;
+        byte[] byteArray;
 
         [OneTimeSetUp]
         public void Initialize()

@@ -14,7 +14,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
-
+        public static int Mod(int x, int m)
+        {
+            return (x % m + m) % m;
+        }
         public byte[] Decode(Bitmap coverImage, string seed)
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
@@ -41,16 +44,75 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             List<byte> newMessage = ByteArrayToValues(message);
             
             //at some point we need to calculate a graph, therefore make new graph
-
             Graph graph = new Graph();
-
             List<EncodeVertex> encodeVertexList;
-            
             List<Edge> listOfEdges = graph.ConstructGraph(pixelList, amountOfPixels, newMessage, out encodeVertexList);
-            
-            graph.ModifyGraph(listOfEdges, encodeVertexList);
 
+            Console.WriteLine("In graphtheorybased");
+            int counter2 = 1;
+            foreach (EncodeVertex encodeVertex in encodeVertexList)
+            {
+                Console.Write(encodeVertex.PixelsForThisVertex[0].ColorDifference+" ");
+                if (counter2 % 4 == 0)
+                {
+                    Console.Write(" ");
+                }
+                counter2++;
+            }
+            Console.WriteLine();
+
+            //we print encodevertexList vertexvalue
+            counter2 = 1;
+            foreach (EncodeVertex encodeVertex in encodeVertexList)
+            {
+                Console.Write(encodeVertex.VertexValue + " ");
+                if (counter2%4 == 0)
+                {
+                    Console.Write(" ");
+                }
+                counter2++;
+            }
+            Console.ReadKey();
+            Console.WriteLine();
+
+
+
+
+            graph.ModifyGraph(listOfEdges, encodeVertexList);
+            
             coverImage = EmbedPixelListIntoImage(pixelList, coverImage, amountOfPixels);
+            
+            //new list add pixels, then make vertices
+            List<Pixel> embeddedPixelList = new List<Pixel>();
+            embeddedPixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
+
+            Graph newGraph = new Graph();
+            List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
+            decodeVertexList = newGraph.ConstructGraph(embeddedPixelList, amountOfPixels);
+            counter2 = 1;
+            foreach (DecodeVertex decodeVertex in decodeVertexList)
+            {
+                Console.Write(decodeVertex.VertexValue+ " ");
+                if (counter2 % 4 == 0)
+                {
+                    Console.Write(" ");
+                }
+                counter2++;
+            }
+
+            Console.WriteLine();
+
+            counter2 = 1;
+            foreach (EncodeVertex encodeVertex in encodeVertexList)
+            {
+                Console.Write(encodeVertex.PixelsForThisVertex[0].ColorDifference+" ");
+                if (counter2 % 4 == 0)
+                {
+                    Console.Write(" ");
+                }
+                counter2++;
+            }
+            Console.ReadKey();
             
             return coverImage;
         }

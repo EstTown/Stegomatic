@@ -246,14 +246,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
 
 
-        private void PixelModify(List<EncodeVertex> encodeVertexList)
+        public void PixelModify(List<EncodeVertex> encodeVertexList)
         {
+            /*
             foreach (var item in encodeVertexList)
             {
                 Console.WriteLine("in pixModify");
                 Console.WriteLine(item.Active + "   " + item.VertexValue);
             }
-
+            */
             foreach (var item in encodeVertexList)
             {
                 if (item.Active == true)
@@ -265,13 +266,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private void HelpMethodPixelModify(EncodeVertex vertex)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 int localDifference = 0;
 
                 if (vertex.PixelsForThisVertex[i].Color.R <= 127)
                 {
-                    while (mod((vertex.PixelsForThisVertex[i].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[i])
+                    while (GraphTheoryBased.Mod((vertex.PixelsForThisVertex[i].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[i])
                     {
                         localDifference++;
                     }
@@ -279,7 +280,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                 else if (vertex.PixelsForThisVertex[i].Color.R > 127)
                 {
-                    while (mod((vertex.PixelsForThisVertex[i].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[i])
+                    while (GraphTheoryBased.Mod((vertex.PixelsForThisVertex[i].EmbeddedValue + localDifference), GraphTheoryBased.Modulo) != vertex.TargetValues[i])
                     {
                         localDifference--;
                     }
@@ -289,10 +290,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
         }
 
-        private int mod(int x, int m)
+
+        private void HelpMethodPixelModify2(EncodeVertex vertex)
         {
-            return (x % m + m) % m;
+            //only need to change 1 pixels color 
+            int vertexValue = 3; //secret message value = 0
+            int pixelvalue = 2;
+            int targetValue = 3;
+
+            //calculate difference
         }
+
+
+        
 
     }
 }

@@ -34,36 +34,24 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         public Bitmap Encode(Bitmap coverImage, string seed, byte[] message)
         {
             //message = AddMetaData(message);
-            
-            int amountOfPixels = CalculateRequiredPixels(message);
+            int amountOfPixels = 12;//CalculateRequiredPixels(message);
             List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
 
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
             
-
             //at some point we need to calculate a graph, therefore make new graph
-            Graph graph = new Graph();
-            List<EncodeVertex> encodeVertexList;
-            List<Edge> listOfEdges = graph.ConstructGraph(pixelList, amountOfPixels, newMessage, out encodeVertexList);
 
+            Graph graph = new Graph();
+
+            List<EncodeVertex> encodeVertexList;
+            
+            List<Edge> listOfEdges = graph.ConstructGraph(pixelList, amountOfPixels, newMessage, out encodeVertexList);
+            
             graph.ModifyGraph(listOfEdges, encodeVertexList);
 
-            foreach (Pixel pixel in pixelList)
-            {
-                Console.WriteLine(pixel.ToString() +"    " + pixel.ColorDifference);
-            }
-            Console.ReadKey();
-
             coverImage = EmbedPixelListIntoImage(pixelList, coverImage, amountOfPixels);
-
-            pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
-            Console.WriteLine();
-            foreach (Pixel pixel in pixelList)
-            {
-                Console.WriteLine(pixel.ToString());
-            }
-            Console.ReadKey();
+            
             return coverImage;
         }
 

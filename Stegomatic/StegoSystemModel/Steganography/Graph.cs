@@ -30,22 +30,26 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             List<EncodeVertex> encodeVertexList = ConstructVertices(pixelList, pixelsNeeded, secretMessage);
             CheckIfMatched(encodeVertexList);
+            /*
             List<Edge> listOfEdges = ConstructEdges(encodeVertexList);
             CheckIfMatched(encodeVertexList);
             List<Edge> matchedEdges = CalcGraphMatching(encodeVertexList, listOfEdges);
             CheckIfMatched(encodeVertexList);
-
+            */
             vertexList = encodeVertexList; //
-            return matchedEdges;
+            return null;
         }
 
         public void ModifyGraph(List<Edge> matchedEdges, List<EncodeVertex> encodeVertexList)
         {
             //these methods change pixels, which they do through edges and vertices, which have references to pixels.
-            PixelSwap(matchedEdges);
+            //PixelSwap(matchedEdges);
             PixelModify(encodeVertexList);
             
         }
+
+
+
 
         private List<DecodeVertex> ConstructVertices(List<Pixel> pixelList, int pixelsNeeded)
         {

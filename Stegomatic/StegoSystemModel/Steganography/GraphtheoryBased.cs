@@ -9,15 +9,18 @@ using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
-    class GraphTheoryBased : IStegoAlgorithm
+    public class GraphTheoryBased : IStegoAlgorithm
     {
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
+
+        //Our own modulo, because C#'s '%' sucks
         public static int Mod(int x, int m)
         {
             return (x % m + m) % m;
         }
+
         public byte[] Decode(Bitmap coverImage, string seed)
         {
             //first we have to get the information of how much data was embedded. Then we can decode the message and put it into a byte array
@@ -175,7 +178,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return coverImage;
         }
 
-        public byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
+        private byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
         {
             byte weight = 0;
             return weight;
@@ -224,6 +227,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return convertedPassphrase;
         }
+
         private List<Pixel> GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             List<Pixel> pixelList = new List<Pixel>();
@@ -249,9 +253,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return pixelList;
         }
 
-        /*
-        private void GetRandomPixelsAddToList1(Bitmap image, string passphrase, int amount)
+        private List<Pixel> GetRandomPixelsAddToList1(Bitmap image, string passphrase, int amount)
         {
+
+            List<Pixel> PixelList = new List<Pixel>();
             //Create array at the lenght of a 'amount of total pixels'
             int[] array = new int[Convert.ToInt32(image.Width * image.Height) * 2];
 
@@ -313,8 +318,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
                 i++;
             }
+
+            return PixelList;
         }
-        */
         
         private byte[] AddMetaData(byte[] secretMessage)
         {
@@ -393,7 +399,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return Values;
         }
 
-        public List<byte> ValuesToByteArray(List<DecodeVertex> input)
+        private List<byte> ValuesToByteArray(List<DecodeVertex> input)
         {
             input.Reverse();
             List<byte> byteList = new List<byte>();
@@ -426,7 +432,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                 i += 2;
 
-                if (i == 8)
+                if (i % 8 == 0)
                 {
                     byteList.Add(ConvertToByte(bitArray));
                     i = 0;
@@ -434,7 +440,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
 
             byteList.Reverse();
-
+            Console.WriteLine("Length of bytelist:  " + byteList.Count);
             return byteList;
         }
         private byte ConvertToByte(BitArray bits)

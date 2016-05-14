@@ -113,6 +113,12 @@
     <Compile Include="StegoSystemUI\PopupForm.designer.cs">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StegoSystemUI\ProgressPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StegoSystemUI\ProgressPopup.Designer.cs">
+      <DependentUpon>ProgressPopup.cs</DependentUpon>
+    </Compile>
     <Compile Include="StegoSystemUI\StegoSystemConsole.cs" />
     <Compile Include="StegoSystemUI\StegoSystemWinForm.cs" />
   </ItemGroup>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StegoSystemUI\PopupForm.resx">
       <DependentUpon>PopupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StegoSystemUI\ProgressPopup.resx">
+      <DependentUpon>ProgressPopup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

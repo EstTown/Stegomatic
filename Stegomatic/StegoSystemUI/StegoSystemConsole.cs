@@ -81,6 +81,5 @@ namespace StegomaticProject.StegoSystemUI
         {
             throw new NotImplementedException();
         }
-
     }
 }

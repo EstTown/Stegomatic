@@ -112,7 +112,11 @@ namespace StegomaticProject.StegoSystemController
             bool encrypt = EncodingArgument.Item5;
             bool compress = EncodingArgument.Item6;
 
+            _stegoUI.ShowSteganographyStarted();
+
             Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
+
+            _stegoUI.ShowSteganographyEnded();
 
             Tuple<Bitmap, string, string, bool, bool> EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
 

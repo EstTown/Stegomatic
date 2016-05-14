@@ -10,6 +10,7 @@ using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI;
 using StegomaticProject.CustomExceptions;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -224,12 +225,10 @@ namespace StegomaticProject.StegoSystemUI
                         {
                             // Read image here
                             Image image = Image.FromStream(stream);
-
                             string filename = openFileWindow.FileName;
 
                             // Display image
                             this.SetDisplayImage(ImageToBitmap(image));
-
                             DisplayImageInfo(image, filename);
                         }
                     }
@@ -290,10 +289,10 @@ namespace StegomaticProject.StegoSystemUI
                 switch (saveFileWindow.FilterIndex)
                 {
                     case 1:
-                        file.Save(saveFileWindow.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                        file.Save(saveFileWindow.FileName, ImageFormat.Png);
                         break;
                     case 2:
-                        file.Save(saveFileWindow.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                        file.Save(saveFileWindow.FileName, ImageFormat.Bmp);
                         break;
                 }
             }
@@ -301,6 +300,10 @@ namespace StegomaticProject.StegoSystemUI
             if (userResponse != DialogResult.OK)
             {
                 throw new NotifyUserException("Image not modified.", "Action cancelled");
+            }
+            else
+            {
+                DisplayImageInfo(file, saveFileWindow.FileName);
             }
         }
 

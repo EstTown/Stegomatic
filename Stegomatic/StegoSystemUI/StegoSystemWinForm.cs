@@ -305,22 +305,22 @@ namespace StegomaticProject.StegoSystemUI
             return Convert.ToInt32((height * width * 0.18) / 12);
         }
 
-        NotificationWindow _currentlyWorkingNotificationWindow;
+        //NotificationWindow _currentlyWorkingNotificationWindow;
 
-        public void ShowSteganographyEnded()
-        {
-            if (_currentlyWorkingNotificationWindow != null)
-            {
-                _currentlyWorkingNotificationWindow.Dispose();
-            }
-        }
+        //public void ShowSteganographyEnded()
+        //{
+        //    if (_currentlyWorkingNotificationWindow != null)
+        //    {
+        //        _currentlyWorkingNotificationWindow.Dispose();
+        //    }
+        //}
 
-        public void ShowSteganographyStarted()
-        {
-            _currentlyWorkingNotificationWindow = new NotificationWindow();
-            _currentlyWorkingNotificationWindow.LabelText = "Currently encoding...";
-            _currentlyWorkingNotificationWindow.TopMost = true;
-            _currentlyWorkingNotificationWindow.Show();
-        }
+        //public void ShowSteganographyStarted()
+        //{
+        //    _currentlyWorkingNotificationWindow = new NotificationWindow();
+        //    _currentlyWorkingNotificationWindow.LabelText = "Currently encoding...";
+        //    _currentlyWorkingNotificationWindow.TopMost = true;
+        //    _currentlyWorkingNotificationWindow.Show();
+        //}
     }
 }

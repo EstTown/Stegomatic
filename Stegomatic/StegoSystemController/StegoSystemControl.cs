@@ -19,7 +19,7 @@ namespace StegomaticProject.StegoSystemController
         private IStegoSystemUI _stegoUI;
         private IVerifyUserInput _verifyUserInput;
 
-        ProcessingPopup f = new ProcessingPopup();
+        ProcessingPopup encodingPopup = new ProcessingPopup();
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
@@ -112,11 +112,11 @@ namespace StegomaticProject.StegoSystemController
             bool encrypt = EncodingArgument.Item5;
             bool compress = EncodingArgument.Item6;
 
-            _stegoUI.ShowSteganographyStarted();
+            //_stegoUI.ShowSteganographyStarted();
 
             Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
 
-            _stegoUI.ShowSteganographyEnded();
+            //_stegoUI.ShowSteganographyEnded();
 
             Tuple<Bitmap, string, string, bool, bool> EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
 
@@ -135,7 +135,7 @@ namespace StegomaticProject.StegoSystemController
             
             try
             {
-                f.Close();
+                encodingPopup.Close();
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
@@ -176,7 +176,7 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                f.Show();
+                encodingPopup.Show();
                 _worker.RunWorkerAsync(args);
 
                 

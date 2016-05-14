@@ -25,8 +25,8 @@ namespace StegomaticProject.StegoSystemUI
         string GetStegoSeed();
         void OpenImage();
         void SaveImage(Bitmap image);
-        void ShowSteganographyEnded();
-        void ShowSteganographyStarted();
+        //void ShowSteganographyEnded();
+        //void ShowSteganographyStarted();
 
         // Start/End
         void Start();

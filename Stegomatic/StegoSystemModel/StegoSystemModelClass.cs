@@ -65,7 +65,7 @@ namespace StegomaticProject.StegoSystemModel
                 {
                     message = _cryptoMethod.Encrypt(message, encryptionKey);
                 }
-                byte[] byteMessage = ByteConverter.StringToByteArray(message);
+                byte[] byteMessage = Encoding.UTF8.GetBytes(message);
                 if (compress)
                 {
                     byteMessage = _compressMethod.Compress(byteMessage);

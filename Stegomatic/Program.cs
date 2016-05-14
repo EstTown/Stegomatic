@@ -50,7 +50,7 @@ namespace StegomaticProject
             IStegoSystemUI stegoUI = new StegoSystemWinForm();
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
-
+            
 
             //Bitmap imageOriginal = new Bitmap(@"C:\Users\EstTown\Desktop\white100.png");
             //Bitmap stegoObject = new Bitmap(@"C:\Users\EstTown\Desktop\MODDED.png");
@@ -65,19 +65,14 @@ namespace StegomaticProject
 
 
 
-            /* Test Code, for testing Bytearraytovalues and valuestobytearray
-            GraphTheoryBased algorithm = new GraphTheoryBased();
-
-
-
+            //Test Code, for testing Bytearraytovalues and valuestobytearray
+            //GraphTheoryBased algorithm = new GraphTheoryBased();
 
             //byte array message
-            
-            
-            string message = "SSSSS334384fjjdsfjfh";
+            /*
+            string message = "1900?";
             Console.WriteLine(message);
-
-
+            
             byte[] messageByte = Encoding.UTF8.GetBytes(message);
 
             foreach (var b in messageByte)
@@ -98,7 +93,10 @@ namespace StegomaticProject
                 }
                 counter++;
             }
+            Console.WriteLine("After printing byteList");
+            Console.ReadKey();
 
+            
             List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
             for (int i = 0; i < byteList.Count; i++)
             {
@@ -106,6 +104,8 @@ namespace StegomaticProject
                 vertex.VertexValue = byteList[i];
                 decodeVertexList.Add(vertex);
             }
+            Console.WriteLine("after decodeVertexList");
+            Console.ReadKey();
 
             List<byte> byteList2 = algorithm.ValuesToByteArray(decodeVertexList);
 
@@ -116,8 +116,7 @@ namespace StegomaticProject
 
             Console.ReadKey();
 
-            */
-
+    */
         }
     }
 }

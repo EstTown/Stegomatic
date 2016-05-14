@@ -19,7 +19,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             CalculateTargetValues();
         }
         
-        public byte LowestEdgeWeight { get; set; }
+        public int LowestEdgeWeight { get; set; }
         public short NumberOfEdges { get; set; }
 
         public bool Active;
@@ -58,7 +58,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         public override string ToString()
         {
-            return this.Id + "\n" + this.VertexValue + "\n";
+            return "ID: " + this.Id + "\n"
+                + "Value: " + this.VertexValue + "\n"
+                + "Targets: " + TargetValues[0] + " " + TargetValues[1] + " " + TargetValues[2] + "\n"
+                + "PartofSMsg: "+ + PartOfSecretMessage +"\n";
         }
     }
 }

@@ -58,7 +58,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         public override string ToString()
         {
-            return this.Id + "\n" + this.VertexValue + "\n";
+            return "ID: " + this.Id + "\n"
+                + "Value: " + this.VertexValue + "\n"
+                + "Targets: " + TargetValues[0] + " " + TargetValues[1] + " " + TargetValues[2] + "\n"
+                + "PartofSMsg: "+ + PartOfSecretMessage +"\n";
         }
     }
 }

@@ -36,7 +36,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public override string ToString()
         {
-            return string.Format("Position X = {0}   Position Y = {1}   R = {2}  G = {3}  B = {4}", this.PosX, this.PosY, this.Color.R, this.Color.G, this.Color.B);
+            return string.Format("Position X = {0}   Position Y = {1}   R = {2}  G = {3}  B = {4} EmbVal = {5}",
+                this.PosX, this.PosY, this.Color.R, this.Color.G, this.Color.B, this.EmbeddedValue);
         }
     }
 }

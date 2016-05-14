@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Windows.Forms;
+using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
@@ -88,7 +89,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             if (b == false)
             {
-                throw new Exception();
+                //throw new Exception();
+                throw new NotifyUserException("Metadata not found. \nMost likely due to a wrong password.");
             }
             
             
@@ -379,7 +381,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
 
             byteList.Reverse();
-            Console.WriteLine("Length of bytelist:  " + byteList.Count);
+            //Console.WriteLine("Length of bytelist:  " + byteList.Count);
             return byteList;
         }
         private byte ConvertToByte(BitArray bits)

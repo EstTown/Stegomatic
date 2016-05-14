@@ -43,7 +43,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
 
             //these methods change pixels, which they do through edges and vertices, which have references to pixels.
-            //PixelSwap(matchedEdges);
+            PixelSwap(matchedEdges);
             //Console.WriteLine("Matched edge [0]:        " + matchedEdges[0].ToString());
             //CheckIfMatched(encodeVertexList);
             PixelModify(encodeVertexList);
@@ -75,8 +75,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private List<Edge> ConstructEdges(List<EncodeVertex> encodeVertexList)
         {
             List<Edge> listOfEdges = new List<Edge>();
-            //byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
-            //byte edgeWeight;
             short amountOfEdges = 0;
             byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
             byte edgeWeight;
@@ -85,7 +83,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             {
                 foreach (EncodeVertex item2 in encodeVertexList)
                 {
-                    if (item1.Active == item2.Active)
+                    if (item1.Active == true && item2.Active == true)
                     {
                         bool b = ConstructASingleEdge(item1, item2, listOfEdges, out edgeWeight);
                         if (b == true)
@@ -94,7 +92,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                             //{
                             //    break;
                             //}
-                            if (edgeWeight <= 10)
+                            if (edgeWeight <= lowestWeight)
                             {
                                 lowestWeight = edgeWeight;
                             }
@@ -191,12 +189,21 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                     if (SortedInternalList.FirstOrDefault() == null)
                     {
-                        
                     }
                     else
                     {
                         Edge M = SortedInternalList.First();
                         tempMatched.Add(M);
+
+                        //for (int i = 0; i < listOfEdges.Count; i++)
+                        //{
+                        //    if (listOfEdges[i].VertexOne.Id == M.VertexOne.Id || listOfEdges[i].VertexTwo.Id == M.VertexOne.Id ||
+                        //           listOfEdges[i].VertexOne.Id == M.VertexTwo.Id || listOfEdges[i].VertexTwo.Id == M.VertexTwo.Id)
+                        //    {
+                        //        listOfEdges.Remove(listOfEdges[i]);
+                        //    }
+                        //}
+
                     }
 
                 }
@@ -223,30 +230,41 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private bool CheckIfEdgeIsUnique(List<Edge> list, Edge edge)
         {
-            bool tmp = true;
+            bool b = true;
 
             //If it's not unique, it's set to 'false'
             foreach (Edge item in list)
             {
-                if (edge != item)
+                if (edge.EdgeID != item.EdgeID)
                 {
                     if (edge.VertexOne.Id == item.VertexTwo.Id)
                     {
-                        tmp = false;
+                        b = false;
                         break;
                     }
 
                     if (edge.VertexTwo.Id == item.VertexOne.Id)
                     {
-                        tmp = false;
+                        b = false;
                         break;
                     }
 
+                    //if (edge.VertexTwo.Id == item.VertexTwo.Id)
+                    //{
+                    //    b = false;
+                    //    break;
+                    //}
+
+                    //if (edge.VertexOne.Id == item.VertexOne.Id)
+                    //{
+                    //    b = false;
+                    //    break;
+                    //}
+
                 }
-                
 
             }
-            return tmp;
+            return b;
         }
 
         private void PixelSwap(List<Edge> matchedEdges)
@@ -255,15 +273,19 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //Console.ReadKey();
             foreach (Edge edge in matchedEdges)
             {
-                TradePixelValues(edge.VertexPixelOne, edge.VertexPixelTwo);
-                edge.VertexOne.Active = false;
-                edge.VertexTwo.Active = false;
+                if (edge.VertexOne.Active == true && edge.VertexTwo.Active == true)
+                {
+                    TradePixelValues(edge.VertexPixelOne, edge.VertexPixelTwo);
+                    edge.VertexOne.Active = false;
+                    edge.VertexTwo.Active = false;
+                }  
             }
         }
-
+        int tmp = 1;
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
-            //Console.WriteLine("Pixels swapped");
+            Console.WriteLine(tmp);
+            tmp++;
 
             //Console.WriteLine("Before swapped");
             //Console.WriteLine("pix 1: " + pixelOne.ToString());

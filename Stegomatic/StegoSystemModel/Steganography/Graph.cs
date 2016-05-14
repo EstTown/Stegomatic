@@ -40,10 +40,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public void ModifyGraph(List<Edge> matchedEdges, List<EncodeVertex> encodeVertexList)
         {
+
+
             //these methods change pixels, which they do through edges and vertices, which have references to pixels.
-            //CheckIfMatched(encodeVertexList);
             //PixelSwap(matchedEdges);
-            CheckIfMatched(encodeVertexList);
+            //Console.WriteLine("Matched edge [0]:        " + matchedEdges[0].ToString());
+            //CheckIfMatched(encodeVertexList);
             PixelModify(encodeVertexList);
         }
 
@@ -106,33 +108,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return listOfEdges;
 
-            ////need double for loop, to check every vertex with every other vertex
-            //for (int i = 0; i < encodeVertexList.Count; i++)
-            //{
-            //    for (int j = 0; j < encodeVertexList.Count; j++)
-            //    {
-            //        if (i != j && encodeVertexList[i].Active == true && encodeVertexList[j].Active == true) //don't want to compare a vertex with itself
-            //        {
-            //            bool b = ConstructASingleEdge(encodeVertexList[i], encodeVertexList[j], listOfEdges,out edgeWeight); //return true if an edge was created
-            //            if (b == true)
-            //            {
-            //                amountOfEdges++;
-            //                if (amountOfEdges == 32000) //Hardcoded limit for edges per vert
-            //                {
-            //                    break;
-            //                }
-            //                if (edgeWeight <= lowestWeight)
-            //                {
-            //                    lowestWeight = edgeWeight;
-            //                }
-            //            }
-            //        }
-            //    }
-            //    encodeVertexList[i].LowestEdgeWeight = lowestWeight;
-            //    encodeVertexList[i].NumberOfEdges = amountOfEdges;
-            //    encodeVertexList[i].Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
-            //}
-            //return listOfEdges;
         }
 
         private bool ConstructASingleEdge(EncodeVertex vertex1, EncodeVertex vertex2,List<Edge> listOfEdges, out int lowestWeight)
@@ -227,9 +202,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             Console.WriteLine("Verts:   " + encodeVertexList.Count);
             Console.WriteLine("Before -     " + tempMatched.Count);
+
             List<Edge> matchedEdges = DeleteDuplicatesInList(tempMatched);
             //List<Edge> matchedEdges = tempMatched;
             Console.WriteLine("After -     " + matchedEdges.Count);
+
+            foreach (var item in matchedEdges)
+            {
+                Console.WriteLine(item.VertexOne.Id + " " + item.VertexTwo.Id);
+            }
 
             return matchedEdges;
         }
@@ -246,10 +227,23 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //If it's not unique, it's set to 'false'
             foreach (Edge item in list)
             {
-                if (edge.VertexOne == item.VertexTwo)
+                if (edge != item)
                 {
-                    tmp = false;
+                    if (edge.VertexOne.Id == item.VertexTwo.Id)
+                    {
+                        tmp = false;
+                        break;
+                    }
+
+                    if (edge.VertexTwo.Id == item.VertexOne.Id)
+                    {
+                        tmp = false;
+                        break;
+                    }
+
                 }
+                
+
             }
             return tmp;
         }

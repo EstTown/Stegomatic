@@ -76,8 +76,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
             //byte edgeWeight;
             short amountOfEdges = 0;
-            byte lowestWeight = GraphTheoryBased.MaxEdgeWeight;
-            byte edgeWeight;
+            int lowestWeight = GraphTheoryBased.MaxEdgeWeight;
+            int edgeWeight;
 
             foreach (EncodeVertex item1 in encodeVertexList)
             {
@@ -98,7 +98,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                             }
                             amountOfEdges++; 
                         }
-
                     }
                 }
                 item1.LowestEdgeWeight = lowestWeight;
@@ -136,7 +135,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //return listOfEdges;
         }
 
-        private bool ConstructASingleEdge(EncodeVertex vertex1, EncodeVertex vertex2,List<Edge> listOfEdges,out byte lowestWeight)
+        private bool ConstructASingleEdge(EncodeVertex vertex1, EncodeVertex vertex2,List<Edge> listOfEdges, out int lowestWeight)
         {
             int weight = GraphTheoryBased.MaxEdgeWeight;
             Edge tempEdge = new Edge(null, null, null, null, 0);
@@ -163,10 +162,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             if (tempEdge.EdgeWeight != 0) //edgeweight will never be zero, because a pixel cannot have an embeddedvalue that's equivalent with it's targetvalue
             {
                 listOfEdges.Add(tempEdge);
-                lowestWeight = (byte)weight;
+                lowestWeight = weight;
                 return true;
             }
-            lowestWeight = 0;
+            lowestWeight = 11;
             return false;
         }
 

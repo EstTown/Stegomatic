@@ -19,7 +19,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             CalculateTargetValues();
         }
         
-        public byte LowestEdgeWeight { get; set; }
+        public int LowestEdgeWeight { get; set; }
         public short NumberOfEdges { get; set; }
 
         public bool Active;

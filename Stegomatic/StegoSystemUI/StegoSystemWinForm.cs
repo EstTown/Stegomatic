@@ -117,7 +117,6 @@ namespace StegomaticProject.StegoSystemUI
         {
             // Initialize a popup window and show the message!
             MessageBox.Show(notification, title);
-
             //NotificationWindow userNotificationWindow = new NotificationWindow();
             //userNotificationWindow.Text = title;
             //userNotificationWindow.LabelText = notification;
@@ -310,6 +309,24 @@ namespace StegomaticProject.StegoSystemUI
         private int StandardCapacityCalculator(int width, int height, bool compress)
         {
             return Convert.ToInt32((height * width * 0.18) / 12);
+        }
+
+        NotificationWindow _currentlyWorkingNotificationWindow;
+
+        public void ShowSteganographyEnded()
+        {
+            if (_currentlyWorkingNotificationWindow != null)
+            {
+                _currentlyWorkingNotificationWindow.Dispose();
+            }
+        }
+
+        public void ShowSteganographyStarted()
+        {
+            _currentlyWorkingNotificationWindow = new NotificationWindow();
+            _currentlyWorkingNotificationWindow.LabelText = "Currently encoding...";
+            _currentlyWorkingNotificationWindow.TopMost = true;
+            _currentlyWorkingNotificationWindow.Show();
         }
     }
 }

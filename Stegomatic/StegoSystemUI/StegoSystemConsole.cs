@@ -80,5 +80,15 @@ namespace StegomaticProject.StegoSystemUI
         {
             throw new NotImplementedException();
         }
+
+        public void ShowSteganographyEnded()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowSteganographyStarted()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -132,6 +132,7 @@ namespace StegomaticProject.StegoSystemController
             try
             {
                 _backgroundWorkerProgressBar.Close();
+                _stegoUI.Enable = true;
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
@@ -172,7 +173,8 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                _backgroundWorkerProgressBar.Show();
+                _backgroundWorkerProgressBar.Show(); //Show that we're working on it!
+                _stegoUI.Enable = false; //Disable the main-window, so the user doesn't fuck with anything they're not supposed to
                 _worker.RunWorkerAsync(args);
 
                 

@@ -17,6 +17,7 @@ namespace StegomaticProject.StegoSystemUI
         Bitmap DisplayImage { get; }
         IConfig Config { get; }
         Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
+        bool Enable { get; set; }
 
         // Modify UI
         void SetDisplayImage(Bitmap newImage);

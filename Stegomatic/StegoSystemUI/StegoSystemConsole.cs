@@ -16,6 +16,7 @@ namespace StegomaticProject.StegoSystemUI
         public string Message { get; private set; }
         public string PathOfCoverImage { get; private set; }
         public Bitmap DisplayImage { get; private set; }
+        public bool Enable { get; set; }
 
         public Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
 

@@ -32,6 +32,12 @@ namespace StegomaticProject.StegoSystemUI
             private set { _mainMenu.picbox_image.ImageLocation = value; }
         }
 
+        public bool Enable
+        {
+            get { return _mainMenu.Enabled; }
+            set { _mainMenu.Enabled = value; }
+        }
+
         public Bitmap DisplayImage
         {
             get { return ImageToBitmap(_mainMenu.picbox_image.Image) ; }

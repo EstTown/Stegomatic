@@ -8,6 +8,8 @@ using StegomaticProject.CustomExceptions;
 using System.ComponentModel;
 using StegomaticProject.StegoSystemModel.Steganography;
 using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -16,6 +18,8 @@ namespace StegomaticProject.StegoSystemController
         private IStegoSystemModel _stegoModel;
         private IStegoSystemUI _stegoUI;
         private IVerifyUserInput _verifyUserInput;
+
+        ProcessingPopup f = new ProcessingPopup();
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
@@ -41,11 +45,13 @@ namespace StegomaticProject.StegoSystemController
 
         private void SubscribeBackgroundWorkerEvents()
         {
+            AutoResetEvent resetEvent = new AutoResetEvent(false);
             // Backgroundworker to have WinForm run on a different thread as the model.
             _worker.WorkerReportsProgress = true;
             _worker.WorkerSupportsCancellation = true;
             _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
             _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+            _worker.ProgressChanged += new ProgressChangedEventHandler(ThreadProgressChanged);
 
             // BACKGROUNDWORKER 2??? TO DECODE?
         }
@@ -92,10 +98,11 @@ namespace StegomaticProject.StegoSystemController
                 ShowNotification(new DisplayNotificationEvent(exception));
             }
         }
-        
+
         private void ThreadedEncode(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+
             Tuple<Bitmap, string, string, string, bool, bool> EncodingArgument = e.Argument as Tuple<Bitmap, string, string, string, bool, bool>;
 
             Bitmap coverImage = EncodingArgument.Item1;
@@ -112,13 +119,19 @@ namespace StegomaticProject.StegoSystemController
             e.Result = EncodingInfo;
         }
 
+        public void ThreadProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
             Tuple<Bitmap, string, string, bool, bool> EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
             Bitmap stegoObject = EncodingInfo.Item1;
-
+            
             try
             {
+                f.Close();
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
@@ -129,6 +142,10 @@ namespace StegomaticProject.StegoSystemController
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         public void EncodeImage(BtnEvent e)
         {
             try
@@ -155,7 +172,10 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
+                f.Show();
                 _worker.RunWorkerAsync(args);
+
+                
                 // When worker is done and event will fire and ThreadedEncodeComplete() will be executed, which
                 // will start a save-dialog when the encoding-process is completed.
 

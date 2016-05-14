@@ -67,6 +67,11 @@
   <ItemGroup>
     <Compile Include="CustomExceptions\AbortActionException.cs" />
     <Compile Include="CustomExceptions\NotifyUserException.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="StegoSystemController\IVerifyUserInput.cs" />
     <Compile Include="StegoSystemController\VerifyUserInput.cs" />
     <Compile Include="StegoSystemModel\Steganography\DecodeVertex.cs" />
@@ -113,11 +118,11 @@
     <Compile Include="StegoSystemUI\PopupForm.designer.cs">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StegoSystemUI\ProgressPopup.cs">
+    <Compile Include="StegoSystemUI\ProcessingPopup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StegoSystemUI\ProgressPopup.Designer.cs">
-      <DependentUpon>ProgressPopup.cs</DependentUpon>
+    <Compile Include="StegoSystemUI\ProcessingPopup.Designer.cs">
+      <DependentUpon>ProcessingPopup.cs</DependentUpon>
     </Compile>
     <Compile Include="StegoSystemUI\StegoSystemConsole.cs" />
     <Compile Include="StegoSystemUI\StegoSystemWinForm.cs" />
@@ -127,6 +132,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="StegoSystemUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,9 +145,15 @@
     <EmbeddedResource Include="StegoSystemUI\PopupForm.resx">
       <DependentUpon>PopupForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StegoSystemUI\ProgressPopup.resx">
-      <DependentUpon>ProgressPopup.cs</DependentUpon>
+    <EmbeddedResource Include="StegoSystemUI\ProcessingPopup.resx">
+      <DependentUpon>ProcessingPopup.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading_icon.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -207,17 +207,17 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                 }
             }
-            Console.WriteLine("Verts:   " + encodeVertexList.Count);
-            Console.WriteLine("Before -     " + tempMatched.Count);
+            //Console.WriteLine("Verts:   " + encodeVertexList.Count);
+            //Console.WriteLine("Before -     " + tempMatched.Count);
 
             List<Edge> matchedEdges = DeleteDuplicatesInList(tempMatched);
-            //List<Edge> matchedEdges = tempMatched;
-            Console.WriteLine("After -     " + matchedEdges.Count);
+            ////List<Edge> matchedEdges = tempMatched;
+            //Console.WriteLine("After -     " + matchedEdges.Count);
 
-            foreach (var item in matchedEdges)
-            {
-                Console.WriteLine(item.VertexOne.Id + " " + item.VertexTwo.Id);
-            }
+            //foreach (var item in matchedEdges)
+            //{
+            //    Console.WriteLine(item.VertexOne.Id + " " + item.VertexTwo.Id);
+            //}
 
             return matchedEdges;
         }
@@ -280,11 +280,12 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }  
             }
         }
-        int tmp = 1;
+
+        //int tmp = 1;
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
-            Console.WriteLine(tmp);
-            tmp++;
+            //Console.WriteLine(tmp);
+            //tmp++;
 
             //Console.WriteLine("Before swapped");
             //Console.WriteLine("pix 1: " + pixelOne.ToString());

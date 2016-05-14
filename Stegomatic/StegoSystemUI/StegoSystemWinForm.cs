@@ -150,7 +150,7 @@ namespace StegomaticProject.StegoSystemUI
         {
             try
             {
-                return GetUserStringPopup("Steganography seed", "Seed:");
+                return GetUserStringPopup("Set password", "Password:");
             }
             catch (AbortActionException)
             {
@@ -196,12 +196,6 @@ namespace StegomaticProject.StegoSystemUI
                 return null;
             }
             return bitmapImage;
-        }
-
-        public void ProgressBar()
-        {
-            ProgressPopup progress = new ProgressPopup();
-            progress.Show(new ProgressPopup());
         }
 
         public void OpenImage()

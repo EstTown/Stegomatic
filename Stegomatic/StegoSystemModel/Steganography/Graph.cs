@@ -89,13 +89,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private List<Edge> ConstructEdges(List<EncodeVertex> encodeVertexList)
         {
             List<Edge> listOfEdges = new List<Edge>();
-            
-            int lowestWeight = GraphTheoryBased.MaxEdgeWeight;
-            int edgeWeight;
 
             foreach (EncodeVertex item1 in encodeVertexList)
             {
+                int lowestWeight = GraphTheoryBased.MaxEdgeWeight;
+                int edgeWeight;
                 int amountOfEdges = 0;
+
                 foreach (EncodeVertex item2 in encodeVertexList)
                 {
                     if (item1.Active == true && item2.Active == true)
@@ -115,6 +115,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         }
                     }
                 }
+
                 item1.LowestEdgeWeight = lowestWeight;
                 item1.NumberOfEdges = amountOfEdges;
                 item1.Active = false; //after examining a single vertex, it will be deactivated since all of the possible edges already have been evaluated, and therefore there is no need to look at this particular vertex again.
@@ -284,32 +285,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return b;
         }
-        /*
-        public List<Edge> CalcGraphMatching2(List<EncodeVertex> encodeVertexList, List<Edge> listOfEdges)
-        {
-            List<Edge> matchedEdges = new List<Edge>();
-
-            SortVertexListByEdgeAndWeight(encodeVertexList);
-
-            for (int i = 0; i < encodeVertexList.Count/2; i++)
-            {
-                if (encodeVertexList[i].Active && encodeVertexList[i].NumberOfEdges > 0)
-                {
-                    Edge matchedEdge = (Edge) listOfEdges.Where(x => (x.VertexOne.Id == encodeVertexList[i].Id ||
-                                                                      x.VertexTwo.Id == encodeVertexList[i].Id) &&
-                                                                     encodeVertexList[i].LowestEdgeWeight ==
-                                                                     x.EdgeWeight);
-                    matchedEdges.Add(matchedEdge);
-                }
-                
-            }
-
-
-
-
-            return matchedEdges;
-        } 
-        */
 
         private void PixelSwap(List<Edge> matchedEdges)
         {

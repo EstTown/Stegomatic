@@ -247,6 +247,32 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
             return tmp;
         }
+        /*
+        public List<Edge> CalcGraphMatching2(List<EncodeVertex> encodeVertexList, List<Edge> listOfEdges)
+        {
+            List<Edge> matchedEdges = new List<Edge>();
+
+            SortVertexListByEdgeAndWeight(encodeVertexList);
+
+            for (int i = 0; i < encodeVertexList.Count/2; i++)
+            {
+                if (encodeVertexList[i].Active && encodeVertexList[i].NumberOfEdges > 0)
+                {
+                    Edge matchedEdge = (Edge) listOfEdges.Where(x => (x.VertexOne.Id == encodeVertexList[i].Id ||
+                                                                      x.VertexTwo.Id == encodeVertexList[i].Id) &&
+                                                                     encodeVertexList[i].LowestEdgeWeight ==
+                                                                     x.EdgeWeight);
+                    matchedEdges.Add(matchedEdge);
+                }
+                
+            }
+
+
+
+
+            return matchedEdges;
+        } 
+        */
 
         private void PixelSwap(List<Edge> matchedEdges)
         {

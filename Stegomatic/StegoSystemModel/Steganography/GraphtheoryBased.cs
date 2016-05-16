@@ -130,7 +130,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int seed;
             string temp = "";
 
-            //convert passphrase to ASCII values
+            //convert passphrase to UTF8 values
             passphrase = ConvertTextToUTF8Value(passphrase);
 
             while (true)

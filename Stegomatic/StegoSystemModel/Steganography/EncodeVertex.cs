@@ -20,7 +20,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         }
         
         public int LowestEdgeWeight { get; set; }
-        public short NumberOfEdges { get; set; }
+        public int NumberOfEdges { get; set; }
 
         public bool Active;
         public int[] TargetValues;
@@ -52,7 +52,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             LowestEdgeWeight = weight;
         }
-        public void AssignNumberOfEdgesToVertex(short edges)
+        public void AssignNumberOfEdgesToVertex(int edges)
         {
             NumberOfEdges = edges;
         }
@@ -61,7 +61,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return "ID: " + this.Id + "\n"
                 + "Value: " + this.VertexValue + "\n"
                 + "Targets: " + TargetValues[0] + " " + TargetValues[1] + " " + TargetValues[2] + "\n"
-                + "PartofSMsg: "+ + PartOfSecretMessage +"\n";
+                + "PartofSMsg: "+ + PartOfSecretMessage +"\n"
+                + "Weight: " + LowestEdgeWeight + "\n"
+                + "No. edges: " + NumberOfEdges + "\n";
         }
     }
 }

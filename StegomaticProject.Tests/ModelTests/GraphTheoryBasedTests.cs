@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using StegomaticProject.StegoSystemModel.Steganography;
 using StegomaticProject.StegoSystemModel.Miscellaneous;
+using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.Tests.ModelTests
 {
@@ -20,7 +21,7 @@ namespace StegomaticProject.Tests.ModelTests
         string _standardMessage;
         byte[] _standardByteMessage;
         Bitmap _standardStegoObject;
-        byte[] byteArray;
+        //byte[] byteArray;
 
         [OneTimeSetUp]
         public void Initialize()
@@ -37,7 +38,7 @@ namespace StegomaticProject.Tests.ModelTests
             _standardByteMessage = ByteConverter.StringToByteArray(_standardMessage);
             _standardStegoObject = _stegoTest.Encode(_image, _standardSeed, _standardByteMessage);
 
-            byte[] byteArray = new byte[1] {83};
+            //byteArray = new byte[1] {83};
 
 
         }
@@ -49,6 +50,14 @@ namespace StegomaticProject.Tests.ModelTests
             {
                 for (int x = 0; x < original.Width; x++)
                 {
+                    //Color originalColor = original.GetPixel(x, y);
+                    //Color modifiedColor = modified.GetPixel(x, y);
+
+                    //if (originalColor.R != modifiedColor.R ||
+                    //    originalColor.B != modifiedColor.B ||
+                    //    originalColor.G != modifiedColor.G)
+                    //{
+                    //    pixelDifferences++;
                     if (!original.GetPixel(x, y).Equals(modified.GetPixel(x, y)))
                     {
                         pixelDifferences++;
@@ -58,37 +67,36 @@ namespace StegomaticProject.Tests.ModelTests
             return pixelDifferences;
         }
 
-        [TestCase(83, 81)/*, expected = ""*/]
+        //[TestCase(83, 81)/*, expected = ""*/]
+        //public List<byte> ByteArrayToValues(byte[] byteArray)
+        //{
+        //    List<byte> Values = new List<byte>();
 
-        public List<byte> ByteArrayToValues(byte[] byteArray)
-        {
-            List<byte> Values = new List<byte>();
-
-            foreach (byte item in byteArray)
-            {
-                BitArray bitValues = new BitArray(BitConverter.GetBytes(item).ToArray());
-                for (int index = 7; index > -1; index -= 2)
-                {
-                    if (bitValues[index] == true && bitValues[index - 1] == true)
-                    {
-                        Values.Add(3);
-                    }
-                    else if (bitValues[index] == true && bitValues[index - 1] == false)
-                    {
-                        Values.Add(2);
-                    }
-                    else if (bitValues[index] == false && bitValues[index - 1] == true)
-                    {
-                        Values.Add(1);
-                    }
-                    else
-                    {
-                        Values.Add(0);
-                    }
-                }
-            }
-            return Values;
-        }
+        //    foreach (byte item in byteArray)
+        //    {
+        //        BitArray bitValues = new BitArray(BitConverter.GetBytes(item).ToArray());
+        //        for (int index = 7; index > -1; index -= 2)
+        //        {
+        //            if (bitValues[index] == true && bitValues[index - 1] == true)
+        //            {
+        //                Values.Add(3);
+        //            }
+        //            else if (bitValues[index] == true && bitValues[index - 1] == false)
+        //            {
+        //                Values.Add(2);
+        //            }
+        //            else if (bitValues[index] == false && bitValues[index - 1] == true)
+        //            {
+        //                Values.Add(1);
+        //            }
+        //            else
+        //            {
+        //                Values.Add(0);
+        //            }
+        //        }
+        //    }
+        //    return Values;
+        //}
 
         [TestCase("1234567890123456789012345678901234567890")]
         [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
@@ -125,11 +133,21 @@ namespace StegomaticProject.Tests.ModelTests
             Assert.Greater(ImagePixelDifference(stegoObject, _standardStegoObject), 0);
         }
 
+        [Test]
         public void Decode_InvalidSeed_DoesNotDecode()
         {
             string seed = "1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!";
-            byte[] decodedMessage = _stegoTest.Decode(_standardStegoObject, seed);
-            Assert.AreNotEqual(decodedMessage, _standardByteMessage);
+            //byte[] decodedMessage = _stegoTest.Decode(_standardStegoObject, seed);
+            //Assert.AreNotEqual(decodedMessage, _standardByteMessage);
+            try
+            {
+                _stegoTest.Decode(_standardStegoObject, seed);
+            }
+            catch (NotifyUserException)
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
         }
 
         [TestCase("1234567890123456789012345678901234567890")]
@@ -143,6 +161,19 @@ namespace StegomaticProject.Tests.ModelTests
             Bitmap coverImage = _stegoTest.Encode(_image, _standardSeed, byteMessage);
             _stegoTest.Decode(coverImage, _standardSeed);
             string decodedMessage = ByteConverter.ByteArrayToString(byteMessage);
+            Assert.AreEqual(message, decodedMessage);
         }
+
+        //[Test]
+        //public void TestImageDifference()
+        //{
+        //    int width = 50;
+        //    int height = 50;
+        //    Bitmap image2 = new Bitmap(width, height);
+        //    Graphics g = Graphics.FromImage(image2);
+        //    g.Clear(Color.Green);
+
+        //    Assert.Greater(ImagePixelDifference(_image, image2), 0);
+        //}
     }
 }

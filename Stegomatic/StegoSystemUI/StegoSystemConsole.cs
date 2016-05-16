@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.StegoSystemUI.Events;
 
@@ -15,6 +16,7 @@ namespace StegomaticProject.StegoSystemUI
         public string Message { get; private set; }
         public string PathOfCoverImage { get; private set; }
         public Bitmap DisplayImage { get; private set; }
+        public bool Enable { get; set; }
 
         public Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
 
@@ -80,5 +82,15 @@ namespace StegomaticProject.StegoSystemUI
         {
             throw new NotImplementedException();
         }
+
+        //public void ShowSteganographyEnded()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public void ShowSteganographyStarted()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

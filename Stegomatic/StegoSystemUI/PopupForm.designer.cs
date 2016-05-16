@@ -47,9 +47,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(43, 12);
+            this.textBox1.Location = new System.Drawing.Point(65, 12);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(238, 20);
+            this.textBox1.Size = new System.Drawing.Size(216, 20);
             this.textBox1.TabIndex = 1;
             // 
             // label_popuplabel
@@ -57,7 +57,7 @@
             this.label_popuplabel.AutoSize = true;
             this.label_popuplabel.Location = new System.Drawing.Point(6, 15);
             this.label_popuplabel.Name = "label_popuplabel";
-            this.label_popuplabel.Size = new System.Drawing.Size(28, 13);
+            this.label_popuplabel.Size = new System.Drawing.Size(87, 13);
             this.label_popuplabel.TabIndex = 2;
             this.label_popuplabel.Text = "label_popuplabel";
             // 
@@ -77,7 +77,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.ClientSize = new System.Drawing.Size(294, 71);
+            this.ClientSize = new System.Drawing.Size(290, 67);
             this.ControlBox = false;
             this.Controls.Add(this.btn_popup_cancel);
             this.Controls.Add(this.label_popuplabel);

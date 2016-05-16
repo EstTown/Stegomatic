@@ -32,6 +32,12 @@ namespace StegomaticProject.StegoSystemUI
             private set { _mainMenu.picbox_image.ImageLocation = value; }
         }
 
+        public bool Enable
+        {
+            get { return _mainMenu.Enabled; }
+            set { _mainMenu.Enabled = value; }
+        }
+
         public Bitmap DisplayImage
         {
             get { return ImageToBitmap(_mainMenu.picbox_image.Image) ; }
@@ -117,7 +123,6 @@ namespace StegomaticProject.StegoSystemUI
         {
             // Initialize a popup window and show the message!
             MessageBox.Show(notification, title);
-
             //NotificationWindow userNotificationWindow = new NotificationWindow();
             //userNotificationWindow.Text = title;
             //userNotificationWindow.LabelText = notification;
@@ -150,7 +155,7 @@ namespace StegomaticProject.StegoSystemUI
         {
             try
             {
-                return GetUserStringPopup("Steganography seed", "Seed:");
+                return GetUserStringPopup("Set password", "Password:");
             }
             catch (AbortActionException)
             {
@@ -196,12 +201,6 @@ namespace StegomaticProject.StegoSystemUI
                 return null;
             }
             return bitmapImage;
-        }
-
-        public void ProgressBar()
-        {
-            ProgressPopup progress = new ProgressPopup();
-            progress.Show(new ProgressPopup());
         }
 
         public void OpenImage()
@@ -311,5 +310,23 @@ namespace StegomaticProject.StegoSystemUI
         {
             return Convert.ToInt32((height * width * 0.18) / 12);
         }
+
+        //NotificationWindow _currentlyWorkingNotificationWindow;
+
+        //public void ShowSteganographyEnded()
+        //{
+        //    if (_currentlyWorkingNotificationWindow != null)
+        //    {
+        //        _currentlyWorkingNotificationWindow.Dispose();
+        //    }
+        //}
+
+        //public void ShowSteganographyStarted()
+        //{
+        //    _currentlyWorkingNotificationWindow = new NotificationWindow();
+        //    _currentlyWorkingNotificationWindow.LabelText = "Currently encoding...";
+        //    _currentlyWorkingNotificationWindow.TopMost = true;
+        //    _currentlyWorkingNotificationWindow.Show();
+        //}
     }
 }

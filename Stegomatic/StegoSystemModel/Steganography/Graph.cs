@@ -30,7 +30,21 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             List<EncodeVertex> encodeVertexList = ConstructVertices(pixelList, pixelsNeeded, secretMessage);
             CheckIfMatched(encodeVertexList);
+
+            int countActiveVerts = 0;
+            foreach (var item in encodeVertexList)
+            {
+                if (item.Active == true)
+                {
+                    countActiveVerts++;
+                }
+            }
+            Console.WriteLine("Active verts:        " + countActiveVerts);
+
             List<Edge> listOfEdges = ConstructEdges(encodeVertexList);
+
+            Console.WriteLine("All edges:       " + listOfEdges.Count);
+
             CheckIfMatched(encodeVertexList);
             List<Edge> matchedEdges = CalcGraphMatching(encodeVertexList, listOfEdges);
             CheckIfMatched(encodeVertexList);
@@ -47,6 +61,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //Console.WriteLine("Matched edge [0]:        " + matchedEdges[0].ToString());
             //CheckIfMatched(encodeVertexList);
             PixelModify(encodeVertexList);
+            Console.WriteLine("Pixels swapped:      " + trades);
         }
 
         private List<DecodeVertex> ConstructVertices(List<Pixel> pixelList, int pixelsNeeded)
@@ -60,7 +75,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             return decodeVertexList;
         }
         private List<EncodeVertex> ConstructVertices(List<Pixel> pixelList, int pixelsNeeded, List<byte> secretMessage)
-
         {
             List<EncodeVertex> encodeVertexList = new List<EncodeVertex>();
             int counter = 0;
@@ -75,12 +89,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private List<Edge> ConstructEdges(List<EncodeVertex> encodeVertexList)
         {
             List<Edge> listOfEdges = new List<Edge>();
-            short amountOfEdges = 0;
+            
             int lowestWeight = GraphTheoryBased.MaxEdgeWeight;
             int edgeWeight;
 
             foreach (EncodeVertex item1 in encodeVertexList)
             {
+                int amountOfEdges = 0;
                 foreach (EncodeVertex item2 in encodeVertexList)
                 {
                     if (item1.Active == true && item2.Active == true)
@@ -160,14 +175,27 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
         }
 
-        private void SortVertexListByEdgeAndWeight(List<EncodeVertex> encodeVertexList)
+        private List<EncodeVertex> SortVertexListByEdgeAndWeight(List<EncodeVertex> encodeVertexList)
         {
-            encodeVertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight);
+            return encodeVertexList.OrderBy(x => x.NumberOfEdges).ThenBy(x => x.LowestEdgeWeight).ToList();
         }
 
         private List<Edge> CalcGraphMatching(List<EncodeVertex> encodeVertexList, List<Edge> listOfEdges)
         {
-            SortVertexListByEdgeAndWeight(encodeVertexList);
+
+            encodeVertexList = SortVertexListByEdgeAndWeight(encodeVertexList);
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.WriteLine(encodeVertexList[i].ToString());
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            for (int i = encodeVertexList.Count - 5; i < encodeVertexList.Count; i++)
+            {
+                Console.WriteLine(encodeVertexList[i].ToString());
+            }
 
             List<Edge> tempMatched = new List<Edge>();
 
@@ -181,8 +209,18 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         if (edge.VertexOne == vert || edge.VertexTwo == vert)
                         {
                             InternalEdgeList.Add(edge);
+
                         }
                     }
+
+
+                    //Console.WriteLine(vert.ToString());
+                    //for (int i = 0; i < InternalEdgeList.Count; i++)
+                    //{
+                    //    Console.WriteLine(InternalEdgeList[i].ToString());
+                    //    Console.WriteLine();
+                    //}
+                    //Console.ReadKey();
 
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
@@ -194,30 +232,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         Edge M = SortedInternalList.First();
                         tempMatched.Add(M);
 
-                        //for (int i = 0; i < listOfEdges.Count; i++)
-                        //{
-                        //    if (listOfEdges[i].VertexOne.Id == M.VertexOne.Id || listOfEdges[i].VertexTwo.Id == M.VertexOne.Id ||
-                        //           listOfEdges[i].VertexOne.Id == M.VertexTwo.Id || listOfEdges[i].VertexTwo.Id == M.VertexTwo.Id)
-                        //    {
-                        //        listOfEdges.Remove(listOfEdges[i]);
-                        //    }
-                        //}
-
                     }
 
                 }
             }
-            //Console.WriteLine("Verts:   " + encodeVertexList.Count);
-            //Console.WriteLine("Before -     " + tempMatched.Count);
-
-            List<Edge> matchedEdges = DeleteDuplicatesInList(tempMatched);
-            ////List<Edge> matchedEdges = tempMatched;
-            //Console.WriteLine("After -     " + matchedEdges.Count);
-
-            //foreach (var item in matchedEdges)
-            //{
-            //    Console.WriteLine(item.VertexOne.Id + " " + item.VertexTwo.Id);
-            //}
+            List<Edge> matchedEdges = tempMatched;
 
             return matchedEdges;
         }
@@ -307,11 +326,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
         }
 
-        //int tmp = 1;
+        int trades = 0;
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
-            //Console.WriteLine(tmp);
-            //tmp++;
+            
+            trades++;
 
             //Console.WriteLine("Before swapped");
             //Console.WriteLine("pix 1: " + pixelOne.ToString());

@@ -31,6 +31,16 @@ namespace StegomaticProject.Tests.ModelTests
             _image = new Bitmap(width, height);
             Graphics g = Graphics.FromImage(_image);
             g.Clear(Color.Blue);
+            //Color white = Color.White;
+
+            //for (int y = 0; y < height; y++)
+            //{
+            //    for (int x = 0; x < width; x++)
+            //    {
+            //        _image.SetPixel(x, y, white);
+            //    }
+            //}
+
 
             _stegoTest = new GraphTheoryBased();
             _standardSeed = "123";

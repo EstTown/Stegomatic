@@ -11,12 +11,20 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     {
         public EncodeVertex(byte partOfSecretMessage, params Pixel[] pixels) : base(pixels) 
         {
-            //all vertices will be set to active, no matter what
-            this.Active = false;
-
             this.PartOfSecretMessage = partOfSecretMessage;
-
             CalculateTargetValues();
+            
+            //all vertices will be set to active, no matter what
+            this.Active = true;
+            if (partOfSecretMessage != VertexValue)
+            {
+                this.Active = true;
+            }
+            else
+            {
+                this.Active = false;
+            }
+            
         }
         
         public int LowestEdgeWeight { get; set; }

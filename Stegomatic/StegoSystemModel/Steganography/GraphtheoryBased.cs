@@ -167,7 +167,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return convertedPassphrase;
         }
-
+        
         private List<Pixel> GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             List<Pixel> pixelList = new List<Pixel>();

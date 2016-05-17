@@ -49,10 +49,9 @@ namespace StegomaticProject.StegoSystemUI
             get { return new ModelConfiguration(_mainMenu.EncryptChecked, _mainMenu.CompressChecked); }
         }
 
-        public event DisplayNotificationEventHandler NotifyUser; // DELETE THIS MAYBE?!
+        public event DisplayNotificationEventHandler NotifyUser; 
         public event BtnEventHandler DecodeBtn;
         public event BtnEventHandler EncodeBtn;
-        //public event BtnEventHandler SaveImageBtn;
         public event BtnEventHandler OpenImageBtn;
 
         public StegoSystemWinForm()
@@ -71,19 +70,9 @@ namespace StegomaticProject.StegoSystemUI
             _mainMenu.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
             _mainMenu.EncodeBtnClick += new BtnEventHandler(this.EncodeBtnClick);
             _mainMenu.DecodeBtnClick += new BtnEventHandler(this.DecodeBtnClick);
-            //_mainMenu.SaveImageBtnClick += new BtnEventHandler(this.SaveImageBtnClick);
             _mainMenu.OpenImageBtnClick += new BtnEventHandler(this.OpenImageBtnClick);
-            // Either we don't need SaveImage here, or we need OpenImage here as well. They may be fine to be handled in the form itself. 
             _mainMenu.CompressionCheckToggle += new BtnEventHandler(this.ForceUpdateImageCapacity);
         }
-
-        //private void SaveImageBtnClick(BtnEvent e)
-        //{
-        //    if (SaveImageBtn != null)
-        //    {
-        //        SaveImageBtn(new BtnEvent());
-        //    }
-        //}
 
         private void OpenImageBtnClick(BtnEvent e)
         {
@@ -310,23 +299,5 @@ namespace StegomaticProject.StegoSystemUI
         {
             return Convert.ToInt32((height * width * 0.18) / 12);
         }
-
-        //NotificationWindow _currentlyWorkingNotificationWindow;
-
-        //public void ShowSteganographyEnded()
-        //{
-        //    if (_currentlyWorkingNotificationWindow != null)
-        //    {
-        //        _currentlyWorkingNotificationWindow.Dispose();
-        //    }
-        //}
-
-        //public void ShowSteganographyStarted()
-        //{
-        //    _currentlyWorkingNotificationWindow = new NotificationWindow();
-        //    _currentlyWorkingNotificationWindow.LabelText = "Currently encoding...";
-        //    _currentlyWorkingNotificationWindow.TopMost = true;
-        //    _currentlyWorkingNotificationWindow.Show();
-        //}
     }
 }

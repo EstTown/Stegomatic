@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.IO;
 using System.Windows.Forms;
 using StegomaticProject.CustomExceptions;
 
@@ -15,8 +16,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         //Create list for values of bitpairs in message
         public List<IEnumerable<byte>> BitPairValueList = new List<IEnumerable<byte>>();
         public const int SamplesVertexRatio = 3, Modulo = 4, MaxEdgeWeight = 10, PixelsPerByte = 12;
-
-        //Our own modulo, because C#'s '%' sucks
+        
         public static int Mod(int x, int m)
         {
             return (x % m + m) % m;
@@ -106,7 +106,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
 
-            //at some point we need to calculate a graph, therefore make new graph
+            //at some point we need to calculate a graph, therefore make a new graph
             Graph graph = new Graph();
             List<EncodeVertex> encodeVertexList;
             List<Edge> listOfEdges = graph.ConstructGraph(pixelList, amountOfPixels, newMessage, out encodeVertexList);
@@ -114,14 +114,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             graph.ModifyGraph(listOfEdges, encodeVertexList);
             
             coverImage = EmbedPixelListIntoImage(pixelList, coverImage, amountOfPixels);
-
             
             return coverImage;
         }
 
-        private byte CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
+        private int CalculateEdgeWeight(Pixel vertPixOne, Pixel vertPixTwo)
         {
-            byte weight = 0;
+            int weight = 0;
             return weight;
         }
 
@@ -412,7 +411,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         public int CalculateImageCapacity(int height, int width)
         {
-            return (height*width)/12;
+            return (height*width)/GraphTheoryBased.PixelsPerByte;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -11,15 +12,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Graph
     {
-        /*
-        public List<Pixel> PixelList;
-        public List<EncodeVertex> EncodeVertexList = new List<EncodeVertex>();
-        public List<DecodeVertex> DecodeVertexList = new List<DecodeVertex>();
-        public List<Edge> EdgeList = new List<Edge>();
-        public List<Edge> MatchedEdges = new List<Edge>();
-        public int PixelsNeeded { get; }
-        */
-        
         public List<DecodeVertex> ConstructGraph(List<Pixel> pixelList, int pixelsNeeded)
         {
             List<DecodeVertex> decodeVertexList = ConstructVertices(pixelList, pixelsNeeded);
@@ -31,6 +23,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             List<EncodeVertex> encodeVertexList = ConstructVertices(pixelList, pixelsNeeded, secretMessage);
             CheckIfMatched(encodeVertexList);
 
+            
+
             int countActiveVerts = 0;
             foreach (var item in encodeVertexList)
             {
@@ -39,31 +33,37 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     countActiveVerts++;
                 }
             }
-            Console.WriteLine("Active verts:        " + countActiveVerts);
 
             List<Edge> listOfEdges = ConstructEdges(encodeVertexList);
-
-            Console.WriteLine("All edges:       " + listOfEdges.Count);
-
+            
             CheckIfMatched(encodeVertexList);
             List<Edge> matchedEdges = CalcGraphMatching(encodeVertexList, listOfEdges);
             CheckIfMatched(encodeVertexList);
-            vertexList = encodeVertexList; //
+            vertexList = encodeVertexList;
+
+            //write datat to file
+            StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt"); //is located under debugger
+            file.WriteLine("Active vertices " + " | " + "Total Edges " + "|" + "Matched Edges");
+            file.WriteLine(countActiveVerts + "                     " + listOfEdges.Count + "                       "+matchedEdges.Count+"");
+            file.Close();
+
+            
             return matchedEdges;
         }
-
+        
         public void ModifyGraph(List<Edge> matchedEdges, List<EncodeVertex> encodeVertexList)
         {
-
-
             //these methods change pixels, which they do through edges and vertices, which have references to pixels.
             PixelSwap(matchedEdges);
-            //Console.WriteLine("Matched edge [0]:        " + matchedEdges[0].ToString());
-            //CheckIfMatched(encodeVertexList);
             PixelModify(encodeVertexList);
-            Console.WriteLine("Pixels swapped:      " + trades);
+
+            StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt");
+            file.WriteLine("Vertices embedded through swapping");
+            file.WriteLine(trades*2);
+            file.Close();
         }
 
+        public int trades = 0;
         private List<DecodeVertex> ConstructVertices(List<Pixel> pixelList, int pixelsNeeded)
         {
             List<DecodeVertex> decodeVertexList = new List<DecodeVertex>();
@@ -141,7 +141,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         {
                             weight = CalculateWeightForOneEdge(vertex1.PixelsForThisVertex[i],
                                 vertex2.PixelsForThisVertex[j]);
-                            tempEdge = new Edge(vertex1, vertex2, vertex1.PixelsForThisVertex[i], vertex2.PixelsForThisVertex[j], (byte)weight);
+                            tempEdge = new Edge(vertex1, vertex2, vertex1.PixelsForThisVertex[i], vertex2.PixelsForThisVertex[j], weight);
                         }
                     }
                 }
@@ -153,11 +153,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 lowestWeight = weight;
                 return true;
             }
-            lowestWeight = 11;
+            lowestWeight = 11; //random value
             return false;
         }
 
-        private int CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
+        public int CalculateWeightForOneEdge(Pixel pixel1, Pixel pixel2)
         {
             int weight = (Math.Abs(pixel1.Color.R - pixel2.Color.R) + Math.Abs(pixel1.Color.G - pixel2.Color.G) +
                      Math.Abs(pixel1.Color.B - pixel2.Color.B));
@@ -184,18 +184,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
 
             encodeVertexList = SortVertexListByEdgeAndWeight(encodeVertexList);
-
-            for (int i = 0; i < 10; i++)
-            {
-                Console.WriteLine(encodeVertexList[i].ToString());
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            for (int i = encodeVertexList.Count - 5; i < encodeVertexList.Count; i++)
-            {
-                Console.WriteLine(encodeVertexList[i].ToString());
-            }
+            
 
             List<Edge> tempMatched = new List<Edge>();
 
@@ -226,14 +215,13 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
                     if (SortedInternalList.FirstOrDefault() == null)
                     {
+                        //do nothing
                     }
                     else
                     {
                         Edge M = SortedInternalList.First();
                         tempMatched.Add(M);
-
                     }
-
                 }
             }
             List<Edge> matchedEdges = tempMatched;
@@ -313,8 +301,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private void PixelSwap(List<Edge> matchedEdges)
         {
-            //Console.WriteLine(matchedEdges.Count);
-            //Console.ReadKey();
             foreach (Edge edge in matchedEdges)
             {
                 if (edge.VertexOne.Active == true && edge.VertexTwo.Active == true)
@@ -326,7 +312,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             }
         }
 
-        int trades = 0;
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
             
@@ -351,7 +336,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         }
 
-        public void PixelModify(List<EncodeVertex> encodeVertexList)
+        private void PixelModify(List<EncodeVertex> encodeVertexList)
         {
             /*
             foreach (var item in encodeVertexList)
@@ -404,9 +389,5 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             //calculate difference
         }
-
-
-        
-
     }
 }

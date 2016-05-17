@@ -36,7 +36,6 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.NotifyUser += new DisplayNotificationEventHandler(this.ShowNotification);
             _stegoUI.EncodeBtn += new BtnEventHandler(this.EncodeImage);
             _stegoUI.DecodeBtn += new BtnEventHandler(this.DecodeImage);
-            //_stegoUI.SaveImageBtn += new BtnEventHandler(this.SaveImage); // MAYBE WE DON'T NEED THIS ONE??
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
             SubscribeBackgroundWorkerEvents();
@@ -82,7 +81,6 @@ namespace StegomaticProject.StegoSystemController
 
         private void ShowDecodingSuccessNotification(string message)
         {
-            // REMOVE THE EMPTY PARTS OF THE MESSAGE SOMEHOW??!!
             message = message.TrimEnd('\0');
             _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
         }
@@ -131,7 +129,7 @@ namespace StegomaticProject.StegoSystemController
             
             try
             {
-                _backgroundWorkerProgressBar.Close();
+                _backgroundWorkerProgressBar.Hide();
                 _stegoUI.Enable = true;
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
@@ -167,33 +165,17 @@ namespace StegomaticProject.StegoSystemController
                 message = _verifyUserInput.Message(message);
                 stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
-                //Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
-
-                //Tuple<Bitmap, string, string, string, bool, bool> tuple = new Tuple<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
-
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                _backgroundWorkerProgressBar.Show(); //Show that we're working on it!
-                _stegoUI.Enable = false; //Disable the main-window, so the user doesn't fuck with anything they're not supposed to
-                _worker.RunWorkerAsync(args);
+                _backgroundWorkerProgressBar.Show(); 
+                //Show that we're working on it!
 
-                
+                _stegoUI.Enable = false; 
+                //Disable the main-window, so the user click on anything they're not supposed to.
+
+                _worker.RunWorkerAsync(args);
                 // When worker is done and event will fire and ThreadedEncodeComplete() will be executed, which
                 // will start a save-dialog when the encoding-process is completed.
-
-
-                //try
-                //{
-                //    _stegoUI.SaveImage(GlobalBitmap);
-                //}
-                //catch (NotifyUserException exception)
-                //{
-                //    ShowNotification(new DisplayNotificationEvent(exception));
-                //}
-
-                //_stegoUI.SetDisplayImage(GlobalBitmap);
-                //ShowEncodingSuccessNotification(config.Encrypt, encryptionKey, stegoSeed);
-
             }
             catch (NotifyUserException exception)
             {
@@ -236,17 +218,5 @@ namespace StegomaticProject.StegoSystemController
             {
             }
         }
-
-        //public void SaveImage(BtnEvent btnEvent)
-        //{
-        //    try
-        //    {
-        //        _stegoUI.SaveImage();
-        //    }
-        //    catch (NotifyUserException exception)
-        //    {
-        //        ShowNotification(new DisplayNotificationEvent(exception));
-        //    }
-        //}
     }
 }

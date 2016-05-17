@@ -23,13 +23,10 @@ namespace StegomaticProject.StegoSystemUI
         public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtn;
         public event BtnEventHandler EncodeBtn;
-        public event BtnEventHandler SaveImageBtn;
         public event BtnEventHandler OpenImageBtn;
 
         public void SetDisplayImage(Bitmap newImage)
         {
-            // VERIFY SOMEHOW? 
-            // PUT INTO UI
             DisplayImage = newImage;
             throw new NotImplementedException();
         }
@@ -82,15 +79,5 @@ namespace StegomaticProject.StegoSystemUI
         {
             throw new NotImplementedException();
         }
-
-        //public void ShowSteganographyEnded()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void ShowSteganographyStarted()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

@@ -44,7 +44,6 @@ namespace StegomaticProject.StegoSystemController
 
         private void SubscribeBackgroundWorkerEvents()
         {
-            AutoResetEvent resetEvent = new AutoResetEvent(false);
             // Backgroundworker to have WinForm run on a different thread as the model.
             _worker.WorkerReportsProgress = true;
             _worker.WorkerSupportsCancellation = true;

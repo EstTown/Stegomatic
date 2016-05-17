@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
+using StegomaticProject.CustomExceptions;
 
 namespace StegomaticProject.StegoSystemModel.Cryptograhy
 {
@@ -14,7 +15,15 @@ namespace StegomaticProject.StegoSystemModel.Cryptograhy
         public string Decrypt(string cipherText, string password)
         {
             string plaintext = null;
-            byte[] encrypted = Convert.FromBase64String(cipherText);
+            byte[] encrypted;
+            try
+            {
+                encrypted = Convert.FromBase64String(cipherText);
+            }
+            catch (FormatException)
+            {
+                throw new NotifyUserException("Failed decrypting message, message might not have been encrypted at all.");
+            }
 
             /*New instance of the AES-class*/
             using (RijndaelManaged aesAlg = new RijndaelManaged())

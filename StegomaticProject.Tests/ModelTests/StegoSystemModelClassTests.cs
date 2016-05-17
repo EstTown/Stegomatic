@@ -38,12 +38,13 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase(true, false)]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public void EncodeDecode_Message_NoLossOfData(bool encrypt, bool compress)
+        public void EncodeDecode_Configuration_NoLossOfData(bool encrypt, bool compress)
         {
             Bitmap stegoObject;
             string decodedMessage;
             stegoObject = _stegoModel.EncodeMessageInImage(_image, _message, _key, _seed, encrypt, compress);
             decodedMessage = _stegoModel.DecodeMessageFromImage(stegoObject, _key, _seed, encrypt, compress);
+            Assert.AreEqual(decodedMessage, _message);
         }
 
         [Test]

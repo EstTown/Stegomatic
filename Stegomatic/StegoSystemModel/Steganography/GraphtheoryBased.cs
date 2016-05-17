@@ -130,7 +130,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             int seed;
             string temp = "";
 
-            //convert passphrase to ASCII values
+            //convert passphrase to UTF8 values
             passphrase = ConvertTextToUTF8Value(passphrase);
 
             while (true)
@@ -168,7 +168,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             return convertedPassphrase;
         }
-
+        
         private List<Pixel> GetRandomPixelsAddToList2(Bitmap image, string passphrase, int pixelsNeeded)
         {
             List<Pixel> pixelList = new List<Pixel>();

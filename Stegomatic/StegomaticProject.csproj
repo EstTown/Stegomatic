@@ -112,6 +112,12 @@
     <Compile Include="StegoSystemUI\NotificationWindow.Designer.cs">
       <DependentUpon>NotificationWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="StegoSystemUI\PopupDisplayMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StegoSystemUI\PopupDisplayMessage.Designer.cs">
+      <DependentUpon>PopupDisplayMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="StegoSystemUI\PopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StegoSystemUI\NotificationWindow.resx">
       <DependentUpon>NotificationWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StegoSystemUI\PopupDisplayMessage.resx">
+      <DependentUpon>PopupDisplayMessage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StegoSystemUI\PopupForm.resx">
       <DependentUpon>PopupForm.cs</DependentUpon>

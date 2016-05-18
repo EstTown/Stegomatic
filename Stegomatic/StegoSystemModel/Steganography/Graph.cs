@@ -42,10 +42,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             vertexList = encodeVertexList;
 
             //write datat to file
-            StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt"); //is located under debugger
-            file.WriteLine("Active vertices " + " | " + "Total Edges " + "|" + "Matched Edges");
-            file.WriteLine(countActiveVerts + "                     " + listOfEdges.Count + "                       "+matchedEdges.Count+"");
-            file.Close();
+            //StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt"); //is located under debugger
+            //file.WriteLine("Active vertices " + " | " + "Total Edges " + "|" + "Matched Edges");
+            //file.WriteLine(countActiveVerts + "                     " + listOfEdges.Count + "                       "+matchedEdges.Count+"");
+            //file.Close();
 
             
             return matchedEdges;
@@ -57,10 +57,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             PixelSwap(matchedEdges);
             PixelModify(encodeVertexList);
 
-            StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt");
-            file.WriteLine("Vertices embedded through swapping");
-            file.WriteLine(trades*2);
-            file.Close();
+            //StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt");
+            //file.WriteLine("Vertices embedded through swapping");
+            //file.WriteLine(trades*2);
+            //file.Close();
         }
 
         public int trades = 0;

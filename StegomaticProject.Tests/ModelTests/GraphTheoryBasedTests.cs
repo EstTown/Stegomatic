@@ -31,6 +31,7 @@ namespace StegomaticProject.Tests.ModelTests
             _image = new Bitmap(width, height);
             Graphics g = Graphics.FromImage(_image);
             g.Clear(Color.Blue);
+            
             //Color white = Color.White;
 
             //for (int y = 0; y < height; y++)
@@ -46,7 +47,7 @@ namespace StegomaticProject.Tests.ModelTests
             _standardSeed = "123";
             _standardMessage = "1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!";
             _standardByteMessage = ByteConverter.StringToByteArray(_standardMessage);
-            _standardStegoObject = _stegoTest.Encode(_image, _standardSeed, _standardByteMessage);
+            _standardStegoObject = new Bitmap(_stegoTest.Encode(_image, _standardSeed, _standardByteMessage));
 
             //byteArray = new byte[1] {83};
 
@@ -116,7 +117,7 @@ namespace StegomaticProject.Tests.ModelTests
         public void Encode_Message_ResultIsDifferent(string text)
         {
             byte[] byteMessage = ByteConverter.StringToByteArray(text);
-            Bitmap stegoObject = _stegoTest.Encode(_image, _standardSeed, byteMessage);
+            Bitmap stegoObject = _stegoTest.Encode(new Bitmap(_image), _standardSeed, byteMessage);
             Assert.Greater(ImagePixelDifference(stegoObject, _image), 0);
         }
 
@@ -139,7 +140,7 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
         public void Encode_Seed_SeedAffectsResult(string seed)
         {
-            Bitmap stegoObject = _stegoTest.Encode(_image, seed, _standardByteMessage);
+            Bitmap stegoObject = new Bitmap(_stegoTest.Encode(_image, seed, _standardByteMessage));
             Assert.Greater(ImagePixelDifference(stegoObject, _standardStegoObject), 0);
         }
 
@@ -168,7 +169,7 @@ namespace StegomaticProject.Tests.ModelTests
         public void EncodeDecode_Message_NoLossOfData(string message)
         {
             byte[] byteMessage = ByteConverter.StringToByteArray(message);
-            Bitmap coverImage = _stegoTest.Encode(_image, _standardSeed, byteMessage);
+            Bitmap coverImage = new Bitmap(_stegoTest.Encode(_image, _standardSeed, byteMessage));
             _stegoTest.Decode(coverImage, _standardSeed);
             string decodedMessage = ByteConverter.ByteArrayToString(byteMessage);
             Assert.AreEqual(message, decodedMessage);

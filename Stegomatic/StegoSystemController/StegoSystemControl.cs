@@ -81,7 +81,7 @@ namespace StegomaticProject.StegoSystemController
         private void ShowDecodingSuccessNotification(string message)
         {
             message = message.TrimEnd('\0');
-            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
+            _stegoUI.ShowMessageNotification($"Message decoded successfully: \n \"{message}\"", "Success");
         }
 
         public void OpenImage(BtnEvent e)

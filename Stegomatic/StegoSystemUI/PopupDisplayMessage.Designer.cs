@@ -76,8 +76,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox;
         public System.Windows.Forms.RichTextBox txtbox_display;
+        private System.Windows.Forms.GroupBox groupBox;
     }
 }

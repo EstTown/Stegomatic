@@ -79,5 +79,10 @@ namespace StegomaticProject.StegoSystemUI
         {
             throw new NotImplementedException();
         }
+
+        public void ShowMessageNotification(string notification, string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

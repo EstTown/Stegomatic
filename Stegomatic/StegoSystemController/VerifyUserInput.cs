@@ -38,7 +38,8 @@ namespace StegomaticProject.StegoSystemController
         {
             if (string.IsNullOrEmpty(encryptionKey))
             {
-                return "123"; //string.Empty;
+                //return "123"; //string.Empty;
+                throw new NotifyUserException("A password is required!", "Error");
             }
             return encryptionKey;
         }
@@ -47,7 +48,8 @@ namespace StegomaticProject.StegoSystemController
         {
             if (string.IsNullOrEmpty(stegoSeed))
             {
-                return "123"; //string.Empty;
+                //return "123"; //string.Empty;
+                throw new NotifyUserException("A password is required!", "Error");
             }
             return stegoSeed;
         }

@@ -119,14 +119,15 @@ namespace StegomaticProject.StegoSystemUI
             //userNotificationWindow.ShowDialog();
         }
 
-        public void ShowMessageNotification(string notification, string title = "")
+        public void ShowMessageNotification(string notification, string text, string title = "")
         {
             // Initialize a popup window and show the message!
             //MessageBox.Show(notification, title);
 
             PopupDisplayMessage popup = new PopupDisplayMessage();
             popup.Text = title;
-            popup.txtbox_display.Text = notification;
+            popup.groupBox.Text = notification;
+            popup.txtbox_display.Text = text;
             popup.ShowDialog();
 
             //NotificationWindow userNotificationWindow = new NotificationWindow();

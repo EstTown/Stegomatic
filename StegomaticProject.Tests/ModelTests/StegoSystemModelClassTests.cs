@@ -42,7 +42,7 @@ namespace StegomaticProject.Tests.ModelTests
         {
             Bitmap stegoObject;
             string decodedMessage;
-            stegoObject = _stegoModel.EncodeMessageInImage(_image, _message, _key, _seed, encrypt, compress);
+            stegoObject = _stegoModel.EncodeMessageInImage(new Bitmap(_image), _message, _key, _seed, encrypt, compress);
             decodedMessage = _stegoModel.DecodeMessageFromImage(stegoObject, _key, _seed, encrypt, compress);
             Assert.AreEqual(decodedMessage, _message);
         }

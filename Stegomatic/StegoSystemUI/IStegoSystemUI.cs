@@ -22,7 +22,7 @@ namespace StegomaticProject.StegoSystemUI
         // Modify UI
         void SetDisplayImage(Bitmap newImage);
         void ShowNotification(string notification, string title);
-        void ShowMessageNotification(string notification, string title);
+        void ShowMessageNotification(string notification, string text, string title);
         string GetEncryptionKey();
         string GetStegoSeed();
         void OpenImage();

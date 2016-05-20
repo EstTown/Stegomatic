@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StegomaticProject.StegoSystemController;
 using StegomaticProject.StegoSystemModel;
 using StegomaticProject.StegoSystemUI;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Threading;
-using StegomaticProject.StegoSystemModel.Steganography;
-using System.Drawing.Imaging;
 
 namespace StegomaticProject
 {

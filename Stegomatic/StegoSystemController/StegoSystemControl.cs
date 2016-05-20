@@ -6,10 +6,6 @@ using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.CustomExceptions;
 using System.ComponentModel;
-using StegomaticProject.StegoSystemModel.Steganography;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemController
 {

@@ -1,5 +1,4 @@
-﻿using StegomaticProject.StegoSystemUI.Config;
-using StegomaticProject.StegoSystemUI.Events;
+﻿using StegomaticProject.StegoSystemUI.Events;
 
 namespace StegomaticProject.StegoSystemController
 {

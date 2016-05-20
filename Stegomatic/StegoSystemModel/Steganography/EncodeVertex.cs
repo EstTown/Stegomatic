@@ -38,9 +38,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             TargetValues = new int[GraphTheoryBased.SamplesVertexRatio];
 
-            //calculate difference. It could be zero, and if it is, the vertex is already matched, and therefore the targetvalues are of no use. Put in if statement probably. if (d == 0) {dont calculate anything, waste of time}
-            //int d =  Math.Abs(this.VertexValue - this.PartOfSecretMessage);
-
             int d;
             if (this.VertexValue < this.PartOfSecretMessage)
             {

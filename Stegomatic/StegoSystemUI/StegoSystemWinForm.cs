@@ -16,7 +16,7 @@ namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {
-        private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
+        private Form1 _mainMenu { get; set; }
 
         public Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
 
@@ -110,30 +110,16 @@ namespace StegomaticProject.StegoSystemUI
 
         public void ShowNotification(string notification, string title = "")
         {
-            // Initialize a popup window and show the message!
             MessageBox.Show(notification, title);
-
-            //NotificationWindow userNotificationWindow = new NotificationWindow();
-            //userNotificationWindow.Text = title;
-            //userNotificationWindow.LabelText = notification;
-            //userNotificationWindow.ShowDialog();
         }
 
         public void ShowMessageNotification(string notification, string text, string title = "")
         {
-            // Initialize a popup window and show the message!
-            //MessageBox.Show(notification, title);
-
             PopupDisplayMessage popup = new PopupDisplayMessage();
             popup.Text = title;
             popup.groupBox.Text = notification;
             popup.txtbox_display.Text = text;
             popup.ShowDialog();
-
-            //NotificationWindow userNotificationWindow = new NotificationWindow();
-            //userNotificationWindow.Text = title;
-            //userNotificationWindow.LabelText = notification;
-            //userNotificationWindow.ShowDialog();
         }
 
         public void Start()
@@ -173,7 +159,6 @@ namespace StegomaticProject.StegoSystemUI
         private string GetUserStringPopup(string popupTitle, string popupTextBoxTitle)
         {
             // Create a popup window and return the entered string. 
-
             UserInputPopup popupWindow = new UserInputPopup();
             popupWindow.Text = popupTitle;
             popupWindow.TextBoxTitle = popupTextBoxTitle;

@@ -203,20 +203,11 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                         }
                     }
 
-
-                    //Console.WriteLine(vert.ToString());
-                    //for (int i = 0; i < InternalEdgeList.Count; i++)
-                    //{
-                    //    Console.WriteLine(InternalEdgeList[i].ToString());
-                    //    Console.WriteLine();
-                    //}
-                    //Console.ReadKey();
-
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
                     if (SortedInternalList.FirstOrDefault() == null)
                     {
-                        //do nothing
+                        //in case of this, skip
                     }
                     else
                     {
@@ -289,12 +280,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
         private void TradePixelValues(Pixel pixelOne, Pixel pixelTwo)
         {
-            
-            trades++;
+            trades++; //This is used to count number of times we trade pixelvalues
 
-            //Console.WriteLine("Before swapped");
-            //Console.WriteLine("pix 1: " + pixelOne.ToString());
-            //Console.WriteLine("pix 2: " + pixelTwo.ToString());
             int tempPosX = pixelOne.PosX;
             int tempPosY = pixelOne.PosY;
 
@@ -303,23 +290,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             pixelTwo.PosX = tempPosX;
             pixelTwo.PosY = tempPosY;
-
-
-            //Console.WriteLine("After swapped");
-            //Console.WriteLine("pix 1: " + pixelOne.ToString());
-            //Console.WriteLine("pix 2: " + pixelTwo.ToString());
-
         }
 
         private void PixelModify(List<EncodeVertex> encodeVertexList)
         {
-            /*
-            foreach (var item in encodeVertexList)
-            {
-                Console.WriteLine("in pixModify");
-                Console.WriteLine(item.Active + "   " + item.VertexValue);
-            }
-            */
             foreach (var item in encodeVertexList)
             {
                 if (item.Active == true)
@@ -353,16 +327,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
                 vertex.PixelsForThisVertex[i].ColorDifference = localDifference;
             }
-        }
-
-        private void HelpMethodPixelModify2(EncodeVertex vertex)
-        {
-            //only need to change 1 pixels color 
-            int vertexValue = 3; //secret message value = 0
-            int pixelvalue = 2;
-            int targetValue = 3;
-
-            //calculate difference
         }
     }
 }

@@ -40,7 +40,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             byteList = ValuesToByteArray(decodeVertexList);
             
             return byteList.ToArray();
-
         }
 
         private List<Pixel> ShortenPixelList(List<Pixel> pixelList, int pixelsToSkip)
@@ -378,9 +377,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                     i = 0;
                 }
             }
-
             byteList.Reverse();
-            //Console.WriteLine("Length of bytelist:  " + byteList.Count);
             return byteList;
         }
         private byte ConvertToByte(BitArray bits)

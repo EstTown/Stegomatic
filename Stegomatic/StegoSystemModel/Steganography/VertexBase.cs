@@ -37,8 +37,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 temp += PixelsForThisVertex[i].EmbeddedValue;
-                //Console.WriteLine(PixelsForThisVertex[i].EmbeddedValue + "              " + temp );
-                //Console.ReadKey();
             }
             this.VertexValue = (temp % GraphTheoryBased.Modulo);
         }

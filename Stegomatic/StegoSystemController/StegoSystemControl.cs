@@ -20,8 +20,8 @@ namespace StegomaticProject.StegoSystemController
         private IVerifyUserInput _verifyUserInput;
 
         ProcessingPopup _backgroundWorkerProgressBar = new ProcessingPopup();
-        private BackgroundWorker _worker = new BackgroundWorker();
-        private BackgroundWorker _workerDecode = new BackgroundWorker();
+        private BackgroundWorker _encodeWorker = new BackgroundWorker();
+        private BackgroundWorker _DecodeWorker = new BackgroundWorker();
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
@@ -45,17 +45,17 @@ namespace StegomaticProject.StegoSystemController
 
         private void SubscribeBackgroundWorkerEvents()
         {
-            // Backgroundworker to have WinForm run on a different thread as the model.
-            _worker.WorkerReportsProgress = true;
-            _worker.WorkerSupportsCancellation = true;
-            _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
-            _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+            //Backgroundworker for encoding
+            _encodeWorker.WorkerReportsProgress = true;
+            _encodeWorker.WorkerSupportsCancellation = true;
+            _encodeWorker.DoWork += new DoWorkEventHandler(ThreadedEncode);
+            _encodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
 
-            // BACKGROUNDWORKER 2??? TO DECODE?
-            _workerDecode.WorkerReportsProgress = true;
-            _workerDecode.WorkerSupportsCancellation = true;
-            _workerDecode.DoWork += new DoWorkEventHandler(ThreadedDecode);
-            _workerDecode.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
+            //Backgroundworker for decoding
+            _DecodeWorker.WorkerReportsProgress = true;
+            _DecodeWorker.WorkerSupportsCancellation = true;
+            _DecodeWorker.DoWork += new DoWorkEventHandler(ThreadedDecode);
+            _DecodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
         }
 
         public void ShowNotification(DisplayNotificationEvent e)
@@ -209,7 +209,7 @@ namespace StegomaticProject.StegoSystemController
                 _stegoUI.Enable = false; 
                 //Disable the main-window, so the user click on anything they're not supposed to.
 
-                _worker.RunWorkerAsync(args);
+                _encodeWorker.RunWorkerAsync(args);
                 // When worker is done and event will fire and ThreadedEncodeComplete() will be executed, which
                 // will start a save-dialog when the encoding-process is completed.
             }
@@ -249,7 +249,7 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, bool, bool>(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                _workerDecode.RunWorkerAsync(args);
+                _DecodeWorker.RunWorkerAsync(args);
 
                 //string message= _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 

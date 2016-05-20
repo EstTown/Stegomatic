@@ -21,7 +21,7 @@ namespace StegomaticProject.StegoSystemController
 
         ProcessingPopup _backgroundWorkerProgressBar = new ProcessingPopup();
         private BackgroundWorker _encodeWorker = new BackgroundWorker();
-        private BackgroundWorker _DecodeWorker = new BackgroundWorker();
+        private BackgroundWorker _decodeWorker = new BackgroundWorker();
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
@@ -31,7 +31,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
-    }
+       }
 
         private void SubscribeToEvents()
         {
@@ -52,10 +52,10 @@ namespace StegomaticProject.StegoSystemController
             _encodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
 
             //Backgroundworker for decoding
-            _DecodeWorker.WorkerReportsProgress = true;
-            _DecodeWorker.WorkerSupportsCancellation = true;
-            _DecodeWorker.DoWork += new DoWorkEventHandler(ThreadedDecode);
-            _DecodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
+            _decodeWorker.WorkerReportsProgress = true;
+            _decodeWorker.WorkerSupportsCancellation = true;
+            _decodeWorker.DoWork += new DoWorkEventHandler(ThreadedDecode);
+            _decodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
         }
 
         public void ShowNotification(DisplayNotificationEvent e)
@@ -249,7 +249,7 @@ namespace StegomaticProject.StegoSystemController
 
                 var args = Tuple.Create<Bitmap, string, string, bool, bool>(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                _DecodeWorker.RunWorkerAsync(args);
+                _decodeWorker.RunWorkerAsync(args);
 
                 //string message= _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 

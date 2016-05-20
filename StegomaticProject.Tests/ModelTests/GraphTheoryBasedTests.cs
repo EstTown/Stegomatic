@@ -113,7 +113,7 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
         [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
         [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
-        [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
+        [TestCase("")]
         public void Encode_Message_ResultIsDifferent(string text)
         {
             byte[] byteMessage = ByteConverter.StringToByteArray(text);
@@ -121,17 +121,24 @@ namespace StegomaticProject.Tests.ModelTests
             Assert.Greater(ImagePixelDifference(stegoObject, _image), 0);
         }
 
-        //[TestCase("1234567890123456789012345678901234567890")]
-        //[TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
-        //[TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
-        //[TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
-        //[TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
-        //public void Decode_PlainImage_ResultIsEmpty(string seed)
-        //{
-        //    byte[] byteMessage = _stegoTest.Decode(_image, seed);
-        //    string message = ByteConverter.ByteArrayToString(byteMessage);
-        //    Assert.IsEmpty(message);
-        //}
+        [TestCase("1234567890123456789012345678901234567890")]
+        [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]
+        [TestCase("ABCDEFGHIJKLMNOPQRSTUXYZÆØÅABCDEFGHIJKLMNOPQRSTUXYZÆØÅ")]
+        [TestCase("!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?!#¤%&/()=?")]
+        [TestCase("1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!1aA!")]
+        public void Decode_PlainImage_ResultIsEmpty(string seed)
+        {
+            try
+            {
+                byte[] byteMessage = _stegoTest.Decode(_image, seed);
+                string message = ByteConverter.ByteArrayToString(byteMessage);
+            }
+            catch (NotifyUserException)
+            {
+                Assert.Pass();
+            }
+            Assert.Fail();
+        }
 
         [TestCase("1234567890123456789012345678901234567890")]
         [TestCase("abcdefghijklmnopqrstuxyzæøåabcdefghijklmnopqrstuxyzæøå")]

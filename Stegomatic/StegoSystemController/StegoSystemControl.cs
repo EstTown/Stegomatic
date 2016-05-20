@@ -107,11 +107,19 @@ namespace StegomaticProject.StegoSystemController
             bool encrypt = EncodingArgument.Item5;
             bool compress = EncodingArgument.Item6;
 
-            Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
+            try
+            {
+                Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
 
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
+                Tuple<Bitmap, string, string, bool, bool> EncodingInfo = 
+                    new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
 
-            e.Result = EncodingInfo;
+                e.Result = EncodingInfo;
+            }
+            catch (NotifyUserException exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public void ThreadProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -121,13 +129,21 @@ namespace StegomaticProject.StegoSystemController
 
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
+            _backgroundWorkerProgressBar.Hide();
+            _stegoUI.Enable = true;
+
+            if (e.Error != null)
+            {
+                ShowNotification(new DisplayNotificationEvent(e.Error.Message, "Error"));
+                return;
+            }
+
+            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = 
+                e.Result as Tuple<Bitmap, string, string, bool, bool>;
             Bitmap stegoObject = EncodingInfo.Item1;
             
             try
             {
-                _backgroundWorkerProgressBar.Hide();
-                _stegoUI.Enable = true;
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);

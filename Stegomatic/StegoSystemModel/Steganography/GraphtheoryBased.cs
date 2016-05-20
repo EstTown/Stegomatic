@@ -98,6 +98,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             message = AddMetaData(message);
 
             int amountOfPixels = CalculateRequiredPixels(message);
+            if (amountOfPixels > (coverImage.Width * coverImage.Height))
+            {
+                throw new NotifyUserException("Too many characters.");
+            }
             List<Pixel> pixelList = GetRandomPixelsAddToList2(coverImage, seed, amountOfPixels);
             //convert secretmessage
             List<byte> newMessage = ByteArrayToValues(message);
@@ -390,8 +394,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         
         private int CalculateRequiredPixels(byte[] byteArray)
         {
-            int amount = byteArray.Length * PixelsPerByte;
-            return amount;
+            return byteArray.Length * PixelsPerByte;
         }
         private Bitmap EmbedPixelListIntoImage(List<Pixel> pixelList,Bitmap image, int amountOfPixels)//already has acces to coverimage
         {

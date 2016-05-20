@@ -206,9 +206,6 @@ namespace StegomaticProject.StegoSystemController
 
                 string message= _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
-                //GraphTheoryBased a = new GraphTheoryBased();
-                //string message = a.Decode(coverImage, stegoSeed);
-
                 ShowDecodingSuccessNotification(message);
             }
             catch (NotifyUserException exception)

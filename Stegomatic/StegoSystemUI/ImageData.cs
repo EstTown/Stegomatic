@@ -22,7 +22,6 @@ namespace StegomaticProject.StegoSystemUI
 
             var fileLength = new FileInfo(file).Length;
             var filename = new FileInfo(file).Name;
-            //byte[] imageBytes = imageToByteArray(image);
             string[] tmp = { image.Width.ToString(), image.Height.ToString(), fileLength.ToString(), filename};
 
             return tmp;

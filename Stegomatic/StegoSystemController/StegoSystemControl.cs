@@ -16,6 +16,8 @@ namespace StegomaticProject.StegoSystemController
         private IVerifyUserInput _verifyUserInput;
 
         ProcessingPopup _backgroundWorkerProgressBar = new ProcessingPopup();
+        private BackgroundWorker _encoder = new BackgroundWorker();
+        //private BackgroundWorker _decoder = new BackgroundWorker();
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
@@ -37,22 +39,19 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
             SubscribeBackgroundWorkerEvents();
-            
         }
 
         private void SubscribeBackgroundWorkerEvents()
         {
-            // Backgroundworker to have WinForm run on a different thread as the model.
-            _worker.WorkerReportsProgress = true;
-            _worker.WorkerSupportsCancellation = true;
-            _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
-            _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
-            _worker.ProgressChanged += new ProgressChangedEventHandler(ThreadProgressChanged);
+            // Backgroundworker to have model run on a different thread as the UI.
+            _encoder.DoWork += new DoWorkEventHandler(ThreadedEncode);
+            _encoder.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
+            _encoder.ProgressChanged += new ProgressChangedEventHandler(ThreadProgressChanged);
 
-            // BACKGROUNDWORKER 2??? TO DECODE?
+            //_decoder.DoWork += new DoWorkEventHandler(ThreadedDecode);
+            //_decoder.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
+            //_decoder.ProgressChanged += new ProgressChangedEventHandler(ThreadProgressChanged);
         }
-
-        private BackgroundWorker _worker = new BackgroundWorker();
 
         public void ShowNotification(DisplayNotificationEvent e)
         {
@@ -111,8 +110,7 @@ namespace StegomaticProject.StegoSystemController
             {
                 Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
 
-                Tuple<Bitmap, string, string, bool, bool> EncodingInfo = 
-                    new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
+                var EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
 
                 e.Result = EncodingInfo;
             }
@@ -138,8 +136,7 @@ namespace StegomaticProject.StegoSystemController
                 return;
             }
 
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = 
-                e.Result as Tuple<Bitmap, string, string, bool, bool>;
+            var EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
             Bitmap stegoObject = EncodingInfo.Item1;
             
             try
@@ -186,7 +183,7 @@ namespace StegomaticProject.StegoSystemController
                 _stegoUI.Enable = false; 
                 //Disable the main-window, so the user click on anything they're not supposed to.
 
-                _worker.RunWorkerAsync(args);
+                _encoder.RunWorkerAsync(args);
                 // When worker is done and event will fire and ThreadedEncodeComplete() will be executed, which
                 // will start a save-dialog when the encoding-process is completed.
             }

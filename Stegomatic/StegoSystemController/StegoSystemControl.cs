@@ -26,6 +26,8 @@ namespace StegomaticProject.StegoSystemController
             this._stegoModel = stegoModel;
             this._stegoUI = stegoUI;
             this._verifyUserInput = new VerifyUserInput();
+
+            // Sets the calculate function in the UI to the precise calculate function in the model.
             _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();

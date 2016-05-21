@@ -166,15 +166,10 @@ namespace StegomaticProject.StegoSystemController
 
         public void ThreadedDecodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
+            _backgroundWorkerProgressBar.Hide();
+            _stegoUI.Enable = true;
             string message = (string)e.Result;
-            if (message != null)
-            {
-                    _backgroundWorkerProgressBar.Hide();
-                    _stegoUI.Enable = true;
-                    ShowDecodingSuccessNotification(message);
-            }
-            _backgroundWorkerProgressBar.Dispose();
-
+            ShowDecodingSuccessNotification(message);
         }
 
         /// <summary>

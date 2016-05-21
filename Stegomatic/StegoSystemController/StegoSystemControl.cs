@@ -46,14 +46,10 @@ namespace StegomaticProject.StegoSystemController
         private void SubscribeBackgroundWorkerEvents()
         {
             //Backgroundworker for encoding
-            _encodeWorker.WorkerReportsProgress = true;
-            _encodeWorker.WorkerSupportsCancellation = true;
             _encodeWorker.DoWork += new DoWorkEventHandler(ThreadedEncode);
             _encodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
 
             //Backgroundworker for decoding
-            _decodeWorker.WorkerReportsProgress = true;
-            _decodeWorker.WorkerSupportsCancellation = true;
             _decodeWorker.DoWork += new DoWorkEventHandler(ThreadedDecode);
             _decodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
         }
@@ -111,22 +107,34 @@ namespace StegomaticProject.StegoSystemController
             bool encrypt = EncodingArgument.Item5;
             bool compress = EncodingArgument.Item6;
 
-            Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
-
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
-
-            e.Result = EncodingInfo;
+            try
+            {
+                Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
+                var EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
+                e.Result = EncodingInfo;
+            }
+            catch (NotifyUserException exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
+            _backgroundWorkerProgressBar.Hide();
+            _stegoUI.Enable = true;
+
+            if (e.Error != null)
+            {
+                ShowNotification(new DisplayNotificationEvent(e.Error.Message, "Error"));
+                return;
+            }
+
+            var EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
             Bitmap stegoObject = EncodingInfo.Item1;
             
             try
             {
-                _backgroundWorkerProgressBar.Hide();
-                _stegoUI.Enable = true;
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
@@ -159,7 +167,7 @@ namespace StegomaticProject.StegoSystemController
             }
             catch (NotifyUserException exception)
             {
-                ShowNotification(new DisplayNotificationEvent(exception.Message, exception.Title));
+                throw new Exception(exception.Message);
             }
 
         }
@@ -168,6 +176,13 @@ namespace StegomaticProject.StegoSystemController
         {
             _backgroundWorkerProgressBar.Hide();
             _stegoUI.Enable = true;
+
+            if (e.Error != null)
+            {
+                ShowNotification(new DisplayNotificationEvent(e.Error.Message, "Error"));
+                return;
+            }
+
             string message = (string)e.Result;
             ShowDecodingSuccessNotification(message);
         }

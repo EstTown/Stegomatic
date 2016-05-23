@@ -1,12 +1,6 @@
 ﻿using NUnit.Framework;
 using StegomaticProject.StegoSystemModel;
-using StegomaticProject.StegoSystemModel.Miscellaneous;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StegomaticProject.Tests.ModelTests
 {
@@ -38,12 +32,13 @@ namespace StegomaticProject.Tests.ModelTests
         [TestCase(true, false)]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public void EncodeDecode_Message_NoLossOfData(bool encrypt, bool compress)
+        public void EncodeDecode_Configuration_NoLossOfData(bool encrypt, bool compress)
         {
             Bitmap stegoObject;
             string decodedMessage;
-            stegoObject = _stegoModel.EncodeMessageInImage(_image, _message, _key, _seed, encrypt, compress);
+            stegoObject = _stegoModel.EncodeMessageInImage(new Bitmap(_image), _message, _key, _seed, encrypt, compress);
             decodedMessage = _stegoModel.DecodeMessageFromImage(stegoObject, _key, _seed, encrypt, compress);
+            Assert.AreEqual(decodedMessage, _message);
         }
 
         [Test]

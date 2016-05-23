@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 using StegomaticProject.CustomExceptions;
 using System.Drawing;
 
@@ -38,7 +33,7 @@ namespace StegomaticProject.StegoSystemController
         {
             if (string.IsNullOrEmpty(encryptionKey))
             {
-                return "123"; //string.Empty;
+                throw new NotifyUserException("A password is required!", "Error");
             }
             return encryptionKey;
         }
@@ -47,7 +42,7 @@ namespace StegomaticProject.StegoSystemController
         {
             if (string.IsNullOrEmpty(stegoSeed))
             {
-                return "123"; //string.Empty;
+                throw new NotifyUserException("A password is required!", "Error");
             }
             return stegoSeed;
         }

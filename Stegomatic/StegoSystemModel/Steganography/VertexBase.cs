@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
@@ -10,15 +6,15 @@ namespace StegomaticProject.StegoSystemModel.Steganography
     {
         public VertexBase()
         {
-            
         }
+
         public VertexBase(params Pixel[] pixels)
         {
-            //assign unique ID
+            // Assign unique ID
             this.Id = _id;
             _id++;
             
-            //assign "NumberOfSamples" amount of samples (pixels) to this vertex
+            // Assign "NumberOfSamples" amount of samples (pixels) to this vertex
             PixelsForThisVertex = new Pixel[GraphTheoryBased.SamplesVertexRatio];
             for (int i = 0; i < pixels.Count(); i++)
             {
@@ -29,7 +25,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         private static short _id = 0;
         public short Id { get; set; }
         public Pixel[] PixelsForThisVertex;
-        public int VertexValue; //value that has to correspond to a certain part of the secret message
+        public int VertexValue; // Value that has to correspond to a certain part of the secret message
 
         public void CalculateVertexValue()
         {
@@ -37,8 +33,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 temp += PixelsForThisVertex[i].EmbeddedValue;
-                //Console.WriteLine(PixelsForThisVertex[i].EmbeddedValue + "              " + temp );
-                //Console.ReadKey();
             }
             this.VertexValue = (temp % GraphTheoryBased.Modulo);
         }

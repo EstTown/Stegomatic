@@ -1,5 +1,4 @@
-﻿using StegomaticProject.StegoSystemUI.Config;
-using StegomaticProject.StegoSystemUI.Events;
+﻿using StegomaticProject.StegoSystemUI.Events;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -8,6 +7,5 @@ namespace StegomaticProject.StegoSystemController
         void OpenImage(BtnEvent e);
         void EncodeImage(BtnEvent e);
         void DecodeImage(BtnEvent e);
-        //void SaveImage(BtnEvent e);
     }
 }

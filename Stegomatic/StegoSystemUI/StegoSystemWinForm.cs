@@ -1,13 +1,8 @@
 ﻿using StegomaticProject.StegoSystemUI.Config;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Events;
-using StegomaticProject.StegoSystemUI;
 using StegomaticProject.CustomExceptions;
 using System.IO;
 using System.Drawing.Imaging;
@@ -16,7 +11,7 @@ namespace StegomaticProject.StegoSystemUI
 {
     public class StegoSystemWinForm : IStegoSystemUI
     {
-        private Form1 _mainMenu { get; set; } // LAV ET INTERFACE HERTIL, DOG FØRST TIL SIDST.
+        private Form1 _mainMenu { get; set; }
 
         public Func<int, int, bool, int> ImageCapacityCalculator { get; set; }
 
@@ -56,7 +51,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public StegoSystemWinForm()
         {
-            //Creates new WinForms-window of Form1
+            // Creates new WinForms-window of Form1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _mainMenu = new Form1();
@@ -110,12 +105,16 @@ namespace StegomaticProject.StegoSystemUI
 
         public void ShowNotification(string notification, string title = "")
         {
-            // Initialize a popup window and show the message!
             MessageBox.Show(notification, title);
-            //NotificationWindow userNotificationWindow = new NotificationWindow();
-            //userNotificationWindow.Text = title;
-            //userNotificationWindow.LabelText = notification;
-            //userNotificationWindow.ShowDialog();
+        }
+
+        public void ShowMessageNotification(string notification, string text, string title = "")
+        {
+            PopupDisplayMessage popup = new PopupDisplayMessage();
+            popup.Text = title;
+            popup.groupBox.Text = notification;
+            popup.txtbox_display.Text = text;
+            popup.ShowDialog();
         }
 
         public void Start()
@@ -155,7 +154,6 @@ namespace StegomaticProject.StegoSystemUI
         private string GetUserStringPopup(string popupTitle, string popupTextBoxTitle)
         {
             // Create a popup window and return the entered string. 
-
             UserInputPopup popupWindow = new UserInputPopup();
             popupWindow.Text = popupTitle;
             popupWindow.TextBoxTitle = popupTextBoxTitle;
@@ -271,8 +269,8 @@ namespace StegomaticProject.StegoSystemUI
 
             if (saveFileWindow.FileName != "")
             {
-                //Filestream is saved here, from manipulated image.
-                //Switch determines which format the image will be saved in.
+                // Filestream is saved here, from manipulated image.
+                // Switch determines which format the image will be saved in.
 
                 switch (saveFileWindow.FilterIndex)
                 {

@@ -6,10 +6,6 @@ using StegomaticProject.StegoSystemUI.Events;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.CustomExceptions;
 using System.ComponentModel;
-using StegomaticProject.StegoSystemModel.Steganography;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemController
 {
@@ -20,6 +16,8 @@ namespace StegomaticProject.StegoSystemController
         private IVerifyUserInput _verifyUserInput;
 
         ProcessingPopup _backgroundWorkerProgressBar = new ProcessingPopup();
+        private BackgroundWorker _encodeWorker = new BackgroundWorker();
+        private BackgroundWorker _decodeWorker = new BackgroundWorker();
 
         public StegoSystemControl(IStegoSystemModel stegoModel, IStegoSystemUI stegoUI)
         {
@@ -29,7 +27,7 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.ImageCapacityCalculator = _stegoModel.CalculateImageCapacity;
 
             SubscribeToEvents();
-    }
+       }
 
         private void SubscribeToEvents()
         {
@@ -39,23 +37,18 @@ namespace StegomaticProject.StegoSystemController
             _stegoUI.OpenImageBtn += new BtnEventHandler(this.OpenImage);
 
             SubscribeBackgroundWorkerEvents();
-            
         }
 
         private void SubscribeBackgroundWorkerEvents()
         {
-            AutoResetEvent resetEvent = new AutoResetEvent(false);
-            // Backgroundworker to have WinForm run on a different thread as the model.
-            _worker.WorkerReportsProgress = true;
-            _worker.WorkerSupportsCancellation = true;
-            _worker.DoWork += new DoWorkEventHandler(ThreadedEncode);
-            _worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
-            _worker.ProgressChanged += new ProgressChangedEventHandler(ThreadProgressChanged);
+            //Backgroundworker for encoding
+            _encodeWorker.DoWork += new DoWorkEventHandler(ThreadedEncode);
+            _encodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedEncodeComplete);
 
-            // BACKGROUNDWORKER 2??? TO DECODE?
+            //Backgroundworker for decoding
+            _decodeWorker.DoWork += new DoWorkEventHandler(ThreadedDecode);
+            _decodeWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ThreadedDecodeComplete);
         }
-
-        private BackgroundWorker _worker = new BackgroundWorker();
 
         public void ShowNotification(DisplayNotificationEvent e)
         {
@@ -82,7 +75,7 @@ namespace StegomaticProject.StegoSystemController
         private void ShowDecodingSuccessNotification(string message)
         {
             message = message.TrimEnd('\0');
-            _stegoUI.ShowNotification($"Message decoded successfully: \n \"{message}\"", "Success");
+            _stegoUI.ShowMessageNotification($"Message decoded successfully:", message, "Success");
         }
 
         public void OpenImage(BtnEvent e)
@@ -99,8 +92,6 @@ namespace StegomaticProject.StegoSystemController
 
         private void ThreadedEncode(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
             Tuple<Bitmap, string, string, string, bool, bool> EncodingArgument = e.Argument as Tuple<Bitmap, string, string, string, bool, bool>;
 
             Bitmap coverImage = EncodingArgument.Item1;
@@ -110,27 +101,34 @@ namespace StegomaticProject.StegoSystemController
             bool encrypt = EncodingArgument.Item5;
             bool compress = EncodingArgument.Item6;
 
-            Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
-
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
-
-            e.Result = EncodingInfo;
-        }
-
-        public void ThreadProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
+            try
+            {
+                Bitmap stegoObject = _stegoModel.EncodeMessageInImage(coverImage, message, encryptionKey, stegoSeed, encrypt, compress);
+                var EncodingInfo = new Tuple<Bitmap, string, string, bool, bool>(stegoObject, encryptionKey, stegoSeed, encrypt, compress);
+                e.Result = EncodingInfo;
+            }
+            catch (NotifyUserException exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         public void ThreadedEncodeComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            Tuple<Bitmap, string, string, bool, bool> EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
+            _backgroundWorkerProgressBar.Hide();
+            _stegoUI.Enable = true;
+
+            if (e.Error != null)
+            {
+                ShowNotification(new DisplayNotificationEvent(e.Error.Message, "Error"));
+                return;
+            }
+
+            var EncodingInfo = e.Result as Tuple<Bitmap, string, string, bool, bool>;
             Bitmap stegoObject = EncodingInfo.Item1;
             
             try
             {
-                _backgroundWorkerProgressBar.Hide();
-                _stegoUI.Enable = true;
                 _stegoUI.SaveImage(stegoObject);
                 _stegoUI.SetDisplayImage(stegoObject);
                 ShowEncodingSuccessNotification(EncodingInfo.Item2, EncodingInfo.Item3, EncodingInfo.Item4, EncodingInfo.Item5);
@@ -141,10 +139,43 @@ namespace StegomaticProject.StegoSystemController
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
+        private void ThreadedDecode(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                Tuple<Bitmap, string, string, bool, bool> DecodeArgument = e.Argument as Tuple<Bitmap, string, string, bool, bool>;
+
+                Bitmap coverImage = DecodeArgument.Item1;
+                string encryptionKey = DecodeArgument.Item2;
+                string stegoSeed = DecodeArgument.Item3;
+                bool encrypt = DecodeArgument.Item4;
+                bool compress = DecodeArgument.Item5;
+
+                string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, encrypt, compress);
+
+                e.Result = message;
+            }
+            catch (NotifyUserException exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
+        public void ThreadedDecodeComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _backgroundWorkerProgressBar.Hide();
+            _stegoUI.Enable = true;
+
+            if (e.Error != null)
+            {
+                ShowNotification(new DisplayNotificationEvent(e.Error.Message, "Error"));
+                return;
+            }
+
+            string message = (string)e.Result;
+            ShowDecodingSuccessNotification(message);
+        }
+
         public void EncodeImage(BtnEvent e)
         {
             try
@@ -168,12 +199,12 @@ namespace StegomaticProject.StegoSystemController
                 var args = Tuple.Create<Bitmap, string, string, string, bool, bool>(coverImage, message, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
 
                 _backgroundWorkerProgressBar.Show(); 
-                //Show that we're working on it!
+                // Show that we're working on it!
 
                 _stegoUI.Enable = false; 
-                //Disable the main-window, so the user click on anything they're not supposed to.
+                // Disable the main-window, so the user click on anything they're not supposed to.
 
-                _worker.RunWorkerAsync(args);
+                _encodeWorker.RunWorkerAsync(args);
                 // When worker is done and event will fire and ThreadedEncodeComplete() will be executed, which
                 // will start a save-dialog when the encoding-process is completed.
             }
@@ -203,12 +234,17 @@ namespace StegomaticProject.StegoSystemController
                 string stegoSeed = _stegoUI.GetStegoSeed();
                 stegoSeed = _verifyUserInput.StegoSeed(stegoSeed);
 
-                string message= _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+                _backgroundWorkerProgressBar.Text = "Decoding...";
+                _backgroundWorkerProgressBar.label1.Text = "Extracting message from image...";
+                _backgroundWorkerProgressBar.Show();
+                // Show that we're working on it!
 
-                //GraphTheoryBased a = new GraphTheoryBased();
-                //string message = a.Decode(coverImage, stegoSeed);
+                _stegoUI.Enable = false;
+                // Disable the main-window, so the user click on anything they're not supposed to.
 
-                ShowDecodingSuccessNotification(message);
+                var args = Tuple.Create<Bitmap, string, string, bool, bool>(coverImage, encryptionKey, stegoSeed, config.Encrypt, config.Compress);
+
+                _decodeWorker.RunWorkerAsync(args);
             }
             catch (NotifyUserException exception)
             {

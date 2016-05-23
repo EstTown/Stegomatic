@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.StegoSystemUI.Events;
 
@@ -76,6 +71,11 @@ namespace StegomaticProject.StegoSystemUI
         }
 
         public void SaveImage(Bitmap image)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowMessageNotification(string notification, string text, string title)
         {
             throw new NotImplementedException();
         }

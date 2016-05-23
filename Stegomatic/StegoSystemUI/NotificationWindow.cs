@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemUI
@@ -23,10 +16,8 @@ namespace StegomaticProject.StegoSystemUI
             set { this.label1.Text = value; }
         }
 
-
         private void NotificationWindow_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

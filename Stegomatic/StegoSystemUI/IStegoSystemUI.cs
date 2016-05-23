@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StegomaticProject.StegoSystemUI.Config;
 using StegomaticProject.StegoSystemUI.Events;
 
@@ -22,6 +18,7 @@ namespace StegomaticProject.StegoSystemUI
         // Modify UI
         void SetDisplayImage(Bitmap newImage);
         void ShowNotification(string notification, string title);
+        void ShowMessageNotification(string notification, string text, string title);
         string GetEncryptionKey();
         string GetStegoSeed();
         void OpenImage();
@@ -35,7 +32,6 @@ namespace StegomaticProject.StegoSystemUI
         event DisplayNotificationEventHandler NotifyUser;
         event BtnEventHandler DecodeBtn;
         event BtnEventHandler EncodeBtn;
-        //event BtnEventHandler SaveImageBtn;
         event BtnEventHandler OpenImageBtn;
     }
 }

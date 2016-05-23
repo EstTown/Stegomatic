@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
 
 namespace StegomaticProject.StegoSystemUI
 {
@@ -22,7 +16,6 @@ namespace StegomaticProject.StegoSystemUI
 
             var fileLength = new FileInfo(file).Length;
             var filename = new FileInfo(file).Name;
-            //byte[] imageBytes = imageToByteArray(image);
             string[] tmp = { image.Width.ToString(), image.Height.ToString(), fileLength.ToString(), filename};
 
             return tmp;
@@ -36,7 +29,5 @@ namespace StegomaticProject.StegoSystemUI
                 return ms.ToArray();
             }
         }
-
-
     }
 }

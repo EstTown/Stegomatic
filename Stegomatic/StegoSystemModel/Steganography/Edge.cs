@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
@@ -16,7 +12,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.EdgeID = _edgecounter;
             _edgecounter++;
 
-            
             this.VertexOne = vertOne;
             this.VertexTwo = vertTwo;
             this.VertexPixelOne = vertPixOne;

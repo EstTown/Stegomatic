@@ -47,17 +47,6 @@
                 TargetValues[i] = GraphTheoryBased.Mod((PixelsForThisVertex[i].EmbeddedValue + d), GraphTheoryBased.Modulo);
             }
         }
-
-        public void AssignWeightToVertex(byte weight)
-        {
-            LowestEdgeWeight = weight;
-        }
-
-        public void AssignNumberOfEdgesToVertex(int edges)
-        {
-            NumberOfEdges = edges;
-        }
-
         public override string ToString()
         {
             return "ID: " + this.Id + "\n"

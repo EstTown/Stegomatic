@@ -29,7 +29,5 @@ namespace StegomaticProject.StegoSystemUI
                 return ms.ToArray();
             }
         }
-
-
     }
 }

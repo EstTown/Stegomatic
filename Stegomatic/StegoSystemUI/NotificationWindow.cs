@@ -16,10 +16,8 @@ namespace StegomaticProject.StegoSystemUI
             set { this.label1.Text = value; }
         }
 
-
         private void NotificationWindow_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

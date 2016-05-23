@@ -25,7 +25,7 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 
         public byte[] Compress(byte[] message)
         {
-            //  Constructs and writes gzipstream with the compressed or decompressed message.
+            // Constructs and writes gzipstream with the compressed or decompressed message.
 
             MemoryStream compressedStream = new MemoryStream();
             GZipStream zipStream = new GZipStream(compressedStream, CompressionMode.Compress);

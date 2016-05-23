@@ -12,7 +12,6 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             this.EdgeID = _edgecounter;
             _edgecounter++;
 
-            
             this.VertexOne = vertOne;
             this.VertexTwo = vertTwo;
             this.VertexPixelOne = vertPixOne;

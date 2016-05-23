@@ -11,6 +11,7 @@ namespace StegomaticProject.StegoSystemModel.Miscellaneous
 
         static public string ByteArrayToString(byte[] byteArray)
         {
+            // Removes trailing null terinators
             return Encoding.UTF8.GetString(byteArray).TrimEnd('\0');
         }
     }

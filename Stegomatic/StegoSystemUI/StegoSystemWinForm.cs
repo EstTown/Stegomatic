@@ -51,7 +51,7 @@ namespace StegomaticProject.StegoSystemUI
 
         public StegoSystemWinForm()
         {
-            //Creates new WinForms-window of Form1
+            // Creates new WinForms-window of Form1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             _mainMenu = new Form1();
@@ -269,8 +269,8 @@ namespace StegomaticProject.StegoSystemUI
 
             if (saveFileWindow.FileName != "")
             {
-                //Filestream is saved here, from manipulated image.
-                //Switch determines which format the image will be saved in.
+                // Filestream is saved here, from manipulated image.
+                // Switch determines which format the image will be saved in.
 
                 switch (saveFileWindow.FilterIndex)
                 {

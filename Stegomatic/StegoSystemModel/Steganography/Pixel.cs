@@ -5,7 +5,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class Pixel
     {
-        public Pixel(Color color, int positionX, int positionY) //constructor
+        public Pixel(Color color, int positionX, int positionY) 
         {
             this.Color = color;
             this.PosX = positionX;

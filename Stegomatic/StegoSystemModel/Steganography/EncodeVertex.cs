@@ -7,7 +7,7 @@
             this.PartOfSecretMessage = partOfSecretMessage;
             CalculateTargetValues();
             
-            //all vertices will be set to active, no matter what
+            // All vertices will be set to active no matter what
             this.Active = true;
             if (partOfSecretMessage != VertexValue)
             {
@@ -40,20 +40,24 @@
             {
                 d = (this.PartOfSecretMessage - this.VertexValue);
             }
-            //calculate targetvalues
+
+            // Calculate target values
             for (int i = 0; i < GraphTheoryBased.SamplesVertexRatio; i++)
             {
                 TargetValues[i] = GraphTheoryBased.Mod((PixelsForThisVertex[i].EmbeddedValue + d), GraphTheoryBased.Modulo);
             }
         }
+
         public void AssignWeightToVertex(byte weight)
         {
             LowestEdgeWeight = weight;
         }
+
         public void AssignNumberOfEdgesToVertex(int edges)
         {
             NumberOfEdges = edges;
         }
+
         public override string ToString()
         {
             return "ID: " + this.Id + "\n"

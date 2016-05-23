@@ -24,12 +24,10 @@ namespace StegomaticProject.StegoSystemUI
 
         private void btn_popup_submit_Click(object sender, EventArgs e)
         {
-            //Send key to algoritm
         }
 
         private void btn_popup_cancel_Click(object sender, EventArgs e)
         {
-            
         }
     }
 }

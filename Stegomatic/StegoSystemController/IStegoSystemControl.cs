@@ -7,6 +7,5 @@ namespace StegomaticProject.StegoSystemController
         void OpenImage(BtnEvent e);
         void EncodeImage(BtnEvent e);
         void DecodeImage(BtnEvent e);
-        //void SaveImage(BtnEvent e);
     }
 }

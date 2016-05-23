@@ -20,7 +20,7 @@ namespace StegomaticProject.StegoSystemModel
         {
             _compressMethod = new GZipStreamCompression();
             _cryptoMethod = new RijndaelCrypto();
-            _stegoMethod = new GraphTheoryBased(); //new LeastSignificantBit(); 
+            _stegoMethod = new GraphTheoryBased(); 
 
             CalculateImageCapacity = CalcCapacityWithCompressionAndStego;
         }

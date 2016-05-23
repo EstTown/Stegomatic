@@ -7,7 +7,6 @@ namespace StegomaticProject.StegoSystemUI
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
             InitializeComponent();
@@ -16,10 +15,10 @@ namespace StegomaticProject.StegoSystemUI
             checkBox_compression.Checked = true;
             checkBox_encryption.Checked = false;
         }
+
         public event DisplayNotificationEventHandler NotifyUser;
         public event BtnEventHandler DecodeBtnClick;
         public event BtnEventHandler EncodeBtnClick;
-        //public event BtnEventHandler SaveImageBtnClick;
         public event BtnEventHandler OpenImageBtnClick;
         public event BtnEventHandler CompressionCheckToggle;
 
@@ -71,7 +70,6 @@ namespace StegomaticProject.StegoSystemUI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
         }
 
         private void btn_open_Click(object sender, EventArgs e)
@@ -89,14 +87,6 @@ namespace StegomaticProject.StegoSystemUI
                 EncodeBtnClick(new BtnEvent());
             }
         }
-
-        //private void btn_save_Click(object sender, EventArgs e)
-        //{
-        //    if (SaveImageBtnClick != null)
-        //    {
-        //        SaveImageBtnClick(new BtnEvent());
-        //    }
-        //}
 
         public void ForceUpdateCapacityBar()
         {
@@ -174,17 +164,14 @@ namespace StegomaticProject.StegoSystemUI
 
         private void checkBox_encryption_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void picbox_image_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label_char_Click(object sender, EventArgs e)
         {
-            
         }
 
         private void checkBox_compression_CheckedChanged(object sender, EventArgs e)

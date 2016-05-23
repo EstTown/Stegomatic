@@ -32,7 +32,6 @@ namespace StegomaticProject.StegoSystemUI
         event DisplayNotificationEventHandler NotifyUser;
         event BtnEventHandler DecodeBtn;
         event BtnEventHandler EncodeBtn;
-        //event BtnEventHandler SaveImageBtn;
         event BtnEventHandler OpenImageBtn;
     }
 }

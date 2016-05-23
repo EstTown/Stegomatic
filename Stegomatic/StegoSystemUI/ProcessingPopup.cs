@@ -12,12 +12,10 @@ namespace StegomaticProject.StegoSystemUI
 
         private void ProcessingPopup_Load(object sender, EventArgs e)
         {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

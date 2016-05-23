@@ -42,7 +42,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
             vertexList = encodeVertexList;
 
             //write datat to file
-            StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt"); //is located under debugger
+            StreamWriter file = File.AppendText(@"C:\Users\Dascham\Desktop\Data.txt");
+            file.WriteLine();
+            file.WriteLine("Size of embedded data: {0}", secretMessage.Count/4);
             file.WriteLine("Active vertices " + " | " + "Total Edges " + "|" + "Matched Edges");
             file.WriteLine(countActiveVerts + "                     " + listOfEdges.Count + "                       "+matchedEdges.Count+"");
             file.Close();

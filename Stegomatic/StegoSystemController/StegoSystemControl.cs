@@ -153,8 +153,6 @@ namespace StegomaticProject.StegoSystemController
 
                 string message = _stegoModel.DecodeMessageFromImage(coverImage, encryptionKey, stegoSeed, encrypt, compress);
 
-                Tuple<string> DecodeInfo = new Tuple<string>(message);
-
                 e.Result = message;
             }
             catch (NotifyUserException exception)

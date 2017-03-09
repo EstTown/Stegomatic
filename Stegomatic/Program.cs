@@ -15,6 +15,9 @@ namespace StegomaticProject
             IStegoSystemControl stegoController = new StegoSystemControl(stegoModel, stegoUI);
 
             stegoUI.Start();
+
+            StegoSystemConsole console = new StegoSystemConsole();
+            console.Start();
         }
     }
 }

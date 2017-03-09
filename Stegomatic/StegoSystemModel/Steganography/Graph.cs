@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace StegomaticProject.StegoSystemModel.Steganography
 {
@@ -71,6 +72,9 @@ namespace StegomaticProject.StegoSystemModel.Steganography
         {
             List<Edge> listOfEdges = new List<Edge>();
 
+            Stopwatch s = new Stopwatch();
+            s.Start();
+
             foreach (EncodeVertex item1 in encodeVertexList)
             {
                 int lowestWeight = GraphTheoryBased.MaxEdgeWeight;
@@ -88,7 +92,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                             {
                                 lowestWeight = edgeWeight;
                             }
-                            amountOfEdges++; 
+                            amountOfEdges++;
                         }
                     }
                 }
@@ -99,6 +103,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 // After examining a single vertex it will be deactivated,  since all of the possible edges already have 
                 // been evaluated, and therefore there is no need to look at this particular vertex again.
             }
+
+            Console.WriteLine("ConstructEdges: " + s.Elapsed);
+            s.Stop();
+
             return listOfEdges;
         }
 
@@ -130,6 +138,8 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 // Edgeweight will never be zero, because a pixel cannot have an embeddedvalue that is 
                 // equivalent with it's targetvalue
             {
+                vertex1.AssociatedEdges.Add(tempEdge);
+                vertex2.AssociatedEdges.Add(tempEdge);
                 listOfEdges.Add(tempEdge);
                 lowestWeight = weight;
                 return true;
@@ -168,11 +178,17 @@ namespace StegomaticProject.StegoSystemModel.Steganography
 
             List<Edge> tempMatched = new List<Edge>();
 
+            Stopwatch s = new Stopwatch();
+            s.Start();
             foreach (EncodeVertex vert in encodeVertexList)
             {
                 if (vert.Active == true && vert.NumberOfEdges > 0)
                 {
                     List<Edge> InternalEdgeList = new List<Edge>();
+                    InternalEdgeList = vert.AssociatedEdges;
+
+                    /* Instead of doing this retarded thing, with a ridiculous time complexity,
+                     * edges are instead associated with verticies when they're created.
                     foreach (Edge edge in listOfEdges)
                     {
                         if (edge.VertexOne == vert || edge.VertexTwo == vert)
@@ -180,6 +196,7 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                             InternalEdgeList.Add(edge);
                         }
                     }
+                    */
 
                     List<Edge> SortedInternalList = InternalEdgeList.OrderBy(o => o.EdgeWeight).ToList();
 
@@ -195,6 +212,10 @@ namespace StegomaticProject.StegoSystemModel.Steganography
                 }
             }
             List<Edge> matchedEdges = tempMatched;
+
+            Console.WriteLine("CalcGraphMatching: " + s.Elapsed);
+            s.Stop();
+            
 
             return matchedEdges;
         }

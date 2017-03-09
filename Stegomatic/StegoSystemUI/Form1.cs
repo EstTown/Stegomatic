@@ -14,6 +14,7 @@ namespace StegomaticProject.StegoSystemUI
             txtbox_input.TextChanged += new EventHandler(this.txtbox_input_TextChanged);
             checkBox_compression.Checked = true;
             checkBox_encryption.Checked = false;
+
         }
 
         public event DisplayNotificationEventHandler NotifyUser;

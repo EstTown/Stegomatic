@@ -1,4 +1,6 @@
-﻿namespace StegomaticProject.StegoSystemModel.Steganography
+﻿using System.Collections.Generic;
+
+namespace StegomaticProject.StegoSystemModel.Steganography
 {
     class EncodeVertex : VertexBase
     {
@@ -17,11 +19,15 @@
             {
                 this.Active = false;
             }
+
+            this.AssociatedEdges = new List<Edge>();
             
         }
         
         public int LowestEdgeWeight { get; set; }
         public int NumberOfEdges { get; set; }
+
+        public List<Edge> AssociatedEdges;
 
         public bool Active;
         public int[] TargetValues;

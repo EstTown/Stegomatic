@@ -7,8 +7,8 @@
     <ProjectGuid>{8EDF4429-251A-416D-BB68-93F227191BCF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StegomaticProject.Tests</RootNamespace>
-    <AssemblyName>StegomaticProject.Tests</AssemblyName>
+    <RootNamespace>BlackHelmProject.Tests</RootNamespace>
+    <AssemblyName>BlackHelmProject.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -54,9 +54,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Stegomatic\StegomaticProject.csproj">
+    <ProjectReference Include="..\Stegomatic\BlackHelmProject.csproj">
       <Project>{3249698c-bcbb-443f-81a1-f5e5ccd30982}</Project>
-      <Name>StegomaticProject</Name>
+      <Name>BlackHelmProject</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

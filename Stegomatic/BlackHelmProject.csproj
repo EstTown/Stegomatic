@@ -7,8 +7,8 @@
     <ProjectGuid>{3249698C-BCBB-443F-81A1-F5E5CCD30982}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StegomaticProject</RootNamespace>
-    <AssemblyName>StegomaticProject</AssemblyName>
+    <RootNamespace>BlackHelmProject</RootNamespace>
+    <AssemblyName>BlackHelmProject</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

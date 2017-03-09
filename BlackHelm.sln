@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StegomaticProject", "Stegomatic\StegomaticProject.csproj", "{3249698C-BCBB-443F-81A1-F5E5CCD30982}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHelmProject", "Stegomatic\BlackHelmProject.csproj", "{3249698C-BCBB-443F-81A1-F5E5CCD30982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StegomaticProject.Tests", "StegomaticProject.Tests\StegomaticProject.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackHelmProject.Tests", "StegomaticProject.Tests\BlackHelmProject.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

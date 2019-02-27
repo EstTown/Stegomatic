@@ -5,6 +5,9 @@ This software uses a graphtheory-based approach to steganography, which heighten
 
 The software is written in C#6 (.NET 4.6.2) using Visual Studio 2015, implemented with a Winforms-based GUI.
 
+
+The accompanying project report is also prodvided here, as a PDF (although, this is written in danish).
+
 -------------------------------------------------
 Created as part of the 2nd semester project of group A419, Comp. Sci, Aalborg University, during spring/summer of 2016.
 
